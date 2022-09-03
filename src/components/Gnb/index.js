@@ -1,4 +1,4 @@
-import "./Gnb.css";
+import "./gnb.css";
 
 import { LOGO_URL } from "../../constant/constant";
 import logoImg from "../../assets/logo.svg";
