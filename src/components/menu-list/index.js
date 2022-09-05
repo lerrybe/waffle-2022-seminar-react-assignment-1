@@ -7,7 +7,7 @@ import createIcon from "../../assets/create-icon.svg";
 
 const MenuList = ({ menuItems }) => {
   return (
-    <>
+    <div className='menu-outer-wrapper'>
       <MenuSearchBar />
       <div className="menu-content-wrapper">
         <div className="menu-category-wrapper">
@@ -18,7 +18,7 @@ const MenuList = ({ menuItems }) => {
         <MenuItems menuItems={menuItems} />
         <img className="menu-create-icon" src={createIcon} alt="create" />
       </div>
-    </>
+    </div>
   );
 };
 
