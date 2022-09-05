@@ -1,5 +1,5 @@
 import "./menu-search-bar.css";
-import searchImg from "../../assets/search.svg";
+import searchImg from "../../assets/search-icon.svg";
 
 const MenuSearchBar = ({ content }) => {
   return (
