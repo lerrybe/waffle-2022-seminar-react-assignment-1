@@ -1,5 +1,7 @@
+import MenuManagePage from "./pages";
+
 const App = () => {
-  return <div>시작하기</div>;
+  return <MenuManagePage />;
 };
 
 export default App;
