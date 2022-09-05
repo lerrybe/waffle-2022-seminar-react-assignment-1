@@ -1,4 +1,4 @@
-export const menu = [
+export const dummyArr = [
   {
     id: 1,
     name: "초코와플",

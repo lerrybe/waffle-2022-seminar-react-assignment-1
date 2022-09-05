@@ -6,6 +6,12 @@
   display: flex;
 }
 
+.menu-item-wrapper:hover {
+  cursor: pointer;
+  /* TODO: important 제거 -> 이 때 인라인 스타일 때문에 얘가 적용이 안됨 howto */
+  background: #ffd2d2 !important;
+}
+
 .menu-item-id {
   display: flex;
   justify-content: center;

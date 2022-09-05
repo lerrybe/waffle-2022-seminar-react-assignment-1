@@ -5,9 +5,9 @@ import MenuSearchBar from "../menu-search-bar";
 
 import createIcon from "../../assets/create-icon.svg";
 
-const MenuList = ({ menuItems }) => {
+const MenuList = ({ menuItems, handleOpenDetail, selectedMenu }) => {
   return (
-    <div className='menu-outer-wrapper'>
+    <div className="menu-outer-wrapper">
       <MenuSearchBar />
       <div className="menu-content-wrapper">
         <div className="menu-category-wrapper">
@@ -15,7 +15,11 @@ const MenuList = ({ menuItems }) => {
           <span className="menu-category-name">{"이름"}</span>
           <span className="menu-category-price">{"가격"}</span>
         </div>
-        <MenuItems menuItems={menuItems} />
+        <MenuItems
+          menuItems={menuItems}
+          handleOpenDetail={handleOpenDetail}
+          selectedMenu={selectedMenu}
+        />
         <img className="menu-create-icon" src={createIcon} alt="create" />
       </div>
     </div>

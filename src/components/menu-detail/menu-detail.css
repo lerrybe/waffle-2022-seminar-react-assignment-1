@@ -6,6 +6,8 @@
 
   margin-left: 20px;
   position: relative;
+
+  overflow: auto;
 }
 
 .close-icon {
@@ -37,6 +39,9 @@
   border-radius: 50px;
 
   margin-bottom: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .detail-name {
