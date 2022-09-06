@@ -15,7 +15,7 @@ const ModalCreateMenu = ({
   handleChangeNewMenuImage,
 }) => {
   return (
-    <ModalWrapper>
+    <ModalWrapper handleCloseModal={handleToggleCreateModal}>
       <span className="modal-title">{"메뉴 추가"}</span>
       <FormItem
         label={"이름"}

@@ -1,7 +1,7 @@
 import "./dim.css";
 
-const Dim = () => {
-  return <div className="dim-wrapper"></div>;
+const Dim = ({ handleCloseModal }) => {
+  return <div className="dim-wrapper" onClick={handleCloseModal}></div>;
 };
 
 export default Dim;

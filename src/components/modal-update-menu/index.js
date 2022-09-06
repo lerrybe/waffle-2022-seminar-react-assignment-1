@@ -15,7 +15,7 @@ const ModalUpdateMenu = ({
   handleToggleUpdateModal,
 }) => {
   return (
-    <ModalWrapper>
+    <ModalWrapper handleCloseModal={handleToggleUpdateModal}>
       <span className="modal-title">{"메뉴 수정"}</span>
       <FormItem
         label={"이름"}

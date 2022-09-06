@@ -1,10 +1,10 @@
 import "./modal-wrapper.css";
 import Dim from "../dim";
 
-const ModalWrapper = ({ children }) => {
+const ModalWrapper = ({ children, handleCloseModal }) => {
   return (
     <>
-      <Dim />
+      <Dim handleCloseModal={handleCloseModal} />
       <div className="modal-wrapper">{children}</div>
     </>
   );
