@@ -5,10 +5,20 @@ import MenuSearchBar from "../menu-search-bar";
 
 import createIcon from "../../assets/create-icon.svg";
 
-const MenuList = ({ menuItems, handleOpenDetail, selectedMenu }) => {
+const MenuList = ({
+  menuItems,
+  handleOpenDetail,
+  keyword,
+  handleChangeKeyword,
+  handleToggleCreateModal,
+  selectedMenu,
+}) => {
   return (
     <div className="menu-outer-wrapper">
-      <MenuSearchBar />
+      <MenuSearchBar
+        keyword={keyword}
+        handleChangeKeyword={handleChangeKeyword}
+      />
       <div className="menu-content-wrapper">
         <div className="menu-category-wrapper">
           <span className="menu-category-id">{"ID"}</span>
@@ -20,7 +30,12 @@ const MenuList = ({ menuItems, handleOpenDetail, selectedMenu }) => {
           handleOpenDetail={handleOpenDetail}
           selectedMenu={selectedMenu}
         />
-        <img className="menu-create-icon" src={createIcon} alt="create" />
+        <img
+          className="menu-create-icon"
+          src={createIcon}
+          alt="create"
+          onClick={handleToggleCreateModal}
+        />
       </div>
     </div>
   );
