@@ -6,12 +6,12 @@ import MenuSearchBar from "../menu-search-bar";
 import createIcon from "../../assets/create-icon.svg";
 
 const MenuList = ({
-  menuItems,
-  handleOpenDetail,
   keyword,
+  menuItems,
+  selectedMenu,
+  handleOpenDetail,
   handleChangeKeyword,
   handleToggleCreateModal,
-  selectedMenu,
 }) => {
   return (
     <div className="menu-outer-wrapper">
@@ -27,8 +27,8 @@ const MenuList = ({
         </div>
         <MenuItems
           menuItems={menuItems}
-          handleOpenDetail={handleOpenDetail}
           selectedMenu={selectedMenu}
+          handleOpenDetail={handleOpenDetail}
         />
         <img
           className="menu-create-icon"

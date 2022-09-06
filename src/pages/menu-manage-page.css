@@ -6,26 +6,3 @@
 
   display: flex;
 }
-
-.modal-title {
-  height: 40px;
-  font-weight: 700;
-  font-size: 20px;
-  line-height: 24px;
-}
-
-.button-wrapper {
-  width: 100%;
-  height: 50px;
-  display: flex;
-  justify-content: end;
-  align-items: center;
-}
-
-.modal-announcement {
-  height: 20px;
-  font-weight: 400;
-  font-size: 15px;
-  line-height: 20px;
-  margin: 10px 0;
-}

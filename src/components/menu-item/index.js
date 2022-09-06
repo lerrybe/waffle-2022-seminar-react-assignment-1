@@ -1,7 +1,8 @@
 import "./menu-item.css";
+
 import { numberToCommaString } from "../../utils/numberToCommaString";
 
-const MenuItem = ({ menuItem, handleOpenDetail, selectedMenu }) => {
+const MenuItem = ({ menuItem, selectedMenu, handleOpenDetail }) => {
   const { id, name, price } = menuItem;
   return (
     <li

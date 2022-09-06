@@ -1,6 +1,6 @@
 import MenuItem from "../menu-item";
 
-const MenuItems = ({ menuItems, handleOpenDetail, selectedMenu }) => {
+const MenuItems = ({ menuItems, selectedMenu, handleOpenDetail }) => {
   return (
     <ul>
       {menuItems &&
@@ -9,8 +9,8 @@ const MenuItems = ({ menuItems, handleOpenDetail, selectedMenu }) => {
           <MenuItem
             key={menuItem.name}
             menuItem={menuItem}
-            handleOpenDetail={handleOpenDetail}
             selectedMenu={selectedMenu}
+            handleOpenDetail={handleOpenDetail}
           />
         ))}
     </ul>

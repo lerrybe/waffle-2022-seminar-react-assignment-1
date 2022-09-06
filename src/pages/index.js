@@ -5,9 +5,9 @@ import "./menu-manage-page.css";
 import Gnb from "../components/gnb";
 import MenuList from "../components/menu-list";
 import MenuDetail from "../components/menu-detail";
-import ModalWrapper from "../components/modal-wrapper";
-import FormItem from "../components/form-item";
-import ButtonNormal from "../components/button-normal";
+import ModalCreateMenu from "../components/modal-create-menu";
+import ModalUpdateMenu from "../components/modal-update-menu";
+import ModalDeleteMenu from "../components/modal-delete-menu";
 
 import { dummyArr } from "../data/dummy";
 
@@ -17,8 +17,8 @@ const MenuManagePage = () => {
   const [selectedMenu, setSelectedMenu] = useState(null);
   const [menuList, setMenuList] = useState(dummyArr);
 
-  const [searchedMenuList, setSearchedMenuList] = useState(dummyArr);
   const [keyword, setKeyword] = useState("");
+  const [searchedMenuList, setSearchedMenuList] = useState(dummyArr);
 
   const [createModalToggle, setCreateModalToggle] = useState(false);
   const [updateModalToggle, setUpdateModalToggle] = useState(false);
@@ -70,17 +70,60 @@ const MenuManagePage = () => {
   // 모달 열고 닫는 이벤트 핸들러 함수
   const handleToggleCreateModal = () => {
     setCreateModalToggle((prev) => !prev);
+
+    if (!createModalToggle) {
+      setNewMenuName("");
+      setNewMenuPrice("");
+      setNewMenuImage("");
+    }
   };
 
   const handleToggleUpdateModal = () => {
     setUpdateModalToggle((prev) => !prev);
+
+    if (!updateModalToggle && selectedMenu) {
+      setMenuName(selectedMenu.name);
+      setMenuPrice(selectedMenu.price);
+      setMenuImage(selectedMenu.image);
+    }
   };
 
   const handleToggleDeleteModal = () => {
     setDeleteModalToggle((prev) => !prev);
   };
 
-  // 메뉴 생성, 수정, 삭제 이벤트 핸들러 함수
+  // 메뉴 입력 텍스트 감지 이벤트 핸들러 함수
+  const handleChangeNewMenuName = (e) => {
+    e.preventDefault();
+    setNewMenuName(e.target.value);
+  };
+
+  const handleChangeNewMenuPrice = (e) => {
+    e.preventDefault();
+    setNewMenuPrice(e.target.value);
+  };
+
+  const handleChangeNewMenuImage = (e) => {
+    e.preventDefault();
+    setNewMenuImage(e.target.value);
+  };
+
+  const handleChangeMenuName = (e) => {
+    e.preventDefault();
+    setMenuName(e.target.value);
+  };
+
+  const handleChangeMenuPrice = (e) => {
+    e.preventDefault();
+    setMenuPrice(e.target.value);
+  };
+
+  const handleChangeMenuImage = (e) => {
+    e.preventDefault();
+    setMenuImage(e.target.value);
+  };
+
+  // 메뉴 생성, 수정, 삭제 등록 이벤트 핸들러 함수
   const handleCreateMenu = () => {
     const newMenu = {
       id: nextId,
@@ -127,8 +170,8 @@ const MenuManagePage = () => {
     setMenuList(newMenuList);
     setSearchedMenuList(newMenuList);
 
-    handleToggleDeleteModal();
     handleCloseDetail();
+    handleToggleDeleteModal();
   };
 
   return (
@@ -136,99 +179,52 @@ const MenuManagePage = () => {
       <Gnb />
       <div className="page-content-wrapper">
         <MenuList
+          keyword={keyword}
+          selectedMenu={selectedMenu}
           menuItems={searchedMenuList}
           handleOpenDetail={handleOpenDetail}
-          keyword={keyword}
           handleChangeKeyword={handleChangeKeyword}
           handleToggleCreateModal={handleToggleCreateModal}
-          selectedMenu={selectedMenu}
         />
         {openDetail && (
           <MenuDetail
+            selectedMenu={selectedMenu}
             handleCloseDetail={handleCloseDetail}
             handleToggleUpdateModal={handleToggleUpdateModal}
             handleToggleDeleteModal={handleToggleDeleteModal}
-            selectedMenu={selectedMenu}
           />
         )}
       </div>
+
       {createModalToggle && (
-        <ModalWrapper>
-          <span className="modal-title">메뉴 추가</span>
-          <FormItem
-            label={"이름"}
-            placeholder={"맛있는와플"}
-            content={newMenuName}
-            handleChangeContent={(e) => setNewMenuName(e.target.value)}
-          />
-          <FormItem
-            label={"가격"}
-            placeholder={"5,000"}
-            content={newMenuPrice}
-            handleChangeContent={(e) => setNewMenuPrice(e.target.value)}
-          />
-          <FormItem
-            label={"상품 이미지"}
-            placeholder={"https://foo.bar/baz.png"}
-            content={newMenuImage}
-            handleChangeContent={(e) => setNewMenuImage(e.target.value)}
-          />
-          <div className="button-wrapper">
-            <ButtonNormal
-              text={"추가"}
-              handleClick={handleCreateMenu}
-              bgColor={"#D3FFC3"}
-            />
-            <ButtonNormal text={"취소"} handleClick={handleToggleCreateModal} />
-          </div>
-        </ModalWrapper>
+        <ModalCreateMenu
+          newMenuName={newMenuName}
+          newMenuPrice={newMenuPrice}
+          newMenuImage={newMenuImage}
+          handleCreateMenu={handleCreateMenu}
+          handleToggleCreateModal={handleToggleCreateModal}
+          handleChangeNewMenuName={handleChangeNewMenuName}
+          handleChangeNewMenuPrice={handleChangeNewMenuPrice}
+          handleChangeNewMenuImage={handleChangeNewMenuImage}
+        />
       )}
       {updateModalToggle && (
-        <ModalWrapper>
-          <span className="modal-title">메뉴 수정</span>
-          <FormItem
-            label={"이름"}
-            placeholder={"맛있는와플"}
-            content={menuName}
-            handleChangeContent={(e) => setMenuName(e.target.value)}
-          />
-          <FormItem
-            label={"가격"}
-            placeholder={"5,000"}
-            content={menuPrice}
-            handleChangeContent={(e) => setMenuPrice(e.target.value)}
-          />
-          <FormItem
-            label={"상품 이미지"}
-            placeholder={"https://foo.bar/baz.png"}
-            content={menuImage}
-            handleChangeContent={(e) => setMenuImage(e.target.value)}
-          />
-          <div className="button-wrapper">
-            <ButtonNormal
-              text={"저장"}
-              handleClick={handleUpdateMenu}
-              bgColor={"#D3FFC3"}
-            />
-            <ButtonNormal text={"취소"} handleClick={handleToggleUpdateModal} />
-          </div>
-        </ModalWrapper>
+        <ModalUpdateMenu
+          menuName={menuName}
+          menuPrice={menuPrice}
+          menuImage={menuImage}
+          handleUpdateMenu={handleUpdateMenu}
+          handleChangeMenuName={handleChangeMenuName}
+          handleChangeMenuPrice={handleChangeMenuPrice}
+          handleChangeMenuImage={handleChangeMenuImage}
+          handleToggleUpdateModal={handleToggleUpdateModal}
+        />
       )}
       {deleteModalToggle && (
-        <ModalWrapper>
-          <span className="modal-title">메뉴 삭제</span>
-          <span className="modal-announcement">
-            {"정말로 삭제하시겠습니까?"}
-          </span>
-          <div className="button-wrapper">
-            <ButtonNormal
-              text={"삭제"}
-              handleClick={handleDeleteMenu}
-              bgColor={"#FFCFCF"}
-            />
-            <ButtonNormal text={"취소"} handleClick={handleToggleDeleteModal} />
-          </div>
-        </ModalWrapper>
+        <ModalDeleteMenu
+          handleDeleteMenu={handleDeleteMenu}
+          handleToggleDeleteModal={handleToggleDeleteModal}
+        />
       )}
     </>
   );

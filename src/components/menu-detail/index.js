@@ -1,14 +1,16 @@
 import "./menu-detail.css";
-import { numberToCommaString } from "../../utils/numberToCommaString";
+
 import closeIcon from "../../assets/close-icon.svg";
 import updateIcon from "../../assets/update-icon.svg";
 import deleteIcon from "../../assets/delete-icon.svg";
 
+import { numberToCommaString } from "../../utils/numberToCommaString";
+
 const MenuDetail = ({
+  selectedMenu,
   handleCloseDetail,
   handleToggleUpdateModal,
   handleToggleDeleteModal,
-  selectedMenu,
 }) => {
   return (
     <div className="menu-detail-wrapper">
