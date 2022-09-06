@@ -12,10 +12,10 @@ import ModalDeleteMenu from "../components/modal-delete-menu";
 import { dummyArr } from "../data/dummy";
 
 const MenuManagePage = () => {
-  const [nextId, setNextId] = useState(dummyArr.length + 1);
+  const [menuList, setMenuList] = useState(dummyArr);
   const [openDetail, setOpenDetail] = useState(false);
   const [selectedMenu, setSelectedMenu] = useState(null);
-  const [menuList, setMenuList] = useState(dummyArr);
+  const [nextId, setNextId] = useState(dummyArr.length + 1);
 
   const [keyword, setKeyword] = useState("");
   const [searchedMenuList, setSearchedMenuList] = useState(dummyArr);
