@@ -11,6 +11,13 @@ import ModalDeleteMenu from "../components/modal-delete-menu";
 
 import { dummyArr } from "../data/dummy";
 
+import { checkValidName } from "../utils/name";
+import {
+  checkValidPrice,
+  numberToStringNumber,
+  stringNumberToNumber,
+} from "../utils/price";
+
 const MenuManagePage = () => {
   const [menuList, setMenuList] = useState(dummyArr);
   const [openDetail, setOpenDetail] = useState(false);
@@ -37,7 +44,7 @@ const MenuManagePage = () => {
     setOpenDetail(true);
     setSelectedMenu(item);
     setMenuName(item.name);
-    setMenuPrice(item.price);
+    setMenuPrice(numberToStringNumber(item.price));
     setMenuImage(item.image);
   };
 
@@ -83,7 +90,7 @@ const MenuManagePage = () => {
 
     if (!updateModalToggle && selectedMenu) {
       setMenuName(selectedMenu.name);
-      setMenuPrice(selectedMenu.price);
+      setMenuPrice(numberToStringNumber(selectedMenu.price));
       setMenuImage(selectedMenu.image);
     }
   };
@@ -100,7 +107,7 @@ const MenuManagePage = () => {
 
   const handleChangeNewMenuPrice = (e) => {
     e.preventDefault();
-    setNewMenuPrice(e.target.value);
+    setNewMenuPrice(numberToStringNumber(stringNumberToNumber(e.target.value)));
   };
 
   const handleChangeNewMenuImage = (e) => {
@@ -115,7 +122,7 @@ const MenuManagePage = () => {
 
   const handleChangeMenuPrice = (e) => {
     e.preventDefault();
-    setMenuPrice(e.target.value);
+    setMenuPrice(numberToStringNumber(stringNumberToNumber(e.target.value)));
   };
 
   const handleChangeMenuImage = (e) => {
@@ -125,6 +132,22 @@ const MenuManagePage = () => {
 
   // 메뉴 생성, 수정, 삭제 등록 이벤트 핸들러 함수
   const handleCreateMenu = () => {
+    const { isValidName, announcement: nameAnnouncement } = checkValidName(
+      newMenuName,
+      menuList,
+      nextId
+    );
+    const { isValidPrice, announcement: priceAnnouncement } =
+      checkValidPrice(newMenuPrice);
+
+    if (!isValidName) {
+      alert(nameAnnouncement);
+      return;
+    } else if (!isValidPrice) {
+      alert(priceAnnouncement);
+      return;
+    }
+
     const newMenu = {
       id: nextId,
       name: newMenuName,
@@ -146,6 +169,22 @@ const MenuManagePage = () => {
   };
 
   const handleUpdateMenu = () => {
+    const { isValidName, announcement: nameAnnouncement } = checkValidName(
+      menuName,
+      menuList,
+      selectedMenu.id
+    );
+    const { isValidPrice, announcement: priceAnnouncement } =
+      checkValidPrice(menuPrice);
+
+    if (!isValidName) {
+      alert(nameAnnouncement);
+      return;
+    } else if (!isValidPrice) {
+      alert(priceAnnouncement);
+      return;
+    }
+
     const updatedMenu = {
       id: selectedMenu.id,
       name: menuName,
@@ -154,7 +193,7 @@ const MenuManagePage = () => {
     };
 
     const updatedMenuList = menuList.map((item) =>
-      selectedMenu.name === item.name ? updatedMenu : item
+      selectedMenu.id === item.id ? updatedMenu : item
     );
     setMenuList(updatedMenuList);
     setSearchedMenuList(updatedMenuList);
@@ -164,9 +203,7 @@ const MenuManagePage = () => {
   };
 
   const handleDeleteMenu = () => {
-    const newMenuList = menuList.filter(
-      (menu) => menu.name !== selectedMenu.name
-    );
+    const newMenuList = menuList.filter((menu) => menu.id !== selectedMenu.id);
     setMenuList(newMenuList);
     setSearchedMenuList(newMenuList);
 

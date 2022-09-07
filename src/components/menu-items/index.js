@@ -5,9 +5,8 @@ const MenuItems = ({ menuItems, selectedMenu, handleOpenDetail }) => {
     <ul>
       {menuItems &&
         menuItems.map((menuItem) => (
-          // 각 메뉴는 같은 이름을 가질 수 없다. -> key (O)
           <MenuItem
-            key={menuItem.name}
+            key={menuItem.id}
             menuItem={menuItem}
             selectedMenu={selectedMenu}
             handleOpenDetail={handleOpenDetail}

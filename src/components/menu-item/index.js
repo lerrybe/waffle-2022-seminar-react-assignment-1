@@ -1,6 +1,6 @@
 import "./menu-item.css";
 
-import { numberToCommaString } from "../../utils/numberToCommaString";
+import { numberToStringNumber } from "../../utils/price";
 
 const MenuItem = ({ menuItem, selectedMenu, handleOpenDetail }) => {
   const { id, name, price } = menuItem;
@@ -14,7 +14,7 @@ const MenuItem = ({ menuItem, selectedMenu, handleOpenDetail }) => {
     >
       <span className="menu-item-id">{id}</span>
       <span className="menu-item-name">{name}</span>
-      <span className="menu-item-price">{numberToCommaString(price)}</span>
+      <span className="menu-item-price">{numberToStringNumber(price)}</span>
     </li>
   );
 };

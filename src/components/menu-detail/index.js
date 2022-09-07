@@ -4,7 +4,7 @@ import closeIcon from "../../assets/close-icon.svg";
 import updateIcon from "../../assets/update-icon.svg";
 import deleteIcon from "../../assets/delete-icon.svg";
 
-import { numberToCommaString } from "../../utils/numberToCommaString";
+import { numberToStringNumber } from "../../utils/price";
 
 const MenuDetail = ({
   selectedMenu,
@@ -24,7 +24,7 @@ const MenuDetail = ({
         {selectedMenu && selectedMenu.image ? (
           <img
             className="detail-img"
-            alt="detail_img"
+            alt="대표 이미지가 없습니다."
             src={selectedMenu.image}
           />
         ) : (
@@ -34,7 +34,7 @@ const MenuDetail = ({
           <>
             <span className="detail-name">{selectedMenu.name}</span>
             <span className="detail-price">
-              {numberToCommaString(selectedMenu.price)}원
+              {numberToStringNumber(selectedMenu.price)}원
             </span>
           </>
         )}
