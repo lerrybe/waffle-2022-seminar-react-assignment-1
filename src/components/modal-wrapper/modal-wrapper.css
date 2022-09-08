@@ -1,7 +1,7 @@
 @keyframes fadeIn {
   from {
     opacity: 0;
-    transform: translate(-50%, -80%);
+    transform: translate(-50%, -100%);
   }
   to {
     opacity: 1;
@@ -16,7 +16,7 @@
   }
   to {
     opacity: 0;
-    transform: translate(-50%, -80%);
+    transform: translate(-50%, -100%);
   }
 }
 
@@ -38,9 +38,9 @@
 }
 
 .modal-open {
-  animation: fadeIn 0.5s ease-out;
+  animation: fadeIn 0.3s ease-out;
 }
 
 .modal-close {
-  animation: fadeOut 0.5s ease-out;
+  animation: fadeOut 0.3s ease-out;
 }

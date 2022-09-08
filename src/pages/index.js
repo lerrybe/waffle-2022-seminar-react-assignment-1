@@ -31,6 +31,10 @@ const MenuManagePage = () => {
   const [updateModalToggle, setUpdateModalToggle] = useState(false);
   const [deleteModalToggle, setDeleteModalToggle] = useState(false);
 
+  const [createModalAnimation, setCreateModalAnimation] = useState(false);
+  const [updateModalAnimation, setUpdateModalAnimation] = useState(false);
+  const [deleteModalAnimation, setDeleteModalAnimation] = useState(false);
+
   const [menuName, setMenuName] = useState("");
   const [menuPrice, setMenuPrice] = useState("");
   const [menuImage, setMenuImage] = useState("");
@@ -76,10 +80,11 @@ const MenuManagePage = () => {
 
   // 모달 열고 닫는 이벤트 핸들러 함수
   const handleToggleCreateModal = () => {
+    setCreateModalAnimation((prev) => !prev);
     if (createModalToggle) {
       setTimeout(() => {
         setCreateModalToggle((prev) => !prev);
-      }, 500);
+      }, 300);
     } else {
       setCreateModalToggle((prev) => !prev);
       setNewMenuName("");
@@ -89,17 +94,28 @@ const MenuManagePage = () => {
   };
 
   const handleToggleUpdateModal = () => {
-    setUpdateModalToggle((prev) => !prev);
-
+    setUpdateModalAnimation((prev) => !prev);
     if (!updateModalToggle && selectedMenu) {
+      setUpdateModalToggle((prev) => !prev);
       setMenuName(selectedMenu.name);
       setMenuPrice(numberToStringNumber(selectedMenu.price));
       setMenuImage(selectedMenu.image);
+    } else if (updateModalToggle) {
+      setTimeout(() => {
+        setUpdateModalToggle((prev) => !prev);
+      }, 300);
     }
   };
 
   const handleToggleDeleteModal = () => {
-    setDeleteModalToggle((prev) => !prev);
+    setDeleteModalAnimation((prev) => !prev);
+    if (deleteModalToggle) {
+      setTimeout(() => {
+        setDeleteModalToggle((prev) => !prev);
+      }, 300);
+    } else {
+      setDeleteModalToggle((prev) => !prev);
+    }
   };
 
   // 메뉴 입력 텍스트 감지 이벤트 핸들러 함수
@@ -250,7 +266,7 @@ const MenuManagePage = () => {
           newMenuPrice={newMenuPrice}
           newMenuImage={newMenuImage}
           handleCreateMenu={handleCreateMenu}
-          createModalToggle={createModalToggle}
+          createModalToggle={createModalAnimation}
           handleToggleCreateModal={handleToggleCreateModal}
           handleChangeNewMenuName={handleChangeNewMenuName}
           handleChangeNewMenuPrice={handleChangeNewMenuPrice}
@@ -263,7 +279,7 @@ const MenuManagePage = () => {
           menuPrice={menuPrice}
           menuImage={menuImage}
           handleUpdateMenu={handleUpdateMenu}
-          updateModalToggle={updateModalToggle}
+          updateModalToggle={updateModalAnimation}
           handleChangeMenuName={handleChangeMenuName}
           handleChangeMenuPrice={handleChangeMenuPrice}
           handleChangeMenuImage={handleChangeMenuImage}
@@ -273,7 +289,7 @@ const MenuManagePage = () => {
       {deleteModalToggle && (
         <ModalDeleteMenu
           handleDeleteMenu={handleDeleteMenu}
-          deleteModalToggle={deleteModalToggle}
+          deleteModalToggle={deleteModalAnimation}
           handleToggleDeleteModal={handleToggleDeleteModal}
         />
       )}
