@@ -9,13 +9,17 @@ const ModalUpdateMenu = ({
   menuPrice,
   menuImage,
   handleUpdateMenu,
+  updateModalToggle,
   handleChangeMenuName,
   handleChangeMenuPrice,
   handleChangeMenuImage,
   handleToggleUpdateModal,
 }) => {
   return (
-    <ModalWrapper handleCloseModal={handleToggleUpdateModal}>
+    <ModalWrapper
+      open={updateModalToggle}
+      handleCloseModal={handleToggleUpdateModal}
+    >
       <span className="modal-title">{"메뉴 수정"}</span>
       <FormItem
         label={"이름"}

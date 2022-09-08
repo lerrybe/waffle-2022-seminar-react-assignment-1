@@ -9,14 +9,14 @@ import ModalCreateMenu from "../components/modal-create-menu";
 import ModalUpdateMenu from "../components/modal-update-menu";
 import ModalDeleteMenu from "../components/modal-delete-menu";
 
-import { dummyArr } from "../data/dummy";
-
 import { checkValidName } from "../utils/name";
 import {
   checkValidPrice,
   numberToStringNumber,
   stringNumberToNumber,
 } from "../utils/price";
+
+import { dummyArr } from "../data/dummy";
 
 const MenuManagePage = () => {
   const [menuList, setMenuList] = useState(dummyArr);
@@ -76,9 +76,13 @@ const MenuManagePage = () => {
 
   // 모달 열고 닫는 이벤트 핸들러 함수
   const handleToggleCreateModal = () => {
-    setCreateModalToggle((prev) => !prev);
-
-    if (!createModalToggle) {
+    if (createModalToggle) {
+      // setTimeout(() => {
+      //   setCreateModalToggle((prev) => !prev);
+      // }, 500);
+      setCreateModalToggle((prev) => !prev);
+    } else {
+      setCreateModalToggle((prev) => !prev);
       setNewMenuName("");
       setNewMenuPrice("");
       setNewMenuImage("");
@@ -107,7 +111,11 @@ const MenuManagePage = () => {
 
   const handleChangeNewMenuPrice = (e) => {
     e.preventDefault();
-    setNewMenuPrice(numberToStringNumber(stringNumberToNumber(e.target.value)));
+    setNewMenuPrice(
+      numberToStringNumber(
+        stringNumberToNumber(e.target.value.replace(/[^0-9]/g, ""))
+      )
+    );
   };
 
   const handleChangeNewMenuImage = (e) => {
@@ -122,7 +130,11 @@ const MenuManagePage = () => {
 
   const handleChangeMenuPrice = (e) => {
     e.preventDefault();
-    setMenuPrice(numberToStringNumber(stringNumberToNumber(e.target.value)));
+    setMenuPrice(
+      numberToStringNumber(
+        stringNumberToNumber(e.target.value.replace(/[^0-9]/g, ""))
+      )
+    );
   };
 
   const handleChangeMenuImage = (e) => {
@@ -239,6 +251,7 @@ const MenuManagePage = () => {
           newMenuPrice={newMenuPrice}
           newMenuImage={newMenuImage}
           handleCreateMenu={handleCreateMenu}
+          createModalToggle={createModalToggle}
           handleToggleCreateModal={handleToggleCreateModal}
           handleChangeNewMenuName={handleChangeNewMenuName}
           handleChangeNewMenuPrice={handleChangeNewMenuPrice}
@@ -251,6 +264,7 @@ const MenuManagePage = () => {
           menuPrice={menuPrice}
           menuImage={menuImage}
           handleUpdateMenu={handleUpdateMenu}
+          updateModalToggle={updateModalToggle}
           handleChangeMenuName={handleChangeMenuName}
           handleChangeMenuPrice={handleChangeMenuPrice}
           handleChangeMenuImage={handleChangeMenuImage}
@@ -260,6 +274,7 @@ const MenuManagePage = () => {
       {deleteModalToggle && (
         <ModalDeleteMenu
           handleDeleteMenu={handleDeleteMenu}
+          deleteModalToggle={deleteModalToggle}
           handleToggleDeleteModal={handleToggleDeleteModal}
         />
       )}
