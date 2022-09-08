@@ -2,6 +2,7 @@
   display: flex;
   flex-direction: column;
   flex-grow: 1;
+  position: relative;
 }
 
 .menu-content-wrapper {
@@ -11,8 +12,6 @@
 
   border: 1px solid #000000;
   border-radius: 10px;
-
-  position: relative;
   overflow: auto;
 }
 
