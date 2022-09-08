@@ -77,10 +77,9 @@ const MenuManagePage = () => {
   // 모달 열고 닫는 이벤트 핸들러 함수
   const handleToggleCreateModal = () => {
     if (createModalToggle) {
-      // setTimeout(() => {
-      //   setCreateModalToggle((prev) => !prev);
-      // }, 500);
-      setCreateModalToggle((prev) => !prev);
+      setTimeout(() => {
+        setCreateModalToggle((prev) => !prev);
+      }, 500);
     } else {
       setCreateModalToggle((prev) => !prev);
       setNewMenuName("");
