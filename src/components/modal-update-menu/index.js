@@ -5,9 +5,7 @@ import ButtonNormal from "../button-normal";
 import ModalWrapper from "../modal-wrapper";
 
 const ModalUpdateMenu = ({
-  menuName,
-  menuPrice,
-  menuImage,
+  menu,
   handleUpdateMenu,
   updateModalToggle,
   handleChangeMenuName,
@@ -24,19 +22,19 @@ const ModalUpdateMenu = ({
       <FormItem
         label={"이름"}
         placeholder={"맛있는와플"}
-        content={menuName}
+        content={menu && menu.name}
         handleChangeContent={handleChangeMenuName}
       />
       <FormItem
         label={"가격"}
         placeholder={"5,000"}
-        content={menuPrice}
+        content={menu && menu.price}
         handleChangeContent={handleChangeMenuPrice}
       />
       <FormItem
         label={"상품 이미지"}
         placeholder={"https://foo.bar/baz.png"}
-        content={menuImage}
+        content={menu && menu.image}
         handleChangeContent={handleChangeMenuImage}
       />
       <div className="button-wrapper">

@@ -5,9 +5,7 @@ import ButtonNormal from "../button-normal";
 import ModalWrapper from "../modal-wrapper";
 
 const ModalCreateMenu = ({
-  newMenuName,
-  newMenuPrice,
-  newMenuImage,
+  newMenu,
   handleCreateMenu,
   createModalToggle,
   handleToggleCreateModal,
@@ -24,19 +22,19 @@ const ModalCreateMenu = ({
       <FormItem
         label={"이름"}
         placeholder={"맛있는와플"}
-        content={newMenuName}
+        content={newMenu && newMenu.name}
         handleChangeContent={handleChangeNewMenuName}
       />
       <FormItem
         label={"가격"}
         placeholder={"5,000"}
-        content={newMenuPrice}
+        content={newMenu && newMenu.price}
         handleChangeContent={handleChangeNewMenuPrice}
       />
       <FormItem
         label={"상품 이미지"}
         placeholder={"https://foo.bar/baz.png"}
-        content={newMenuImage}
+        content={newMenu && newMenu.image}
         handleChangeContent={handleChangeNewMenuImage}
       />
       <div className="button-wrapper">

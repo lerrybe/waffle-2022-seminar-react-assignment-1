@@ -22,7 +22,6 @@ const MenuManagePage = () => {
   const [menuList, setMenuList] = useState(dummyArr);
   const [openDetail, setOpenDetail] = useState(false);
   const [selectedMenu, setSelectedMenu] = useState(null);
-  const [nextId, setNextId] = useState(dummyArr.length + 1);
 
   const [keyword, setKeyword] = useState("");
   const [searchedMenuList, setSearchedMenuList] = useState(dummyArr);
@@ -32,28 +31,36 @@ const MenuManagePage = () => {
     update: false,
     delete: false,
   });
+  const [modalAnimation, setModalAnimation] = useState({
+    create: false,
+    update: false,
+    delete: false,
+  });
 
-  const [createModalAnimation, setCreateModalAnimation] = useState(false);
-  const [updateModalAnimation, setUpdateModalAnimation] = useState(false);
-  const [deleteModalAnimation, setDeleteModalAnimation] = useState(false);
-
-  const [menuName, setMenuName] = useState("");
-  const [menuPrice, setMenuPrice] = useState("");
-  const [menuImage, setMenuImage] = useState("");
-
-  const [newMenuName, setNewMenuName] = useState("");
-  const [newMenuPrice, setNewMenuPrice] = useState("");
-  const [newMenuImage, setNewMenuImage] = useState("");
+  const [menu, setMenu] = useState({
+    id: selectedMenu ? selectedMenu.id : dummyArr.length + 1,
+    name: "",
+    price: "",
+    image: "",
+  });
+  const [newMenu, setNewMenu] = useState({
+    id: dummyArr.length + 1,
+    name: "",
+    price: "",
+    image: "",
+  });
 
   // 상세보기 open, close 이벤트 핸들러 함수
   const handleOpenDetail = (item) => {
     setOpenDetail(true);
     setSelectedMenu(item);
-    setMenuName(item.name);
-    setMenuPrice(numberToStringNumber(item.price));
-    setMenuImage(item.image);
+    setMenu({
+      id: item.id,
+      name: item.name,
+      price: numberToStringNumber(item.price),
+      image: item.image,
+    });
   };
-
   const handleCloseDetail = () => {
     setOpenDetail(false);
     setSelectedMenu(null);
@@ -75,14 +82,17 @@ const MenuManagePage = () => {
       );
     }
   };
-
   useEffect(() => {
     searchMenu(keyword, menuList);
   }, [keyword, menuList]);
 
-  // 모달 열고 닫는 이벤트 핸들러 함수
+  // 모달 열고 닫는 이벤트 핸들러 함수 (create, update, delete)
   const handleToggleCreateModal = () => {
-    setCreateModalAnimation((prev) => !prev);
+    setModalAnimation({
+      ...modalAnimation,
+      create: !modalAnimation.create,
+    });
+
     const newToggleModal = {
       ...toggleModal,
       create: !toggleModal.create,
@@ -93,32 +103,44 @@ const MenuManagePage = () => {
       }, 300);
     } else {
       setToggleModal(newToggleModal);
-      setNewMenuName("");
-      setNewMenuPrice("");
-      setNewMenuImage("");
+      setNewMenu({
+        ...newMenu,
+        name: "",
+        price: "",
+        image: "",
+      });
     }
   };
-
   const handleToggleUpdateModal = () => {
+    setModalAnimation({
+      ...modalAnimation,
+      update: !modalAnimation.update,
+    });
+
     const newToggleModal = {
       ...toggleModal,
       update: !toggleModal.update,
     };
-    setUpdateModalAnimation((prev) => !prev);
     if (!toggleModal.update && selectedMenu) {
       setToggleModal(newToggleModal);
-      setMenuName(selectedMenu.name);
-      setMenuPrice(numberToStringNumber(selectedMenu.price));
-      setMenuImage(selectedMenu.image);
+      setMenu({
+        id: selectedMenu.id,
+        name: selectedMenu.name,
+        price: numberToStringNumber(selectedMenu.price),
+        image: selectedMenu.image,
+      });
     } else if (toggleModal.update) {
       setTimeout(() => {
         setToggleModal(newToggleModal);
       }, 300);
     }
   };
-
   const handleToggleDeleteModal = () => {
-    setDeleteModalAnimation((prev) => !prev);
+    setModalAnimation({
+      ...modalAnimation,
+      delete: !modalAnimation.delete,
+    });
+
     const newToggleModal = {
       ...toggleModal,
       delete: !toggleModal.delete,
@@ -135,51 +157,61 @@ const MenuManagePage = () => {
   // 메뉴 입력 텍스트 감지 이벤트 핸들러 함수
   const handleChangeNewMenuName = (e) => {
     e.preventDefault();
-    setNewMenuName(e.target.value);
+    setNewMenu({
+      ...newMenu,
+      name: e.target.value,
+    });
   };
-
   const handleChangeNewMenuPrice = (e) => {
     e.preventDefault();
-    setNewMenuPrice(
-      numberToStringNumber(
+    setNewMenu({
+      ...newMenu,
+      price: numberToStringNumber(
         stringNumberToNumber(e.target.value.replace(/[^0-9]/g, ""))
-      )
-    );
+      ),
+    });
   };
-
   const handleChangeNewMenuImage = (e) => {
     e.preventDefault();
-    setNewMenuImage(e.target.value);
+    setNewMenu({
+      ...newMenu,
+      image: e.target.value,
+    });
   };
-
   const handleChangeMenuName = (e) => {
     e.preventDefault();
-    setMenuName(e.target.value);
+    setMenu({
+      ...menu,
+      name: e.target.value,
+    });
   };
-
   const handleChangeMenuPrice = (e) => {
     e.preventDefault();
-    setMenuPrice(
-      numberToStringNumber(
+    setMenu({
+      ...menu,
+      price: numberToStringNumber(
         stringNumberToNumber(e.target.value.replace(/[^0-9]/g, ""))
-      )
-    );
+      ),
+    });
   };
-
   const handleChangeMenuImage = (e) => {
     e.preventDefault();
-    setMenuImage(e.target.value);
+    setMenu({
+      ...menu,
+      image: e.target.value,
+    });
   };
 
   // 메뉴 생성, 수정, 삭제 등록 이벤트 핸들러 함수
   const handleCreateMenu = () => {
     const { isValidName, announcement: nameAnnouncement } = checkValidName(
-      newMenuName,
+      newMenu.name,
       menuList,
-      nextId
+      newMenu.id
     );
-    const { isValidPrice, announcement: priceAnnouncement } =
-      checkValidPrice(newMenuPrice);
+    const { isValidPrice, announcement: priceAnnouncement } = checkValidPrice(
+      newMenu.price
+    );
 
     if (!isValidName) {
       alert(nameAnnouncement);
@@ -189,34 +221,29 @@ const MenuManagePage = () => {
       return;
     }
 
-    const newMenu = {
-      id: nextId,
-      name: newMenuName,
-      price: newMenuPrice,
-      image: newMenuImage,
-    };
     const newMenuList = [...menuList, newMenu];
-
-    setNextId(nextId + 1);
     setMenuList(newMenuList);
     setSearchedMenuList(newMenuList);
 
     handleToggleCreateModal();
     handleOpenDetail(newMenu);
 
-    setNewMenuName("");
-    setNewMenuPrice("");
-    setNewMenuImage("");
+    setNewMenu({
+      id: newMenu.id + 1,
+      name: "",
+      price: "",
+      image: "",
+    });
   };
-
   const handleUpdateMenu = () => {
     const { isValidName, announcement: nameAnnouncement } = checkValidName(
-      menuName,
+      menu.name,
       menuList,
       selectedMenu.id
     );
-    const { isValidPrice, announcement: priceAnnouncement } =
-      checkValidPrice(menuPrice);
+    const { isValidPrice, announcement: priceAnnouncement } = checkValidPrice(
+      menu.price
+    );
 
     if (!isValidName) {
       alert(nameAnnouncement);
@@ -226,23 +253,15 @@ const MenuManagePage = () => {
       return;
     }
 
-    const updatedMenu = {
-      id: selectedMenu.id,
-      name: menuName,
-      price: menuPrice,
-      image: menuImage,
-    };
-
     const updatedMenuList = menuList.map((item) =>
-      selectedMenu.id === item.id ? updatedMenu : item
+      selectedMenu.id === item.id ? menu : item
     );
     setMenuList(updatedMenuList);
     setSearchedMenuList(updatedMenuList);
 
     handleToggleUpdateModal();
-    handleOpenDetail(updatedMenu);
+    handleOpenDetail(menu);
   };
-
   const handleDeleteMenu = () => {
     const newMenuList = menuList.filter((menu) => menu.id !== selectedMenu.id);
     setMenuList(newMenuList);
@@ -276,11 +295,9 @@ const MenuManagePage = () => {
 
       {toggleModal.create && (
         <ModalCreateMenu
-          newMenuName={newMenuName}
-          newMenuPrice={newMenuPrice}
-          newMenuImage={newMenuImage}
+          newMenu={newMenu}
           handleCreateMenu={handleCreateMenu}
-          createModalToggle={createModalAnimation}
+          createModalToggle={modalAnimation.create}
           handleToggleCreateModal={handleToggleCreateModal}
           handleChangeNewMenuName={handleChangeNewMenuName}
           handleChangeNewMenuPrice={handleChangeNewMenuPrice}
@@ -289,11 +306,9 @@ const MenuManagePage = () => {
       )}
       {toggleModal.update && (
         <ModalUpdateMenu
-          menuName={menuName}
-          menuPrice={menuPrice}
-          menuImage={menuImage}
+          menu={menu}
           handleUpdateMenu={handleUpdateMenu}
-          updateModalToggle={updateModalAnimation}
+          updateModalToggle={modalAnimation.update}
           handleChangeMenuName={handleChangeMenuName}
           handleChangeMenuPrice={handleChangeMenuPrice}
           handleChangeMenuImage={handleChangeMenuImage}
@@ -303,7 +318,7 @@ const MenuManagePage = () => {
       {toggleModal.delete && (
         <ModalDeleteMenu
           handleDeleteMenu={handleDeleteMenu}
-          deleteModalToggle={deleteModalAnimation}
+          deleteModalToggle={modalAnimation.delete}
           handleToggleDeleteModal={handleToggleDeleteModal}
         />
       )}
