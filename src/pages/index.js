@@ -50,7 +50,7 @@ const MenuManagePage = () => {
     image: "",
   });
 
-  // 상세보기 open, close 이벤트 핸들러 함수
+  // 1️⃣ 상세보기 open, close 이벤트 핸들러 함수
   const handleOpenDetail = (item) => {
     setOpenDetail(true);
     setSelectedMenu(item);
@@ -66,13 +66,13 @@ const MenuManagePage = () => {
     setSelectedMenu(null);
   };
 
-  // 검색어 변화 감지 이벤트 핸들러 함수
+  // 2️⃣ 검색어 변화 감지 이벤트 핸들러 함수
   const handleChangeKeyword = (e) => {
     e.preventDefault();
     setKeyword(e.target.value);
   };
 
-  // 키워드로 메뉴 찾는 함수
+  // 3️⃣ 키워드로 메뉴 찾는 함수
   const searchMenu = (keyword, menuList) => {
     if (keyword === "") {
       setSearchedMenuList(menuList);
@@ -86,7 +86,7 @@ const MenuManagePage = () => {
     searchMenu(keyword, menuList);
   }, [keyword, menuList]);
 
-  // 모달 열고 닫는 이벤트 핸들러 함수 (create, update, delete)
+  // 4️⃣ 모달 열고 닫는 이벤트 핸들러 함수 (create, update, delete)
   const handleToggleCreateModal = () => {
     setModalAnimation({
       ...modalAnimation,
@@ -154,7 +154,7 @@ const MenuManagePage = () => {
     }
   };
 
-  // 메뉴 입력 텍스트 감지 이벤트 핸들러 함수
+  // 5️⃣ 메뉴 입력 텍스트 감지 이벤트 핸들러 함수
   const handleChangeNewMenuName = (e) => {
     e.preventDefault();
     setNewMenu({
@@ -202,7 +202,7 @@ const MenuManagePage = () => {
     });
   };
 
-  // 메뉴 생성, 수정, 삭제 등록 이벤트 핸들러 함수
+  // 6️⃣ 메뉴 생성, 수정, 삭제 등록 이벤트 핸들러 함수
   const handleCreateMenu = () => {
     const { isValidName, announcement: nameAnnouncement } = checkValidName(
       newMenu.name,
