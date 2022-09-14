@@ -27,9 +27,11 @@ const MenuManagePage = () => {
   const [keyword, setKeyword] = useState("");
   const [searchedMenuList, setSearchedMenuList] = useState(dummyArr);
 
-  const [createModalToggle, setCreateModalToggle] = useState(false);
-  const [updateModalToggle, setUpdateModalToggle] = useState(false);
-  const [deleteModalToggle, setDeleteModalToggle] = useState(false);
+  const [toggleModal, setToggleModal] = useState({
+    create: false,
+    update: false,
+    delete: false,
+  });
 
   const [createModalAnimation, setCreateModalAnimation] = useState(false);
   const [updateModalAnimation, setUpdateModalAnimation] = useState(false);
@@ -81,12 +83,16 @@ const MenuManagePage = () => {
   // 모달 열고 닫는 이벤트 핸들러 함수
   const handleToggleCreateModal = () => {
     setCreateModalAnimation((prev) => !prev);
-    if (createModalToggle) {
+    const newToggleModal = {
+      ...toggleModal,
+      create: !toggleModal.create,
+    };
+    if (toggleModal.create) {
       setTimeout(() => {
-        setCreateModalToggle((prev) => !prev);
+        setToggleModal(newToggleModal);
       }, 300);
     } else {
-      setCreateModalToggle((prev) => !prev);
+      setToggleModal(newToggleModal);
       setNewMenuName("");
       setNewMenuPrice("");
       setNewMenuImage("");
@@ -94,27 +100,35 @@ const MenuManagePage = () => {
   };
 
   const handleToggleUpdateModal = () => {
+    const newToggleModal = {
+      ...toggleModal,
+      update: !toggleModal.update,
+    };
     setUpdateModalAnimation((prev) => !prev);
-    if (!updateModalToggle && selectedMenu) {
-      setUpdateModalToggle((prev) => !prev);
+    if (!toggleModal.update && selectedMenu) {
+      setToggleModal(newToggleModal);
       setMenuName(selectedMenu.name);
       setMenuPrice(numberToStringNumber(selectedMenu.price));
       setMenuImage(selectedMenu.image);
-    } else if (updateModalToggle) {
+    } else if (toggleModal.update) {
       setTimeout(() => {
-        setUpdateModalToggle((prev) => !prev);
+        setToggleModal(newToggleModal);
       }, 300);
     }
   };
 
   const handleToggleDeleteModal = () => {
     setDeleteModalAnimation((prev) => !prev);
-    if (deleteModalToggle) {
+    const newToggleModal = {
+      ...toggleModal,
+      delete: !toggleModal.delete,
+    };
+    if (toggleModal.delete) {
       setTimeout(() => {
-        setDeleteModalToggle((prev) => !prev);
+        setToggleModal(newToggleModal);
       }, 300);
     } else {
-      setDeleteModalToggle((prev) => !prev);
+      setToggleModal(newToggleModal);
     }
   };
 
@@ -260,7 +274,7 @@ const MenuManagePage = () => {
         )}
       </div>
 
-      {createModalToggle && (
+      {toggleModal.create && (
         <ModalCreateMenu
           newMenuName={newMenuName}
           newMenuPrice={newMenuPrice}
@@ -273,7 +287,7 @@ const MenuManagePage = () => {
           handleChangeNewMenuImage={handleChangeNewMenuImage}
         />
       )}
-      {updateModalToggle && (
+      {toggleModal.update && (
         <ModalUpdateMenu
           menuName={menuName}
           menuPrice={menuPrice}
@@ -286,7 +300,7 @@ const MenuManagePage = () => {
           handleToggleUpdateModal={handleToggleUpdateModal}
         />
       )}
-      {deleteModalToggle && (
+      {toggleModal.delete && (
         <ModalDeleteMenu
           handleDeleteMenu={handleDeleteMenu}
           deleteModalToggle={deleteModalAnimation}
