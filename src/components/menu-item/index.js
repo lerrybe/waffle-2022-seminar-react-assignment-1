@@ -6,10 +6,11 @@ const MenuItem = ({ menuItem, selectedMenu, handleOpenDetail }) => {
   const { id, name, price } = menuItem;
   return (
     <li
-      className="menu-item-wrapper"
-      style={{
-        background: selectedMenu === menuItem ? "#ffd2d2" : "#fff",
-      }}
+      className={`menu-item-wrapper ${
+        selectedMenu === menuItem
+          ? "selected-menu-item"
+          : "not-selected-menu-item"
+      }`}
       onClick={() => handleOpenDetail(menuItem)}
     >
       <span className="menu-item-id">{id}</span>
