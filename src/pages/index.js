@@ -26,7 +26,7 @@ const MenuManagePage = () => {
   const [keyword, setKeyword] = useState("");
   const [searchedMenuList, setSearchedMenuList] = useState(dummyArr);
 
-  const [toggleModal, setToggleModal] = useState({
+  const [openedModal, setOpenedModal] = useState({
     create: false,
     update: false,
     delete: false,
@@ -37,13 +37,13 @@ const MenuManagePage = () => {
     delete: false,
   });
 
-  const [menu, setMenu] = useState({
+  const [menuToBeUpdated, setMenuToBeUpdated] = useState({
     id: selectedMenu ? selectedMenu.id : dummyArr.length + 1,
     name: "",
     price: "",
     image: "",
   });
-  const [newMenu, setNewMenu] = useState({
+  const [menuToBeCreated, setMenuToBeCreated] = useState({
     id: dummyArr.length + 1,
     name: "",
     price: "",
@@ -54,7 +54,7 @@ const MenuManagePage = () => {
   const handleOpenDetail = (item) => {
     setOpenDetail(true);
     setSelectedMenu(item);
-    setMenu({
+    setMenuToBeUpdated({
       id: item.id,
       name: item.name,
       price: numberToStringNumber(item.price),
@@ -68,7 +68,6 @@ const MenuManagePage = () => {
 
   // 2️⃣ 검색어 변화 감지 이벤트 핸들러 함수
   const handleChangeKeyword = (e) => {
-    e.preventDefault();
     setKeyword(e.target.value);
   };
 
@@ -93,18 +92,19 @@ const MenuManagePage = () => {
       create: !modalAnimation.create,
     });
 
-    const newToggleModal = {
-      ...toggleModal,
-      create: !toggleModal.create,
+    const newOpenedModal = {
+      ...openedModal,
+      create: !openedModal.create,
     };
-    if (toggleModal.create) {
+    if (openedModal.create) {
+      // 애니메이션 적용을 위해 3초 delay 후 unmount
       setTimeout(() => {
-        setToggleModal(newToggleModal);
+        setOpenedModal(newOpenedModal);
       }, 300);
     } else {
-      setToggleModal(newToggleModal);
-      setNewMenu({
-        ...newMenu,
+      setOpenedModal(newOpenedModal);
+      setMenuToBeCreated({
+        ...menuToBeCreated,
         name: "",
         price: "",
         image: "",
@@ -117,21 +117,22 @@ const MenuManagePage = () => {
       update: !modalAnimation.update,
     });
 
-    const newToggleModal = {
-      ...toggleModal,
-      update: !toggleModal.update,
+    const newOpenedModal = {
+      ...openedModal,
+      update: !openedModal.update,
     };
-    if (!toggleModal.update && selectedMenu) {
-      setToggleModal(newToggleModal);
-      setMenu({
+    if (!openedModal.update && selectedMenu) {
+      setOpenedModal(newOpenedModal);
+      setMenuToBeUpdated({
         id: selectedMenu.id,
         name: selectedMenu.name,
         price: numberToStringNumber(selectedMenu.price),
         image: selectedMenu.image,
       });
-    } else if (toggleModal.update) {
+    } else if (openedModal.update) {
+      // 애니메이션 적용을 위해 3초 delay 후 unmount
       setTimeout(() => {
-        setToggleModal(newToggleModal);
+        setOpenedModal(newOpenedModal);
       }, 300);
     }
   };
@@ -141,63 +142,58 @@ const MenuManagePage = () => {
       delete: !modalAnimation.delete,
     });
 
-    const newToggleModal = {
-      ...toggleModal,
-      delete: !toggleModal.delete,
+    const newOpenedModal = {
+      ...openedModal,
+      delete: !openedModal.delete,
     };
-    if (toggleModal.delete) {
+    if (openedModal.delete) {
+      // 애니메이션 적용을 위해 3초 delay 후 unmount
       setTimeout(() => {
-        setToggleModal(newToggleModal);
+        setOpenedModal(newOpenedModal);
       }, 300);
     } else {
-      setToggleModal(newToggleModal);
+      setOpenedModal(newOpenedModal);
     }
   };
 
   // 5️⃣ 메뉴 입력 텍스트 감지 이벤트 핸들러 함수
   const handleChangeNewMenuName = (e) => {
-    e.preventDefault();
-    setNewMenu({
-      ...newMenu,
+    setMenuToBeCreated({
+      ...menuToBeCreated,
       name: e.target.value,
     });
   };
   const handleChangeNewMenuPrice = (e) => {
-    e.preventDefault();
-    setNewMenu({
-      ...newMenu,
+    setMenuToBeCreated({
+      ...menuToBeCreated,
       price: numberToStringNumber(
         stringNumberToNumber(e.target.value.replace(/[^0-9]/g, ""))
       ),
     });
   };
   const handleChangeNewMenuImage = (e) => {
-    e.preventDefault();
-    setNewMenu({
-      ...newMenu,
+    setMenuToBeCreated({
+      ...menuToBeCreated,
       image: e.target.value,
     });
   };
   const handleChangeMenuName = (e) => {
-    e.preventDefault();
-    setMenu({
-      ...menu,
+    setMenuToBeUpdated({
+      ...menuToBeUpdated,
       name: e.target.value,
     });
   };
   const handleChangeMenuPrice = (e) => {
-    e.preventDefault();
-    setMenu({
-      ...menu,
+    setMenuToBeUpdated({
+      ...menuToBeUpdated,
       price: numberToStringNumber(
         stringNumberToNumber(e.target.value.replace(/[^0-9]/g, ""))
       ),
     });
   };
   const handleChangeMenuImage = (e) => {
-    e.preventDefault();
-    setMenu({
-      ...menu,
+    setMenuToBeUpdated({
+      ...menuToBeUpdated,
       image: e.target.value,
     });
   };
@@ -205,12 +201,12 @@ const MenuManagePage = () => {
   // 6️⃣ 메뉴 생성, 수정, 삭제 등록 이벤트 핸들러 함수
   const handleCreateMenu = () => {
     const { isValidName, announcement: nameAnnouncement } = checkValidName(
-      newMenu.name,
+      menuToBeCreated.name,
       menuList,
-      newMenu.id
+      menuToBeCreated.id
     );
     const { isValidPrice, announcement: priceAnnouncement } = checkValidPrice(
-      newMenu.price
+      menuToBeCreated.price
     );
 
     if (!isValidName) {
@@ -221,15 +217,15 @@ const MenuManagePage = () => {
       return;
     }
 
-    const newMenuList = [...menuList, newMenu];
+    const newMenuList = [...menuList, menuToBeCreated];
     setMenuList(newMenuList);
     setSearchedMenuList(newMenuList);
 
     handleToggleCreateModal();
-    handleOpenDetail(newMenu);
+    handleOpenDetail(menuToBeCreated);
 
-    setNewMenu({
-      id: newMenu.id + 1,
+    setMenuToBeCreated({
+      id: menuToBeCreated.id + 1,
       name: "",
       price: "",
       image: "",
@@ -237,12 +233,12 @@ const MenuManagePage = () => {
   };
   const handleUpdateMenu = () => {
     const { isValidName, announcement: nameAnnouncement } = checkValidName(
-      menu.name,
+      menuToBeUpdated.name,
       menuList,
       selectedMenu.id
     );
     const { isValidPrice, announcement: priceAnnouncement } = checkValidPrice(
-      menu.price
+      menuToBeUpdated.price
     );
 
     if (!isValidName) {
@@ -254,13 +250,13 @@ const MenuManagePage = () => {
     }
 
     const updatedMenuList = menuList.map((item) =>
-      selectedMenu.id === item.id ? menu : item
+      selectedMenu.id === item.id ? menuToBeUpdated : item
     );
     setMenuList(updatedMenuList);
     setSearchedMenuList(updatedMenuList);
 
     handleToggleUpdateModal();
-    handleOpenDetail(menu);
+    handleOpenDetail(menuToBeUpdated);
   };
   const handleDeleteMenu = () => {
     const newMenuList = menuList.filter((menu) => menu.id !== selectedMenu.id);
@@ -293,9 +289,9 @@ const MenuManagePage = () => {
         )}
       </div>
 
-      {toggleModal.create && (
+      {openedModal.create && (
         <ModalCreateMenu
-          newMenu={newMenu}
+          newMenu={menuToBeCreated}
           handleCreateMenu={handleCreateMenu}
           createModalToggle={modalAnimation.create}
           handleToggleCreateModal={handleToggleCreateModal}
@@ -304,9 +300,9 @@ const MenuManagePage = () => {
           handleChangeNewMenuImage={handleChangeNewMenuImage}
         />
       )}
-      {toggleModal.update && (
+      {openedModal.update && (
         <ModalUpdateMenu
-          menu={menu}
+          menu={menuToBeUpdated}
           handleUpdateMenu={handleUpdateMenu}
           updateModalToggle={modalAnimation.update}
           handleChangeMenuName={handleChangeMenuName}
@@ -315,7 +311,7 @@ const MenuManagePage = () => {
           handleToggleUpdateModal={handleToggleUpdateModal}
         />
       )}
-      {toggleModal.delete && (
+      {openedModal.delete && (
         <ModalDeleteMenu
           handleDeleteMenu={handleDeleteMenu}
           deleteModalToggle={modalAnimation.delete}

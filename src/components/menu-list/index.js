@@ -21,21 +21,23 @@ const MenuList = ({
       />
       <div className="menu-content-wrapper">
         <div className="menu-category-wrapper">
-          <span className="menu-category-id">{"ID"}</span>
-          <span className="menu-category-name">{"이름"}</span>
-          <span className="menu-category-price">{"가격"}</span>
+          <span className="menu-category-id">ID</span>
+          <span className="menu-category-name">이름</span>
+          <span className="menu-category-price">가격</span>
         </div>
         <MenuItems
           menuItems={menuItems}
           selectedMenu={selectedMenu}
           handleOpenDetail={handleOpenDetail}
         />
-        <img
-          className="menu-create-icon"
-          src={createIcon}
-          alt="create"
-          onClick={handleToggleCreateModal}
-        />
+        <button>
+          <img
+            className="menu-create-icon"
+            src={createIcon}
+            alt="create"
+            onClick={handleToggleCreateModal}
+          />
+        </button>
       </div>
     </div>
   );

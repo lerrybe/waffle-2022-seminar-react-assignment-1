@@ -13,8 +13,8 @@ const ModalDeleteMenu = ({
       open={deleteModalToggle}
       handleCloseModal={handleToggleDeleteModal}
     >
-      <span className="modal-title">{"메뉴 삭제"}</span>
-      <span className="modal-announcement">{"정말로 삭제하시겠습니까?"}</span>
+      <span className="modal-title">메뉴 삭제</span>
+      <span className="modal-announcement">정말로 삭제하시겠습니까?</span>
       <div className="button-wrapper">
         <ButtonNormal
           text={"삭제"}

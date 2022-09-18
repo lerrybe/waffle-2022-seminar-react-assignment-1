@@ -21,14 +21,14 @@ const MenuDetail = ({
         onClick={handleCloseDetail}
       />
       <div className="menu-detail-content-wrapper">
-        {selectedMenu && selectedMenu.image ? (
+        {selectedMenu?.image ? (
           <img
             className="detail-img"
             alt="대표 이미지가 없습니다."
             src={selectedMenu.image}
           />
         ) : (
-          <div className="detail-img">{"대표 이미지가 없습니다."}</div>
+          <div className="detail-img">대표 이미지가 없습니다.</div>
         )}
         {selectedMenu && (
           <>
@@ -40,18 +40,20 @@ const MenuDetail = ({
         )}
 
         <div className="method-wrapper">
-          <img
-            className="update-icon"
-            alt="update"
-            src={updateIcon}
-            onClick={handleToggleUpdateModal}
-          />
-          <img
-            className="delete-icon"
-            alt="delete"
-            src={deleteIcon}
-            onClick={handleToggleDeleteModal}
-          />
+          <button>
+            <img
+              alt="update"
+              src={updateIcon}
+              onClick={handleToggleUpdateModal}
+            />
+          </button>
+          <button>
+            <img
+              alt="delete"
+              src={deleteIcon}
+              onClick={handleToggleDeleteModal}
+            />
+          </button>
         </div>
       </div>
     </div>

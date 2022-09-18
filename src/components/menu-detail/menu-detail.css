@@ -75,13 +75,6 @@
 
 .method-wrapper {
   display: flex;
-}
-
-.update-icon {
-  margin-right: 6px;
-  cursor: pointer;
-}
-
-.delete-icon {
-  cursor: pointer;
+  justify-content: space-between;
+  width: 42px;
 }

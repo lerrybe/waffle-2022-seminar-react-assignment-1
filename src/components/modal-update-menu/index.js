@@ -18,23 +18,23 @@ const ModalUpdateMenu = ({
       open={updateModalToggle}
       handleCloseModal={handleToggleUpdateModal}
     >
-      <span className="modal-title">{"메뉴 수정"}</span>
+      <span className="modal-title">메뉴 수정</span>
       <FormItem
         label={"이름"}
         placeholder={"맛있는와플"}
-        content={menu && menu.name}
+        content={menu?.name}
         handleChangeContent={handleChangeMenuName}
       />
       <FormItem
         label={"가격"}
         placeholder={"5,000"}
-        content={menu && menu.price}
+        content={menu?.price}
         handleChangeContent={handleChangeMenuPrice}
       />
       <FormItem
         label={"상품 이미지"}
         placeholder={"https://foo.bar/baz.png"}
-        content={menu && menu.image}
+        content={menu?.image}
         handleChangeContent={handleChangeMenuImage}
       />
       <div className="button-wrapper">
