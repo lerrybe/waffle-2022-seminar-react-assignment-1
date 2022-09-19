@@ -1,0 +1,36 @@
+.menu-search-wrapper {
+  width: 487px;
+  height: 54px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+
+  position: relative;
+}
+
+.menu-search-label {
+  width: 64px;
+  font-weight: 400;
+  font-size: 15px;
+  margin-right: 10px;
+}
+
+.menu-search-input {
+  padding: 5px 32px 5px 5px;
+  width: 413px;
+  height: 34px;
+  border: 1px solid #8a8a8a;
+  border-radius: 5px;
+}
+
+.menu-search-icon {
+  width: 18px;
+  height: 18px;
+  position: absolute;
+
+  right: 10px;
+}
+
+.menu-search-icon:hover {
+  cursor: pointer;
+}
