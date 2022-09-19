@@ -1,24 +1,24 @@
 import { useEffect, useState } from "react";
 
-import "./menu-manage-page.css";
+import "./stores-page.css";
 
-import Gnb from "../components/gnb";
-import MenuList from "../components/menu-list";
-import MenuDetail from "../components/menu-detail";
-import ModalCreateMenu from "../components/modal-create-menu";
-import ModalUpdateMenu from "../components/modal-update-menu";
-import ModalDeleteMenu from "../components/modal-delete-menu";
+import Gnb from "../../components/gnb";
+import MenuList from "../../components/menu-list";
+import MenuDetail from "../../components/menu-detail";
+import ModalCreateMenu from "../../components/modal-create-menu";
+import ModalUpdateMenu from "../../components/modal-update-menu";
+import ModalDeleteMenu from "../../components/modal-delete-menu";
 
-import { checkValidName } from "../utils/name";
+import { checkValidName } from "../../utils/name";
 import {
   checkValidPrice,
   numberToStringNumber,
   stringNumberToNumber,
-} from "../utils/price";
+} from "../../utils/price";
 
-import { dummyArr } from "../data/dummy";
+import { dummyArr } from "../../data/dummy";
 
-const MenuManagePage = () => {
+const StoresPage = () => {
   const [menuList, setMenuList] = useState(dummyArr);
   const [openDetail, setOpenDetail] = useState(false);
   const [selectedMenu, setSelectedMenu] = useState(null);
@@ -322,4 +322,4 @@ const MenuManagePage = () => {
   );
 };
 
-export default MenuManagePage;
+export default StoresPage;
