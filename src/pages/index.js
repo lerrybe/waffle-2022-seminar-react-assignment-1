@@ -97,7 +97,7 @@ const MenuManagePage = () => {
       create: !openedModal.create,
     };
     if (openedModal.create) {
-      // 애니메이션 적용을 위해 3초 delay 후 unmount
+      // 애니메이션 적용을 위해 0.3초 delay 후 unmount
       setTimeout(() => {
         setOpenedModal(newOpenedModal);
       }, 300);
@@ -130,7 +130,7 @@ const MenuManagePage = () => {
         image: selectedMenu.image,
       });
     } else if (openedModal.update) {
-      // 애니메이션 적용을 위해 3초 delay 후 unmount
+      // 애니메이션 적용을 위해 0.3초 delay 후 unmount
       setTimeout(() => {
         setOpenedModal(newOpenedModal);
       }, 300);
@@ -147,7 +147,7 @@ const MenuManagePage = () => {
       delete: !openedModal.delete,
     };
     if (openedModal.delete) {
-      // 애니메이션 적용을 위해 3초 delay 후 unmount
+      // 애니메이션 적용을 위해 0.3초 delay 후 unmount
       setTimeout(() => {
         setOpenedModal(newOpenedModal);
       }, 300);
