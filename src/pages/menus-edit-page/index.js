@@ -1,7 +1,13 @@
 import "./menus-edit-page.css";
+import Gnb from "../../components/gnb";
 
 const MenusEditPage = () => {
-  return <div>메뉴 수정 페이지입니다.</div>;
+  return (
+    <>
+      <Gnb />
+      <div>메뉴 수정 화면입니다.</div>
+    </>
+  );
 };
 
 export default MenusEditPage;

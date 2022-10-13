@@ -1,4 +1,6 @@
 import "./home-page.css";
+import Gnb from "../../components/gnb";
+
 import { useSessionContext } from "../../context/SessionContext";
 import { useMenuDataContext } from "../../context/MenuDataContext";
 
@@ -10,7 +12,12 @@ const HomePage = () => {
   console.log("userPassword", userPassword);
   console.log("menus", menus);
 
-  return <div>홈 화면입니다.</div>;
+  return (
+    <>
+      <Gnb />
+      <div>홈화면입니다.</div>
+    </>
+  );
 };
 
 export default HomePage;

@@ -1,7 +1,13 @@
 import "./login-page.css";
+import Gnb from "../../components/gnb";
 
 const LoginPage = () => {
-  return <div>로그인 페이지입니다.</div>;
+  return (
+    <>
+      <Gnb />
+      <div>로그인 화면입니다.</div>
+    </>
+  );
 };
 
 export default LoginPage;
