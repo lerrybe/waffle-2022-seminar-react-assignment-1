@@ -6,23 +6,49 @@ import updateIcon from "../../assets/update-icon.svg";
 import deleteIcon from "../../assets/delete-icon.svg";
 import arrowBackIcon from "../../assets/arrow-back-icon.svg";
 
+import ModalDeleteMenu from "../modal-delete-menu";
+
 import { convertTypeEnToKo } from "../../utils/menu/type";
 import { numberToStringNumber } from "../../utils/menu/price";
 
+import {
+  useMenuDataContext,
+  useMenuDataActionsContext,
+} from "../../context/MenuDataContext";
 import { useSessionContext } from "../../context/SessionContext";
 
 const MenuDetail = () => {
   const navigate = useNavigate();
   const { isLoggedIn } = useSessionContext();
+  const { menus, selectedMenu: menu } = useMenuDataContext();
+  const { dispatchMenus, dispatchSelectedMenu, dispatchSearchedMenus } =
+    useMenuDataActionsContext();
 
-  const [menu] = useState({
-    id: 1,
-    name: "초코와플",
-    price: 7000,
-    image: "",
-    type: "waffle",
-    description: "이 와플에는 슬픈 전설이 있습니다.",
-  });
+  const [isModalOpened, setIsModalOpened] = useState(false);
+  const [modalAnimation, setModalAnimation] = useState(false);
+
+  const handleToggleDeleteModal = () => {
+    setModalAnimation((prev) => !prev);
+
+    if (modalAnimation) {
+      // DESC: 모달 unmount시 애니메이션 적용을 위해 0.3초 delay 후 unmount
+      setTimeout(() => {
+        setIsModalOpened((prev) => !prev);
+      }, 300);
+    } else {
+      setIsModalOpened((prev) => !prev);
+    }
+  };
+
+  const handleDeleteMenu = () => {
+    const newMenus = menus.filter((targetMenu) => targetMenu.id !== menu.id);
+    dispatchMenus(newMenus);
+    dispatchSelectedMenu(null);
+    dispatchSearchedMenus(newMenus);
+
+    handleToggleDeleteModal();
+    navigate("/stores/1");
+  };
 
   return (
     <div className="menu-info-outer-wrapper">
@@ -57,17 +83,22 @@ const MenuDetail = () => {
           <div className="interaction-wrapper">
             <button
               className="icon-wrapper"
-              onClick={() => console.log("수정하기")}
+              onClick={() => navigate(`/menus/${menu.id}/edit`)}
             >
               <img alt="update" src={updateIcon} />
             </button>
-            <button
-              className="icon-wrapper"
-              onClick={() => console.log("삭제하기")}
-            >
+            <button className="icon-wrapper" onClick={handleToggleDeleteModal}>
               <img alt="delete" src={deleteIcon} />
             </button>
           </div>
+        )}
+
+        {isModalOpened && (
+          <ModalDeleteMenu
+            deleteModalToggle={modalAnimation}
+            handleDeleteMenu={handleDeleteMenu}
+            handleToggleDeleteModal={handleToggleDeleteModal}
+          />
         )}
       </div>
     </div>
