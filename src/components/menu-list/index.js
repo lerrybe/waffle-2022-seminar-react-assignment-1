@@ -26,7 +26,7 @@ const MenuList = ({ keyword, handleOpenOverview, handleChangeKeyword }) => {
           <span className="menu-category-type">종류</span>
           <span className="menu-category-price">가격</span>
         </div>
-        <MenuItems handleOpenDetail={handleOpenOverview} />
+        <MenuItems handleOpenOverview={handleOpenOverview} />
         {isLoggedIn && (
           <button onClick={() => navigate("/menus/new")}>
             <img className="menu-create-icon" src={createIcon} alt="create" />

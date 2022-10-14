@@ -3,7 +3,7 @@ import "./menu-item.css";
 import { convertTypeEnToKo } from "../../utils/menu/type";
 import { numberToStringNumber } from "../../utils/menu/price";
 
-const MenuItem = ({ menuItem, selectedMenu, handleOpenDetail }) => {
+const MenuItem = ({ menuItem, selectedMenu, handleOpenOverview }) => {
   const { id, name, type, price } = menuItem;
 
   return (
@@ -13,7 +13,7 @@ const MenuItem = ({ menuItem, selectedMenu, handleOpenDetail }) => {
           ? "selected-menu-item"
           : "not-selected-menu-item"
       }`}
-      onClick={() => handleOpenDetail(menuItem)}
+      onClick={() => handleOpenOverview(menuItem)}
     >
       <span className="menu-item-id">{id}</span>
       <span className="menu-item-name">{name}</span>
