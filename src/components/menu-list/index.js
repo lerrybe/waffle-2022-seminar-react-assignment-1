@@ -1,7 +1,7 @@
 import "./menu-list.css";
 
 import MenuItems from "../menu-items";
-import MenuSearchBar from "../menu-search-bar";
+import SearchBar from "../search-bar";
 
 import createIcon from "../../assets/create-icon.svg";
 
@@ -15,8 +15,9 @@ const MenuList = ({
 }) => {
   return (
     <div className="menu-outer-wrapper">
-      <MenuSearchBar
+      <SearchBar
         keyword={keyword}
+        label={"메뉴 이름 검색: "}
         handleChangeKeyword={handleChangeKeyword}
       />
       <div className="menu-content-wrapper">
