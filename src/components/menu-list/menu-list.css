@@ -39,7 +39,19 @@
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  min-width: 340px;
+  min-width: 180px;
+  margin-left: 15px;
+
+  font-weight: 700;
+  font-size: 15px;
+  line-height: 18px;
+}
+
+.menu-category-type {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  min-width: 140px;
   margin-left: 15px;
 
   font-weight: 700;

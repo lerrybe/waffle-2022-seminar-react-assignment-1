@@ -4,6 +4,7 @@ import MenuItems from "../menu-items";
 import SearchBar from "../search-bar";
 
 import createIcon from "../../assets/create-icon.svg";
+import { useSessionContext } from "../../context/SessionContext";
 
 const MenuList = ({
   keyword,
@@ -13,6 +14,8 @@ const MenuList = ({
   handleChangeKeyword,
   handleToggleCreateModal,
 }) => {
+  const { isLoggedIn } = useSessionContext();
+
   return (
     <div className="menu-outer-wrapper">
       <SearchBar
@@ -24,6 +27,7 @@ const MenuList = ({
         <div className="menu-category-wrapper">
           <span className="menu-category-id">ID</span>
           <span className="menu-category-name">이름</span>
+          <span className="menu-category-type">종류</span>
           <span className="menu-category-price">가격</span>
         </div>
         <MenuItems
@@ -31,14 +35,16 @@ const MenuList = ({
           selectedMenu={selectedMenu}
           handleOpenDetail={handleOpenDetail}
         />
-        <button>
-          <img
-            className="menu-create-icon"
-            src={createIcon}
-            alt="create"
-            onClick={handleToggleCreateModal}
-          />
-        </button>
+        {isLoggedIn && (
+          <button>
+            <img
+              className="menu-create-icon"
+              src={createIcon}
+              alt="create"
+              onClick={handleToggleCreateModal}
+            />
+          </button>
+        )}
       </div>
     </div>
   );

@@ -4,27 +4,27 @@ import "./stores-page.css";
 
 import Gnb from "../../components/gnb";
 import MenuList from "../../components/menu-list";
-import MenuDetail from "../../components/menu-detail";
+import MenuOverview from "../../components/menu-overview";
 import ModalCreateMenu from "../../components/modal-create-menu";
 import ModalUpdateMenu from "../../components/modal-update-menu";
 import ModalDeleteMenu from "../../components/modal-delete-menu";
 
-import { checkValidName } from "../../utils/name";
+import { checkValidName } from "../../utils/menu/name";
 import {
   checkValidPrice,
   numberToStringNumber,
   stringNumberToNumber,
-} from "../../utils/price";
+} from "../../utils/menu/price";
 
-import { dummyArr } from "../../data/dummy";
+import { initialMenus } from "../../data/initialStates";
 
 const StoresPage = () => {
-  const [menuList, setMenuList] = useState(dummyArr);
+  const [menuList, setMenuList] = useState(initialMenus);
   const [openDetail, setOpenDetail] = useState(false);
   const [selectedMenu, setSelectedMenu] = useState(null);
 
   const [keyword, setKeyword] = useState("");
-  const [searchedMenuList, setSearchedMenuList] = useState(dummyArr);
+  const [searchedMenuList, setSearchedMenuList] = useState(initialMenus);
 
   const [openedModal, setOpenedModal] = useState({
     create: false,
@@ -38,13 +38,13 @@ const StoresPage = () => {
   });
 
   const [menuToBeUpdated, setMenuToBeUpdated] = useState({
-    id: selectedMenu ? selectedMenu.id : dummyArr.length + 1,
+    id: selectedMenu ? selectedMenu.id : initialMenus.length + 1,
     name: "",
     price: "",
     image: "",
   });
   const [menuToBeCreated, setMenuToBeCreated] = useState({
-    id: dummyArr.length + 1,
+    id: initialMenus.length + 1,
     name: "",
     price: "",
     image: "",
@@ -61,7 +61,7 @@ const StoresPage = () => {
       image: item.image,
     });
   };
-  const handleCloseDetail = () => {
+  const handleCloseOverview = () => {
     setOpenDetail(false);
     setSelectedMenu(null);
   };
@@ -263,7 +263,7 @@ const StoresPage = () => {
     setMenuList(newMenuList);
     setSearchedMenuList(newMenuList);
 
-    handleCloseDetail();
+    handleCloseOverview();
     handleToggleDeleteModal();
   };
 
@@ -280,9 +280,9 @@ const StoresPage = () => {
           handleToggleCreateModal={handleToggleCreateModal}
         />
         {openDetail && (
-          <MenuDetail
+          <MenuOverview
             selectedMenu={selectedMenu}
-            handleCloseDetail={handleCloseDetail}
+            handleCloseOverview={handleCloseOverview}
             handleToggleUpdateModal={handleToggleUpdateModal}
             handleToggleDeleteModal={handleToggleDeleteModal}
           />
