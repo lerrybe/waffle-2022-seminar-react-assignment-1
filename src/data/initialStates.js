@@ -1,6 +1,6 @@
 export const initialUserInfo = {
+  isLoggedIn: null,
   userId: null,
-  userPassword: null,
 };
 
 export const initialMenus = [
