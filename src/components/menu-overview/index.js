@@ -7,7 +7,6 @@ import closeIcon from "../../assets/close-icon.svg";
 import ButtonNormal from "../button-normal";
 
 import { convertTypeEnToKo } from "../../utils/menu/type";
-import { numberToStringNumber } from "../../utils/menu/price";
 import { useMenuDataContext } from "../../context/MenuDataContext";
 
 const MenuOverview = ({ handleCloseOverview }) => {
@@ -38,9 +37,7 @@ const MenuOverview = ({ handleCloseOverview }) => {
             <span className="overview-type">
               {convertTypeEnToKo(selectedMenu.type)}
             </span>
-            <span className="overview-price">
-              {numberToStringNumber(selectedMenu.price)}원
-            </span>
+            <span className="overview-price">{selectedMenu.price}원</span>
           </>
         )}
 

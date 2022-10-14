@@ -3,7 +3,7 @@ import { Navigate } from "react-router-dom";
 
 const ErrorPage = () => {
   useEffect(() => {
-    alert("잘못된 접근입니다.");
+    alert("올바르지 않은 주소입니다.");
   }, []);
 
   return <Navigate to={-1} />;

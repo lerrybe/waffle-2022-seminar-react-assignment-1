@@ -1,6 +1,6 @@
 const checkHangeulName = (name) => {
   const regex = /^[ㄱ-ㅎ|가-힣]+$/;
-  return regex.test(name);
+  return regex.test(name.replace(/(\s*)/g, ""));
 };
 
 const checkUniqueName = (name, list, selectedId) => {

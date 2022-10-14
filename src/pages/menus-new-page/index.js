@@ -1,11 +1,15 @@
 import "./menus-new-page.css";
+
 import Gnb from "../../components/gnb";
+import MenuNew from "../../components/menu-new";
 
 const MenusNewPage = () => {
   return (
     <>
       <Gnb />
-      <div>메뉴 생성 화면입니다.</div>
+      <div className="menus-new-page-wrapper">
+        <MenuNew />
+      </div>
     </>
   );
 };

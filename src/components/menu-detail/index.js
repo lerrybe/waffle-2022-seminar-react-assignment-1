@@ -9,7 +9,6 @@ import arrowBackIcon from "../../assets/arrow-back-icon.svg";
 import ModalDeleteMenu from "../modal-delete-menu";
 
 import { convertTypeEnToKo } from "../../utils/menu/type";
-import { numberToStringNumber } from "../../utils/menu/price";
 
 import {
   useMenuDataContext,
@@ -53,7 +52,10 @@ const MenuDetail = () => {
   return (
     <div className="menu-info-outer-wrapper">
       <div className="go-back-stores-wrapper">
-        <button className="go-back-stores-button" onClick={() => navigate(-1)}>
+        <button
+          className="go-back-stores-button"
+          onClick={() => navigate("/stores/1")}
+        >
           <img alt="goback" src={arrowBackIcon} />
           메뉴 목록
         </button>
@@ -72,9 +74,7 @@ const MenuDetail = () => {
           <>
             <span className="detail-name">{menu.name}</span>
             <span className="detail-type">{convertTypeEnToKo(menu.type)}</span>
-            <span className="detail-price">
-              {numberToStringNumber(menu.price)}원
-            </span>
+            <span className="detail-price">{menu.price}원</span>
             <span className="detail-description">{menu.description}</span>
           </>
         )}

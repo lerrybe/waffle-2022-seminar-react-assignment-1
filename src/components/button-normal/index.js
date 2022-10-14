@@ -1,10 +1,11 @@
 import "./button-normal.css";
 
-const ButtonNormal = ({ text, handleClick, bgColor }) => {
+const ButtonNormal = ({ type, text, handleClick, bgColor }) => {
   return (
     <button
-      className="button-normal"
       onClick={handleClick}
+      type={type || "button"}
+      className="button-normal"
       style={{ backgroundColor: bgColor ? bgColor : "#fff" }}
     >
       {text}

@@ -1,13 +1,15 @@
 export const numberToStringNumber = (number) => {
-  return number.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+  return Number(number)
+    .toString()
+    .replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
 };
 
 export const stringNumberToNumber = (stringNumber) => {
-  return Number(stringNumber.replace(/,/g, ""));
+  return Number(String(stringNumber).replace(/,/g, ""));
 };
 
 export const checkValidPrice = (string) => {
-  const price = stringNumberToNumber(string);
+  const price = stringNumberToNumber(String(string));
   if (!string.trim()) {
     return {
       isValidPrice: false,
