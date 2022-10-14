@@ -1,11 +1,17 @@
 import "./menus-detail-page.css";
+
 import Gnb from "../../components/gnb";
+import MenuDetail from "../../components/menu-detail";
+import MenuReview from "../../components/menu-review";
 
 const MenusDetailPage = () => {
   return (
     <>
       <Gnb />
-      <div>메뉴 세부정보 화면입니다.</div>
+      <div className="menu-detail-wrapper">
+        <MenuDetail />
+        <MenuReview />
+      </div>
     </>
   );
 };
