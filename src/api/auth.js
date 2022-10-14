@@ -9,15 +9,14 @@ export const login = (id, password) => {
     // localStorage에 로그인 상태 및 userId 저장
     saveItem("isLoggedIn", true);
     saveItem("userId", id);
-    window.location.href = "/";
+    return true;
   } else {
     // TODO: 로그인 실패 시 처리 로직
     alert("로그인에 실패하였습니다.");
-    return;
+    return false;
   }
 };
 
 export const logout = () => {
   clearAll();
-  window.location.reload();
 };

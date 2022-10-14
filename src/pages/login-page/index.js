@@ -1,4 +1,5 @@
 import { useCallback, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import "./login-page.css";
 
@@ -6,8 +7,11 @@ import Gnb from "../../components/gnb";
 import FormItem from "../../components/form-item";
 
 import { login } from "../../api/auth";
+import { useSessionActionsContext } from "../../context/SessionContext";
 
 const LoginPage = () => {
+  const navigate = useNavigate();
+  const { dispatchUserId, dispatchIsLoggedIn } = useSessionActionsContext();
   const [formData, setFormData] = useState({
     id: "",
     password: "",
@@ -30,9 +34,13 @@ const LoginPage = () => {
       e.preventDefault();
 
       const { id, password } = formData;
-      login(id, password);
+      if (login(id, password)) {
+        dispatchUserId(id);
+        dispatchIsLoggedIn(true);
+        navigate(-1);
+      }
     },
-    [formData]
+    [dispatchIsLoggedIn, dispatchUserId, formData, navigate]
   );
 
   return (

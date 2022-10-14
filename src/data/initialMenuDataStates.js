@@ -24,7 +24,7 @@ export const initialMenus = [
     image:
       "https://upload.wikimedia.org/wikipedia/commons/1/15/Blueberries.jpg",
     type: "beverage",
-    description: "",
+    description: "이 스무디에는 슬픈 전설이 있습니다.",
   },
   {
     id: 4,
@@ -61,7 +61,7 @@ export const initialSearchedMenus = [
     image:
       "https://upload.wikimedia.org/wikipedia/commons/1/15/Blueberries.jpg",
     type: "beverage",
-    description: "",
+    description: "이 스무디에는 슬픈 전설이 있습니다.",
   },
   {
     id: 4,
