@@ -1,19 +1,15 @@
+import { useNavigate } from "react-router-dom";
+
 import "./menu-list.css";
+import createIcon from "../../assets/create-icon.svg";
 
 import MenuItems from "../menu-items";
 import SearchBar from "../search-bar";
 
-import createIcon from "../../assets/create-icon.svg";
 import { useSessionContext } from "../../context/SessionContext";
 
-const MenuList = ({
-  keyword,
-  menuItems,
-  selectedMenu,
-  handleOpenDetail,
-  handleChangeKeyword,
-  handleToggleCreateModal,
-}) => {
+const MenuList = ({ keyword, handleOpenOverview, handleChangeKeyword }) => {
+  const navigate = useNavigate();
   const { isLoggedIn } = useSessionContext();
 
   return (
@@ -30,19 +26,10 @@ const MenuList = ({
           <span className="menu-category-type">종류</span>
           <span className="menu-category-price">가격</span>
         </div>
-        <MenuItems
-          menuItems={menuItems}
-          selectedMenu={selectedMenu}
-          handleOpenDetail={handleOpenDetail}
-        />
+        <MenuItems handleOpenDetail={handleOpenOverview} />
         {isLoggedIn && (
-          <button>
-            <img
-              className="menu-create-icon"
-              src={createIcon}
-              alt="create"
-              onClick={handleToggleCreateModal}
-            />
+          <button onClick={() => navigate("/menus/new")}>
+            <img className="menu-create-icon" src={createIcon} alt="create" />
           </button>
         )}
       </div>

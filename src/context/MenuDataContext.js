@@ -1,17 +1,47 @@
-import { createContext, useContext, useState } from "react";
-import { initialMenus } from "../data/initialStates";
+import { createContext, useContext, useMemo, useState } from "react";
+import {
+  initialMenus,
+  initialSelectedMenu,
+  initialSearchedMenus,
+  initialMenuDataActions,
+} from "../data/initialMenuDataStates";
 
-const MenuDataContext = createContext(initialMenus);
+const MenuDataContext = createContext({
+  initialMenus,
+  initialSelectedMenu,
+  initialSearchedMenus,
+});
+const MenuDataActionsContext = createContext(initialMenuDataActions);
 
 const MenuDataProvider = ({ children }) => {
-  const [menus] = useState(initialMenus);
+  const [menus, setMenus] = useState(initialMenus);
+  const [selectedMenu, setSelectedMenu] = useState(initialSelectedMenu);
+  const [searchedMenus, setSearchedMenus] = useState(initialSearchedMenus);
+  const actions = useMemo(
+    () => ({
+      dispatchMenus(menus) {
+        setMenus(menus);
+      },
+      dispatchSelectedMenu(menu) {
+        setSelectedMenu(menu);
+      },
+      dispatchSearchedMenus(menus) {
+        setSearchedMenus(menus);
+      },
+    }),
+    []
+  );
 
   return (
-    <MenuDataContext.Provider value={menus}>
-      {children}
-    </MenuDataContext.Provider>
+    <MenuDataActionsContext.Provider value={actions}>
+      <MenuDataContext.Provider value={{ menus, selectedMenu, searchedMenus }}>
+        {children}
+      </MenuDataContext.Provider>
+    </MenuDataActionsContext.Provider>
   );
 };
 export const useMenuDataContext = () => useContext(MenuDataContext);
+export const useMenuDataActionsContext = () =>
+  useContext(MenuDataActionsContext);
 
 export default MenuDataProvider;

@@ -8,9 +8,11 @@ import ButtonNormal from "../button-normal";
 
 import { convertTypeEnToKo } from "../../utils/menu/type";
 import { numberToStringNumber } from "../../utils/menu/price";
+import { useMenuDataContext } from "../../context/MenuDataContext";
 
-const MenuOverview = ({ selectedMenu, handleCloseOverview }) => {
+const MenuOverview = ({ handleCloseOverview }) => {
   const navigate = useNavigate();
+  const { selectedMenu } = useMenuDataContext();
 
   return (
     <div className="menu-overview-wrapper">

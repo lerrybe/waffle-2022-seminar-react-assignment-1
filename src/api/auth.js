@@ -6,8 +6,6 @@ export const login = (id, password) => {
   if (checkValidId(id) && checkValidPassword(password)) {
     alert(`${id}님, 환영합니다!`);
 
-    // TODO: context API에 저장
-
     // localStorage에 로그인 상태 및 userId 저장
     saveItem("isLoggedIn", true);
     saveItem("userId", id);
