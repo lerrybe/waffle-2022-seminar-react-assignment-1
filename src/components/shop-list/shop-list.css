@@ -1,0 +1,16 @@
+.shop-outer-wrapper {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  position: relative;
+}
+
+.shop-content-wrapper {
+  flex-grow: 1;
+  height: calc(100vh - 174px);
+  padding: 0px 10px;
+
+  border: 1px solid #000000;
+  border-radius: 10px;
+  overflow: auto;
+}
