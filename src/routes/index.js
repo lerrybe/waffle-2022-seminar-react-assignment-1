@@ -1,6 +1,7 @@
-import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 import HomePage from "../pages/home-page";
+import ErrorPage from "../pages/error-page";
 import LoginPage from "../pages/login-page";
 import StoresPage from "../pages/stores-page";
 import MenusNewPage from "../pages/menus-new-page";
@@ -18,7 +19,7 @@ const EntryRoute = () => {
         <Route path="/menus/new" element={<MenusNewPage />} />
         <Route path="/menus/:menuId/edit" element={<MenusEditPage />} />
         <Route path="/login" element={<LoginPage />} />
-        <Route path="/*" element={<Navigate to={"/"} />} />
+        <Route path="/*" element={<ErrorPage />} />
       </Routes>
     </BrowserRouter>
   );
