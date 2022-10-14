@@ -15,7 +15,7 @@ const StoresPage = () => {
   const [keyword, setKeyword] = useState("");
   const [openDetail, setOpenDetail] = useState(false);
 
-  const { menus } = useMenuDataContext();
+  const { menus, selectedMenu } = useMenuDataContext();
   const { dispatchSelectedMenu, dispatchSearchedMenus } =
     useMenuDataActionsContext();
 
@@ -52,6 +52,10 @@ const StoresPage = () => {
   useEffect(() => {
     searchMenu(keyword, menus);
   }, [keyword, menus]);
+
+  useEffect(() => {
+    if (selectedMenu) setOpenDetail(true);
+  }, [selectedMenu]);
 
   return (
     <>
