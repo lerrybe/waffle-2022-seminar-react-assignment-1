@@ -15,6 +15,7 @@ const MenusDetailPage = () => {
   const { menus } = useMenuDataContext();
 
   useEffect(() => {
+    // DESC: menuId에 해당하는 메뉴가 존재하지 않는 경우
     if (!isValidMenuParams(menuId, menus)) {
       alert("유효하지 않은 메뉴 아이디입니다.");
       return;

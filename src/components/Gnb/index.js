@@ -12,12 +12,13 @@ import {
   useSessionActionsContext,
 } from "../../context/SessionContext";
 
-// global navbar
+// DESC: global navbar
 const Gnb = () => {
   const navigate = useNavigate();
   const { isLoggedIn, userId } = useSessionContext();
   const { dispatchUserId, dispatchIsLoggedIn } = useSessionActionsContext();
 
+  // DESC: 로그아웃, context 비워주기
   const handleLogout = useCallback(() => {
     logout();
     dispatchUserId(null);

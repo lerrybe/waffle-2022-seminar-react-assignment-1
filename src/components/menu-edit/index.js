@@ -32,6 +32,7 @@ const MenuEdit = () => {
     description: selectedMenu?.description,
   });
 
+  // DESC: formData 변화 감지, price는 기본적으로 number로 관리
   const handleChangeFormData = useCallback(
     (e) => {
       const target = {
@@ -51,7 +52,8 @@ const MenuEdit = () => {
     [formData]
   );
 
-  const handleSubmit = () => {
+  // DESC: 메뉴 수정 저장하기
+  const handleSubmit = useCallback(() => {
     const { isValidPrice, announcement } = checkValidPrice(formData.price);
 
     if (!isValidPrice) {
@@ -64,8 +66,17 @@ const MenuEdit = () => {
     dispatchMenus(updatedMenu);
     dispatchSelectedMenu(formData);
     dispatchSearchedMenus(updatedMenu);
+    // DESC: 수정한 메뉴 상세보기로 이동
     navigate(`/menus/${formData?.id}`);
-  };
+  }, [
+    dispatchMenus,
+    dispatchSearchedMenus,
+    dispatchSelectedMenu,
+    formData,
+    menus,
+    navigate,
+    selectedMenu.id,
+  ]);
 
   return (
     <>

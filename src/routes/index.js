@@ -8,7 +8,7 @@ import MenusNewPage from "../pages/menus-new-page";
 import MenusEditPage from "../pages/menus-edit-page";
 import MenusDetailPage from "../pages/menus-detail-page";
 
-// 라우팅 관리를 위한 EntryRoute, 기존 App을 대체
+// DESC: 라우팅 관리를 위한 EntryRoute, 기존 App을 대체
 const EntryRoute = () => {
   return (
     <BrowserRouter>

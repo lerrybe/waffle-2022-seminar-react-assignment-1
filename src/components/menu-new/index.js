@@ -32,6 +32,7 @@ const MenusNewPage = () => {
     description: "",
   });
 
+  // DESC: formData 변화 감지, price는 기본적으로 number로 관리
   const handleChangeFormData = useCallback(
     (e) => {
       const target = {
@@ -51,7 +52,8 @@ const MenusNewPage = () => {
     [formData]
   );
 
-  const handleSubmit = () => {
+  // DESC: 메뉴 추가 등록하기
+  const handleSubmit = useCallback(() => {
     const { isValidName, announcement: nameAnnouncement } = checkValidName(
       formData.name,
       menus,
@@ -73,8 +75,16 @@ const MenusNewPage = () => {
     dispatchMenus(newmenus);
     dispatchSelectedMenu(formData);
     dispatchSearchedMenus(newmenus);
+    // DESC: 생성한 메뉴 상세보기로 이동
     navigate(`/menus/${formData?.id}`);
-  };
+  }, [
+    dispatchMenus,
+    dispatchSearchedMenus,
+    dispatchSelectedMenu,
+    formData,
+    menus,
+    navigate,
+  ]);
 
   return (
     <>
