@@ -86,7 +86,7 @@ const MenuDetail = () => {
           <div className="interaction-wrapper">
             <button
               className="icon-wrapper"
-              onClick={() => navigate(`/menus/${menu.id}/edit`)}
+              onClick={() => navigate(`/menus/${menu?.id}/edit`)}
             >
               <img alt="update" src={updateIcon} />
             </button>

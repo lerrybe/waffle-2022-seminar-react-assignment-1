@@ -1,5 +1,5 @@
-import { useCallback, useEffect, useState } from "react";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useCallback, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import "./menu-edit.css";
 
@@ -16,11 +16,9 @@ import {
   useMenuDataContext,
   useMenuDataActionsContext,
 } from "../../context/MenuDataContext";
-import { useSessionContext } from "../../context/SessionContext";
 
 const MenuEdit = () => {
   const navigate = useNavigate();
-  const { isLoggedIn } = useSessionContext();
   const { menus, selectedMenu } = useMenuDataContext();
   const { dispatchMenus, dispatchSelectedMenu, dispatchSearchedMenus } =
     useMenuDataActionsContext();
@@ -66,84 +64,67 @@ const MenuEdit = () => {
     dispatchMenus(updatedMenu);
     dispatchSelectedMenu(formData);
     dispatchSearchedMenus(updatedMenu);
-    navigate(`/menus/${formData.id}`);
+    navigate(`/menus/${formData?.id}`);
   };
-
-  console.log("formData", formData);
-
-  useEffect(() => {
-    if (!isLoggedIn) {
-      alert("접근할 수 없습니다.");
-      return;
-    }
-  }, [isLoggedIn]);
 
   return (
     <>
-      {!isLoggedIn ? (
-        <Navigate to={-1} />
-      ) : (
-        <>
-          <div className="menu-edit-wrapper">
-            <h1 className="menu-edit-header">메뉴 수정</h1>
-            <div className="menu-field-fixed-wrapper">
-              <label className="menu-field-label-fixed">이름</label>
-              <span className="menu-field-value-fixed">
-                {selectedMenu?.name}
-              </span>
-            </div>
-            <div className="menu-field-fixed-wrapper">
-              <label className="menu-field-label-fixed">종류</label>
-              <span className="menu-field-value-fixed">
-                {convertTypeEnToKo(selectedMenu?.type)}
-              </span>
-            </div>
-            <div className="menu-field-wrapper">
-              <label className="menu-field-label">가격</label>
-              <input
-                className="menu-field-input"
-                name="price"
-                placeholder={"5,000"}
-                value={toStringNumberWithComma(formData.price)}
-                onChange={handleChangeFormData}
-              />
-              <span className="menu-field-input-unit">원</span>
-            </div>
-            <div className="menu-field-wrapper">
-              <label className="menu-field-label">상품 이미지</label>
-              <input
-                className="menu-field-input"
-                name="image"
-                placeholder={"이미지 주소를 입력해주세요"}
-                value={formData.image}
-                onChange={handleChangeFormData}
-              />
-            </div>
-            <div className="menu-field-wrapper">
-              <label className="menu-field-label">설명</label>
-              <textarea
-                className="menu-field-textarea"
-                name="description"
-                value={formData.description}
-                onChange={handleChangeFormData}
-                placeholder={"상품에 대한 자세한 설명을 입력해주세요"}
-              />
-            </div>
-          </div>
+      <div className="menu-edit-wrapper">
+        <h1 className="menu-edit-header">메뉴 수정</h1>
+        <div className="menu-field-fixed-wrapper">
+          <label className="menu-field-label-fixed">이름</label>
+          <span className="menu-field-value-fixed">{selectedMenu?.name}</span>
+        </div>
+        <div className="menu-field-fixed-wrapper">
+          <label className="menu-field-label-fixed">종류</label>
+          <span className="menu-field-value-fixed">
+            {convertTypeEnToKo(selectedMenu?.type)}
+          </span>
+        </div>
+        <div className="menu-field-wrapper">
+          <label className="menu-field-label">가격</label>
+          <input
+            className="menu-field-input"
+            name="price"
+            placeholder={"5,000"}
+            value={toStringNumberWithComma(formData.price)}
+            onChange={handleChangeFormData}
+          />
+          <span className="menu-field-input-unit">원</span>
+        </div>
+        <div className="menu-field-wrapper">
+          <label className="menu-field-label">상품 이미지</label>
+          <input
+            className="menu-field-input"
+            name="image"
+            placeholder={"이미지 주소를 입력해주세요"}
+            value={formData.image}
+            onChange={handleChangeFormData}
+          />
+        </div>
+        <div className="menu-field-wrapper">
+          <label className="menu-field-label">설명</label>
+          <textarea
+            className="menu-field-textarea"
+            name="description"
+            value={formData.description}
+            onChange={handleChangeFormData}
+            placeholder={"상품에 대한 자세한 설명을 입력해주세요"}
+          />
+        </div>
+      </div>
 
-          <div className="menu-edit-button-wrapper">
-            <ButtonNormal
-              text={"저장"}
-              bgColor={"#D3FFC3"}
-              handleClick={handleSubmit}
-            />
-            <ButtonNormal
-              text={"취소"}
-              handleClick={() => navigate(`/menus/${selectedMenu?.id}`)}
-            />
-          </div>
-        </>
-      )}
+      <div className="menu-edit-button-wrapper">
+        <ButtonNormal
+          text={"저장"}
+          bgColor={"#D3FFC3"}
+          handleClick={handleSubmit}
+        />
+        <ButtonNormal
+          text={"취소"}
+          handleClick={() => navigate(`/menus/${selectedMenu?.id}`)}
+        />
+      </div>
     </>
   );
 };
