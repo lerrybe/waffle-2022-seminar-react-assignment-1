@@ -54,7 +54,7 @@ const MenuDetail = () => {
     dispatchSearchedMenus,
     dispatchSelectedMenu,
     handleToggleDeleteModal,
-    menu.id,
+    menu?.id,
     menus,
     navigate,
   ]);

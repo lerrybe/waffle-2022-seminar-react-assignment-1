@@ -75,7 +75,7 @@ const MenuEdit = () => {
     formData,
     menus,
     navigate,
-    selectedMenu.id,
+    selectedMenu?.id,
   ]);
 
   return (
