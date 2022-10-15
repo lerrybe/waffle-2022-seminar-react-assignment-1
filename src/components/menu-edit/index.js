@@ -7,8 +7,8 @@ import ButtonNormal from "../button-normal";
 
 import {
   checkValidPrice,
-  numberToStringNumber,
-  stringNumberToNumber,
+  toStringNumberWithComma,
+  toNumberWithoutComma,
 } from "../../utils/menu/price";
 import { convertTypeEnToKo } from "../../utils/menu/type";
 
@@ -41,8 +41,8 @@ const MenuEdit = () => {
         value: e.target.value,
       };
       if (target.name === "price") {
-        target.value = numberToStringNumber(
-          stringNumberToNumber(e.target.value.replace(/[^0-9]/g, ""))
+        target.value = toNumberWithoutComma(
+          e.target.value.replace(/[^0-9]/g, "")
         );
       }
       setFormData({
@@ -104,7 +104,7 @@ const MenuEdit = () => {
                 className="menu-field-input"
                 name="price"
                 placeholder={"5,000"}
-                value={formData.price}
+                value={toStringNumberWithComma(formData.price)}
                 onChange={handleChangeFormData}
               />
               <span className="menu-field-input-unit">원</span>

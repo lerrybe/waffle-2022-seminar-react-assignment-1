@@ -1,6 +1,7 @@
 import "./menu-item.css";
 
 import { convertTypeEnToKo } from "../../utils/menu/type";
+import { toStringNumberWithComma } from "../../utils/menu/price";
 
 const MenuItem = ({ menuItem, selectedMenu, handleOpenOverview }) => {
   const { id, name, type, price } = menuItem;
@@ -17,7 +18,7 @@ const MenuItem = ({ menuItem, selectedMenu, handleOpenOverview }) => {
       <span className="menu-item-id">{id}</span>
       <span className="menu-item-name">{name}</span>
       <span className="menu-item-type">{convertTypeEnToKo(type)}</span>
-      <span className="menu-item-price">{price}</span>
+      <span className="menu-item-price">{toStringNumberWithComma(price)}</span>
     </li>
   );
 };

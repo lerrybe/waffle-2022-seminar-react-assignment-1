@@ -1,16 +1,15 @@
-export const numberToStringNumber = (number) => {
-  return Number(number)
-    .toString()
-    .replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+export const toStringNumberWithComma = (input) => {
+  return String(input).replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
 };
 
-export const stringNumberToNumber = (stringNumber) => {
-  return Number(String(stringNumber).replace(/,/g, ""));
+export const toNumberWithoutComma = (input) => {
+  return Number(String(input).replace(/,/g, ""));
 };
 
-export const checkValidPrice = (string) => {
-  const price = stringNumberToNumber(String(string));
-  if (!string.trim()) {
+export const checkValidPrice = (input) => {
+  const price = toNumberWithoutComma(String(input));
+  const strPrice = String(price);
+  if (!strPrice.trim()) {
     return {
       isValidPrice: false,
       announcement: "가격을 입력해주세요.",
@@ -25,7 +24,7 @@ export const checkValidPrice = (string) => {
       isValidPrice: false,
       announcement: "가격은 1,000,000원 이하여야 합니다.",
     };
-  } else if (string[string.length - 1] !== "0") {
+  } else if (strPrice[strPrice.length - 1] !== "0") {
     return {
       isValidPrice: false,
       announcement: "최소 단위는 10원입니다.",

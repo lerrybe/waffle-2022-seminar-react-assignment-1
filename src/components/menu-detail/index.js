@@ -9,6 +9,7 @@ import arrowBackIcon from "../../assets/arrow-back-icon.svg";
 import ModalDeleteMenu from "../modal-delete-menu";
 
 import { convertTypeEnToKo } from "../../utils/menu/type";
+import { toStringNumberWithComma } from "../../utils/menu/price";
 
 import {
   useMenuDataContext,
@@ -72,10 +73,12 @@ const MenuDetail = () => {
         )}
         {menu && (
           <>
-            <span className="detail-name">{menu.name}</span>
-            <span className="detail-type">{convertTypeEnToKo(menu.type)}</span>
-            <span className="detail-price">{menu.price}원</span>
-            <span className="detail-description">{menu.description}</span>
+            <span className="detail-name">{menu?.name}</span>
+            <span className="detail-type">{convertTypeEnToKo(menu?.type)}</span>
+            <span className="detail-price">
+              {toStringNumberWithComma(menu?.price)}원
+            </span>
+            <span className="detail-description">{menu?.description}</span>
           </>
         )}
 

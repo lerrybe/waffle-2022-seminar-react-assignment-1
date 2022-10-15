@@ -1,12 +1,13 @@
 import { useNavigate } from "react-router-dom";
 
 import "./menu-overview.css";
-
 import closeIcon from "../../assets/close-icon.svg";
 
 import ButtonNormal from "../button-normal";
 
 import { convertTypeEnToKo } from "../../utils/menu/type";
+import { toStringNumberWithComma } from "../../utils/menu/price";
+
 import { useMenuDataContext } from "../../context/MenuDataContext";
 
 const MenuOverview = ({ handleCloseOverview }) => {
@@ -26,18 +27,20 @@ const MenuOverview = ({ handleCloseOverview }) => {
           <img
             className="overview-img"
             alt="대표 이미지가 없습니다."
-            src={selectedMenu.image}
+            src={selectedMenu?.image}
           />
         ) : (
           <div className="overview-img">대표 이미지가 없습니다.</div>
         )}
         {selectedMenu && (
           <>
-            <span className="overview-name">{selectedMenu.name}</span>
+            <span className="overview-name">{selectedMenu?.name}</span>
             <span className="overview-type">
-              {convertTypeEnToKo(selectedMenu.type)}
+              {convertTypeEnToKo(selectedMenu?.type)}
             </span>
-            <span className="overview-price">{selectedMenu.price}원</span>
+            <span className="overview-price">
+              {toStringNumberWithComma(selectedMenu?.price)}원
+            </span>
           </>
         )}
 
