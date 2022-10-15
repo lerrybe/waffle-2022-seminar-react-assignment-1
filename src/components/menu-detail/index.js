@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import "./menu-detail.css";
@@ -27,7 +27,7 @@ const MenuDetail = () => {
   const [isModalOpened, setIsModalOpened] = useState(false);
   const [modalAnimation, setModalAnimation] = useState(false);
 
-  const handleToggleDeleteModal = () => {
+  const handleToggleDeleteModal = useCallback(() => {
     setModalAnimation((prev) => !prev);
 
     if (modalAnimation) {
@@ -38,17 +38,26 @@ const MenuDetail = () => {
     } else {
       setIsModalOpened((prev) => !prev);
     }
-  };
+  }, [modalAnimation]);
 
-  const handleDeleteMenu = () => {
+  const handleDeleteMenu = useCallback(() => {
     const newMenus = menus.filter((targetMenu) => targetMenu.id !== menu.id);
     dispatchMenus(newMenus);
     dispatchSelectedMenu(null);
     dispatchSearchedMenus(newMenus);
 
+    // DESC: 모달 닫고 /stores/1로 리다이렉트
     handleToggleDeleteModal();
     navigate("/stores/1");
-  };
+  }, [
+    dispatchMenus,
+    dispatchSearchedMenus,
+    dispatchSelectedMenu,
+    handleToggleDeleteModal,
+    menu.id,
+    menus,
+    navigate,
+  ]);
 
   return (
     <div className="menu-info-outer-wrapper">

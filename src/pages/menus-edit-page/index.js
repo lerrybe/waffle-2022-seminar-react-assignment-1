@@ -19,8 +19,7 @@ const MenusEditPage = () => {
     if (!isValidMenuParams(menuId, menus)) {
       alert("유효하지 않은 메뉴 아이디입니다.");
       return;
-    }
-    else if (!isLoggedIn) {
+    } else if (!isLoggedIn) {
       alert("접근할 수 없습니다.");
       return;
     }
