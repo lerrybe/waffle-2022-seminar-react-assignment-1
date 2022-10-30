@@ -8,6 +8,9 @@ import './styles/reset.css';
 
 // import components
 import EntryRoute from './routes';
+import ModalToast from './components/modal-toast';
+
+// import contexts
 import SessionProvider from './context/SessionContext';
 import MenuDataProvider from './context/MenuDataContext';
 
@@ -17,6 +20,7 @@ root.render(
     <SessionProvider>
       <MenuDataProvider>
         <EntryRoute />
+        <ModalToast />
       </MenuDataProvider>
     </SessionProvider>
   </React.StrictMode>,
