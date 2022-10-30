@@ -1,14 +1,14 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
 
-import "./menu-list.css";
-import createIcon from "../../assets/create-icon.svg";
+import './menu-list.css';
+import createIcon from '../../assets/create-icon.svg';
 
-import MenuItems from "../menu-items";
-import SearchBar from "../search-bar";
+import MenuItems from '../menu-items';
+import SearchBar from '../search-bar';
 
-import { useSessionContext } from "../../context/SessionContext";
+import { useSessionContext } from '../../context/SessionContext';
 
-const MenuList = ({ keyword, handleOpenOverview, handleChangeKeyword }) => {
+function MenuList({ keyword, handleOpenOverview, handleChangeKeyword }) {
   const navigate = useNavigate();
   const { isLoggedIn } = useSessionContext();
 
@@ -16,7 +16,7 @@ const MenuList = ({ keyword, handleOpenOverview, handleChangeKeyword }) => {
     <div className="menu-outer-wrapper">
       <SearchBar
         keyword={keyword}
-        label={"메뉴 이름 검색: "}
+        label="메뉴 이름 검색: "
         handleChangeKeyword={handleChangeKeyword}
       />
       <div className="menu-content-wrapper">
@@ -28,13 +28,13 @@ const MenuList = ({ keyword, handleOpenOverview, handleChangeKeyword }) => {
         </div>
         <MenuItems handleOpenOverview={handleOpenOverview} />
         {isLoggedIn && (
-          <button onClick={() => navigate("/menus/new")}>
+          <button onClick={() => navigate('/menus/new')}>
             <img className="menu-create-icon" src={createIcon} alt="create" />
           </button>
         )}
       </div>
     </div>
   );
-};
+}
 
 export default MenuList;

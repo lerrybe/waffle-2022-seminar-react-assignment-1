@@ -1,20 +1,19 @@
-import { useEffect } from "react";
-import { Navigate } from "react-router-dom";
+import { useEffect } from 'react';
+import { Navigate } from 'react-router-dom';
 
-import "./menus-new-page.css";
+import './menus-new-page.css';
 
-import Gnb from "../../components/gnb";
-import MenuNew from "../../components/menu-new";
+import Gnb from '../../components/gnb';
+import MenuNew from '../../components/menu-new';
 
-import { useSessionContext } from "../../context/SessionContext";
+import { useSessionContext } from '../../context/SessionContext';
 
-const MenusNewPage = () => {
+function MenusNewPage() {
   const { isLoggedIn } = useSessionContext();
 
   useEffect(() => {
     if (!isLoggedIn) {
-      alert("접근할 수 없습니다.");
-      return;
+      alert('접근할 수 없습니다.');
     }
   }, [isLoggedIn]);
 
@@ -32,6 +31,6 @@ const MenusNewPage = () => {
       )}
     </>
   );
-};
+}
 
 export default MenusNewPage;

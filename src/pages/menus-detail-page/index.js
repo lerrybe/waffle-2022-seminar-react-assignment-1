@@ -1,24 +1,23 @@
-import { useEffect } from "react";
-import { Navigate, useParams } from "react-router-dom";
+import { useEffect } from 'react';
+import { Navigate, useParams } from 'react-router-dom';
 
-import "./menus-detail-page.css";
+import './menus-detail-page.css';
 
-import Gnb from "../../components/gnb";
-import MenuDetail from "../../components/menu-detail";
-import MenuReview from "../../components/menu-review";
+import Gnb from '../../components/gnb';
+import MenuDetail from '../../components/menu-detail';
+import MenuReview from '../../components/menu-review';
 
-import { isValidMenuParams } from "../../utils/error";
-import { useMenuDataContext } from "../../context/MenuDataContext";
+import { isValidMenuParams } from '../../utils/error';
+import { useMenuDataContext } from '../../context/MenuDataContext';
 
-const MenusDetailPage = () => {
+function MenusDetailPage() {
   const { menuId } = useParams();
   const { menus } = useMenuDataContext();
 
   useEffect(() => {
     // DESC: menuId에 해당하는 메뉴가 존재하지 않는 경우
     if (!isValidMenuParams(menuId, menus)) {
-      alert("유효하지 않은 메뉴 아이디입니다.");
-      return;
+      alert('유효하지 않은 메뉴 아이디입니다.');
     }
   }, [menuId, menus]);
 
@@ -37,6 +36,6 @@ const MenusDetailPage = () => {
       )}
     </>
   );
-};
+}
 
 export default MenusDetailPage;

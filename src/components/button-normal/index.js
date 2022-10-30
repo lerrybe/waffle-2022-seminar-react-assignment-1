@@ -1,16 +1,18 @@
-import "./button-normal.css";
+import './button-normal.css';
 
-const ButtonNormal = ({ type, text, handleClick, bgColor }) => {
+function ButtonNormal({
+  type, text, handleClick, bgColor,
+}) {
   return (
     <button
       onClick={handleClick}
-      type={type || "button"}
+      type={type || 'button'}
       className="button-normal"
-      style={{ backgroundColor: bgColor ? bgColor : "#fff" }}
+      style={{ backgroundColor: bgColor || '#fff' }}
     >
       {text}
     </button>
   );
-};
+}
 
 export default ButtonNormal;

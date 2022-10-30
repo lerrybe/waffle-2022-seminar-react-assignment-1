@@ -1,13 +1,13 @@
-import Gnb from "../../components/gnb";
-import Login from "../../components/login";
+import Gnb from '../../components/gnb';
+import Login from '../../components/login';
 
-const LoginPage = () => {
+function LoginPage() {
   return (
     <>
       <Gnb />
       <Login />
     </>
   );
-};
+}
 
 export default LoginPage;

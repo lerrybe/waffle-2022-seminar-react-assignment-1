@@ -1,6 +1,6 @@
-import "./form-item.css";
+import './form-item.css';
 
-const FormItem = ({
+function FormItem({
   name,
   type,
   label,
@@ -8,7 +8,7 @@ const FormItem = ({
   required,
   placeholder,
   handleChangeContent,
-}) => {
+}) {
   return (
     <div className="form-wrapper">
       <label className="form-label">{label}</label>
@@ -19,11 +19,11 @@ const FormItem = ({
         required={required}
         placeholder={placeholder}
         onChange={handleChangeContent}
-        type={type === "password" ? "password" : "text"}
+        type={type === 'password' ? 'password' : 'text'}
       />
-      {label === "가격" && <span className="form-unit">{"원"}</span>}
+      {label === '가격' && <span className="form-unit">원</span>}
     </div>
   );
-};
+}
 
 export default FormItem;

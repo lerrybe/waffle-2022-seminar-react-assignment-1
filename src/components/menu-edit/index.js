@@ -1,27 +1,26 @@
-import { useCallback, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useCallback, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-import "./menu-edit.css";
+import './menu-edit.css';
 
-import ButtonNormal from "../button-normal";
+import ButtonNormal from '../button-normal';
 
 import {
   checkValidPrice,
   toStringNumberWithComma,
   toNumberWithoutComma,
-} from "../../utils/menu/price";
-import { convertTypeEnToKo } from "../../utils/menu/type";
+} from '../../utils/menu/price';
+import { convertTypeEnToKo } from '../../utils/menu/type';
 
 import {
   useMenuDataContext,
   useMenuDataActionsContext,
-} from "../../context/MenuDataContext";
+} from '../../context/MenuDataContext';
 
-const MenuEdit = () => {
+function MenuEdit() {
   const navigate = useNavigate();
   const { menus, selectedMenu } = useMenuDataContext();
-  const { dispatchMenus, dispatchSelectedMenu, dispatchSearchedMenus } =
-    useMenuDataActionsContext();
+  const { dispatchMenus, dispatchSelectedMenu, dispatchSearchedMenus } = useMenuDataActionsContext();
 
   const [formData, setFormData] = useState({
     id: selectedMenu?.id,
@@ -39,9 +38,9 @@ const MenuEdit = () => {
         name: e.target.name,
         value: e.target.value,
       };
-      if (target.name === "price") {
+      if (target.name === 'price') {
         target.value = toNumberWithoutComma(
-          e.target.value.replace(/[^0-9]/g, "")
+          e.target.value.replace(/[^0-9]/g, ''),
         );
       }
       setFormData({
@@ -49,7 +48,7 @@ const MenuEdit = () => {
         [target.name]: target.value,
       });
     },
-    [formData]
+    [formData],
   );
 
   // DESC: 메뉴 수정 저장하기
@@ -60,9 +59,7 @@ const MenuEdit = () => {
       alert(announcement);
       return;
     }
-    const updatedMenu = menus.map((item) =>
-      selectedMenu.id === item.id ? formData : item
-    );
+    const updatedMenu = menus.map((item) => (selectedMenu.id === item.id ? formData : item));
     dispatchMenus(updatedMenu);
     dispatchSelectedMenu(formData);
     dispatchSearchedMenus(updatedMenu);
@@ -97,7 +94,7 @@ const MenuEdit = () => {
           <input
             className="menu-field-input"
             name="price"
-            placeholder={"5,000"}
+            placeholder="5,000"
             value={toStringNumberWithComma(formData.price)}
             onChange={handleChangeFormData}
           />
@@ -108,7 +105,7 @@ const MenuEdit = () => {
           <input
             className="menu-field-input"
             name="image"
-            placeholder={"이미지 주소를 입력해주세요"}
+            placeholder="이미지 주소를 입력해주세요"
             value={formData.image}
             onChange={handleChangeFormData}
           />
@@ -120,24 +117,24 @@ const MenuEdit = () => {
             name="description"
             value={formData.description}
             onChange={handleChangeFormData}
-            placeholder={"상품에 대한 자세한 설명을 입력해주세요"}
+            placeholder="상품에 대한 자세한 설명을 입력해주세요"
           />
         </div>
       </div>
 
       <div className="menu-edit-button-wrapper">
         <ButtonNormal
-          text={"저장"}
-          bgColor={"#D3FFC3"}
+          text="저장"
+          bgColor="#D3FFC3"
           handleClick={handleSubmit}
         />
         <ButtonNormal
-          text={"취소"}
+          text="취소"
           handleClick={() => navigate(`/menus/${selectedMenu?.id}`)}
         />
       </div>
     </>
   );
-};
+}
 
 export default MenuEdit;

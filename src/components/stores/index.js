@@ -1,20 +1,19 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from 'react';
 
-import MenuList from "../menu-list";
-import MenuOverview from "../menu-overview";
+import MenuList from '../menu-list';
+import MenuOverview from '../menu-overview';
 
 import {
   useMenuDataContext,
   useMenuDataActionsContext,
-} from "../../context/MenuDataContext";
+} from '../../context/MenuDataContext';
 
-const Stores = () => {
-  const [keyword, setKeyword] = useState("");
+function Stores() {
+  const [keyword, setKeyword] = useState('');
   const [openDetail, setOpenDetail] = useState(false);
 
   const { menus, selectedMenu } = useMenuDataContext();
-  const { dispatchSelectedMenu, dispatchSearchedMenus } =
-    useMenuDataActionsContext();
+  const { dispatchSelectedMenu, dispatchSearchedMenus } = useMenuDataActionsContext();
 
   // DESC: 가게 페이지 Overview - open, close 이벤트 핸들러 함수
   const handleOpenOverview = useCallback(
@@ -22,7 +21,7 @@ const Stores = () => {
       setOpenDetail(true);
       dispatchSelectedMenu(item);
     },
-    [dispatchSelectedMenu]
+    [dispatchSelectedMenu],
   );
 
   const handleCloseOverview = useCallback(() => {
@@ -38,15 +37,15 @@ const Stores = () => {
   // DESC: 키워드로 메뉴 찾는 함수
   const searchMenu = useCallback(
     (keyword, menus) => {
-      if (keyword === "") {
+      if (keyword === '') {
         dispatchSearchedMenus(menus);
       } else {
         dispatchSearchedMenus(
-          menus.filter((item) => item.name.includes(keyword))
+          menus.filter((item) => item.name.includes(keyword)),
         );
       }
     },
-    [dispatchSearchedMenus]
+    [dispatchSearchedMenus],
   );
 
   useEffect(() => {
@@ -67,6 +66,6 @@ const Stores = () => {
       {openDetail && <MenuOverview handleCloseOverview={handleCloseOverview} />}
     </>
   );
-};
+}
 
 export default Stores;

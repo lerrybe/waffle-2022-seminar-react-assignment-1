@@ -1,12 +1,12 @@
-import { createContext, useContext, useEffect, useMemo, useState } from "react";
-import { initialUser, initialUserActions } from "../data/initialSessionStates";
+import { createContext, useContext, useEffect, useMemo, useState } from 'react';
+import { initialUser, initialUserActions } from '../data/initialSessionStates';
 
-import { loadItem } from "../services/storage";
+import { loadItem } from '../services/storage';
 
 const SessionContext = createContext(initialUser);
 const SessionActionsContext = createContext(initialUserActions);
 
-const SessionProvider = ({ children }) => {
+function SessionProvider({ children }) {
   const [userId, setUserId] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
@@ -19,12 +19,12 @@ const SessionProvider = ({ children }) => {
         setIsLoggedIn(isLoggedIn);
       },
     }),
-    []
+    [],
   );
 
   useEffect(() => {
-    actions.dispatchUserId(loadItem("userId"));
-    actions.dispatchIsLoggedIn(loadItem("isLoggedIn"));
+    actions.dispatchUserId(loadItem('userId'));
+    actions.dispatchIsLoggedIn(loadItem('isLoggedIn'));
   }, [actions]);
 
   return (
@@ -39,7 +39,7 @@ const SessionProvider = ({ children }) => {
       </SessionContext.Provider>
     </SessionActionsContext.Provider>
   );
-};
+}
 
 export const useSessionContext = () => useContext(SessionContext);
 export const useSessionActionsContext = () => useContext(SessionActionsContext);

@@ -1,1 +1,1 @@
-export const LOGO_URL = "https://wafflestudio.com";
+export const LOGO_URL = 'https://wafflestudio.com';

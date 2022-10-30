@@ -1,12 +1,12 @@
-import { useEffect } from "react";
-import { Navigate } from "react-router-dom";
+import { useEffect } from 'react';
+import { Navigate } from 'react-router-dom';
 
-const ErrorPage = () => {
+function ErrorPage() {
   useEffect(() => {
-    alert("올바르지 않은 주소입니다.");
+    alert('올바르지 않은 주소입니다.');
   }, []);
 
   return <Navigate to={-1} />;
-};
+}
 
 export default ErrorPage;

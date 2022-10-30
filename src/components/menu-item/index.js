@@ -1,17 +1,19 @@
-import "./menu-item.css";
+import './menu-item.css';
 
-import { convertTypeEnToKo } from "../../utils/menu/type";
-import { toStringNumberWithComma } from "../../utils/menu/price";
+import { convertTypeEnToKo } from '../../utils/menu/type';
+import { toStringNumberWithComma } from '../../utils/menu/price';
 
-const MenuItem = ({ menuItem, selectedMenu, handleOpenOverview }) => {
-  const { id, name, type, price } = menuItem;
+function MenuItem({ menuItem, selectedMenu, handleOpenOverview }) {
+  const {
+    id, name, type, price,
+  } = menuItem;
 
   return (
     <li
       className={`menu-item-wrapper ${
         selectedMenu === menuItem
-          ? "selected-menu-item"
-          : "not-selected-menu-item"
+          ? 'selected-menu-item'
+          : 'not-selected-menu-item'
       }`}
       onClick={() => handleOpenOverview(menuItem)}
     >
@@ -21,6 +23,6 @@ const MenuItem = ({ menuItem, selectedMenu, handleOpenOverview }) => {
       <span className="menu-item-price">{toStringNumberWithComma(price)}</span>
     </li>
   );
-};
+}
 
 export default MenuItem;

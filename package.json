@@ -18,7 +18,8 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "deploy": "aws s3 sync ./build s3://waffle-menu-manage-lerrybe --profile=lerry",
-    "invalidate": "aws cloudfront create-invalidation --profile=lerry --distribution-id E1KUU6YYS9GROC --paths /*"
+    "invalidate": "aws cloudfront create-invalidation --profile=lerry --distribution-id E1KUU6YYS9GROC --paths /*",
+    "lint:fix": "eslint src --ext js,jsx . --fix"
   },
   "eslintConfig": {
     "extends": [
@@ -37,5 +38,16 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "babel-eslint": "^10.1.0",
+    "eslint": "^8.26.0",
+    "eslint-config-airbnb": "^19.0.4",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-jsx-a11y": "^6.6.1",
+    "eslint-plugin-react": "^7.31.10",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "husky": "^8.0.1",
+    "prettier": "^2.7.1"
   }
 }

@@ -1,9 +1,9 @@
-import "./stores-page.css";
+import './stores-page.css';
 
-import Gnb from "../../components/gnb";
-import Stores from "../../components/stores";
+import Gnb from '../../components/gnb';
+import Stores from '../../components/stores';
 
-const StoresPage = () => {
+function StoresPage() {
   return (
     <>
       <Gnb />
@@ -12,6 +12,6 @@ const StoresPage = () => {
       </div>
     </>
   );
-};
+}
 
 export default StoresPage;

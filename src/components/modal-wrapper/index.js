@@ -1,14 +1,14 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 
-import "./modal-wrapper.css";
+import './modal-wrapper.css';
 
-import Dim from "../dim";
+import Dim from '../dim';
 
-const ModalWrapper = ({ children, handleCloseModal, open }) => {
-  const [animate, setAnimate] = useState("modal-open");
+function ModalWrapper({ children, handleCloseModal, open }) {
+  const [animate, setAnimate] = useState('modal-open');
 
   useEffect(() => {
-    open ? setAnimate("modal-open") : setAnimate("modal-close");
+    open ? setAnimate('modal-open') : setAnimate('modal-close');
   }, [open]);
 
   return (
@@ -17,6 +17,6 @@ const ModalWrapper = ({ children, handleCloseModal, open }) => {
       <div className={`modal-wrapper ${animate}`}>{children}</div>
     </>
   );
-};
+}
 
 export default ModalWrapper;
