@@ -1,16 +1,19 @@
 import { useCallback, useEffect, useState } from 'react';
 
+import { useParams } from 'react-router-dom';
 import MenuList from '../menu-list';
 import MenuOverview from '../menu-overview';
 
 import { useMenuDataContext, useMenuDataActionsContext } from '../../context/MenuDataContext';
+import { requestMenus } from '../../api/menus';
 
 function MenuListContainer() {
+  const { storeId } = useParams();
   const [keyword, setKeyword] = useState('');
   const [openDetail, setOpenDetail] = useState(false);
 
   const { menus, selectedMenu } = useMenuDataContext();
-  const { dispatchSelectedMenu, dispatchSearchedMenus } = useMenuDataActionsContext();
+  const { dispatchMenus, dispatchSelectedMenu, dispatchSearchedMenus } = useMenuDataActionsContext();
 
   // DESC: 가게 페이지 Overview - open, close 이벤트 핸들러 함수
   const handleOpenOverview = useCallback(
@@ -50,6 +53,17 @@ function MenuListContainer() {
   useEffect(() => {
     if (selectedMenu) setOpenDetail(true);
   }, [selectedMenu]);
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const res = await requestMenus(storeId);
+        dispatchMenus(res.data);
+      } catch (err) {
+        console.log(err);
+      }
+    })();
+  }, []);
 
   return (
     <>

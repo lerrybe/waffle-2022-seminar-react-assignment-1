@@ -17,6 +17,7 @@ function MenuDataProvider({ children }) {
   const [menus, setMenus] = useState(initialMenus);
   const [selectedMenu, setSelectedMenu] = useState(initialSelectedMenu);
   const [searchedMenus, setSearchedMenus] = useState(initialSearchedMenus);
+
   const actions = useMemo(
     () => ({
       dispatchMenus(newMenus) {

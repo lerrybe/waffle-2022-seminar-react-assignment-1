@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import './menu-overview.css';
@@ -11,6 +12,8 @@ import { toStringNumberWithComma } from '../../utils/menu/price';
 import { useMenuDataContext } from '../../context/MenuDataContext';
 
 function MenuOverview({ handleCloseOverview }) {
+  const [starRating] = useState(3);
+
   const navigate = useNavigate();
   const { selectedMenu } = useMenuDataContext();
 
@@ -41,6 +44,9 @@ function MenuOverview({ handleCloseOverview }) {
             <span className="overview-price">
               {toStringNumberWithComma(selectedMenu?.price)}
               원
+            </span>
+            <span className="overview-rating">
+              {'★'.repeat(starRating) + '☆'.repeat(5 - starRating)}
             </span>
           </>
         )}

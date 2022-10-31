@@ -25,6 +25,7 @@ function MenuList({ keyword, handleOpenOverview, handleChangeKeyword }) {
           <span className="menu-category-name">이름</span>
           <span className="menu-category-type">종류</span>
           <span className="menu-category-price">가격</span>
+          <span className="menu-category-rating">평점</span>
         </div>
         <MenuItems handleOpenOverview={handleOpenOverview} />
         {isLoggedIn && (
