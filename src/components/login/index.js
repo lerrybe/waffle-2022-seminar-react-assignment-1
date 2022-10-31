@@ -12,7 +12,7 @@ function Login() {
   const { login } = useSessionActionsContext();
 
   const [formData, setFormData] = useState({
-    id: '',
+    name: '',
     password: '',
   });
 
@@ -46,9 +46,9 @@ function Login() {
           <div className="login-inputs">
             <FormItem
               required
-              name="id"
+              name="name"
               label="ID"
-              content={formData.id}
+              content={formData.name}
               placeholder="아이디를 입력해주세요."
               handleChangeContent={handleChangeFormData}
             />

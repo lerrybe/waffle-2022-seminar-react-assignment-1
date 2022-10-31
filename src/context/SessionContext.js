@@ -14,12 +14,12 @@ function SessionProvider({ children }) {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [accessToken, setAccessToken] = useState(null);
 
-  const login = async ({ id, password }) => {
+  const login = async ({ name, password }) => {
     try {
-      const userData = await requestLogin({ id, password });
+      const userData = await requestLogin({ name, password });
 
       if (userData) {
-        toast.success(`${id}님, 환영합니다!`, {
+        toast.success(`${name}님, 환영합니다!`, {
           theme: 'colored',
         });
 
