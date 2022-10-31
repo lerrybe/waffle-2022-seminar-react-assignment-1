@@ -1,0 +1,20 @@
+.menu-review-edit-rating {
+  font-size: 20px;
+  line-height: 20px;
+  color: #f0975e;
+}
+
+.menu-review-edit-textarea {
+  width: 100%;
+  height: 81px;
+  border: 1px solid #000000;
+  border-radius: 10px;
+  resize: none;
+  padding: 11px;
+}
+
+.menu-review-edit-button {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+}
