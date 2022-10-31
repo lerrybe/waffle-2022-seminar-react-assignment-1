@@ -3,12 +3,9 @@ import { useCallback, useEffect, useState } from 'react';
 import MenuList from '../menu-list';
 import MenuOverview from '../menu-overview';
 
-import {
-  useMenuDataContext,
-  useMenuDataActionsContext,
-} from '../../context/MenuDataContext';
+import { useMenuDataContext, useMenuDataActionsContext } from '../../context/MenuDataContext';
 
-function Stores() {
+function MenuListContainer() {
   const [keyword, setKeyword] = useState('');
   const [openDetail, setOpenDetail] = useState(false);
 
@@ -40,9 +37,7 @@ function Stores() {
       if (keyword === '') {
         dispatchSearchedMenus(menus);
       } else {
-        dispatchSearchedMenus(
-          menus.filter((item) => item.name.includes(keyword)),
-        );
+        dispatchSearchedMenus(menus.filter((item) => item.name.includes(keyword)));
       }
     },
     [dispatchSearchedMenus],
@@ -58,14 +53,10 @@ function Stores() {
 
   return (
     <>
-      <MenuList
-        keyword={keyword}
-        handleOpenOverview={handleOpenOverview}
-        handleChangeKeyword={handleChangeKeyword}
-      />
+      <MenuList keyword={keyword} handleOpenOverview={handleOpenOverview} handleChangeKeyword={handleChangeKeyword} />
       {openDetail && <MenuOverview handleCloseOverview={handleCloseOverview} />}
     </>
   );
 }
 
-export default Stores;
+export default MenuListContainer;

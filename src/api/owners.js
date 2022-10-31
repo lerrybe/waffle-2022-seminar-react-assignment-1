@@ -13,7 +13,8 @@ export const requestOwners = async () => {
 
 export const requestOwner = async (id) => {
   try {
-    await axios.get(`${BASE_URL}/owners/${id}`);
+    const res = await axios.get(`${BASE_URL}/owners/${id}`);
+    return res.data;
   } catch (err) {
     console.log(err);
   }

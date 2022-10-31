@@ -9,7 +9,7 @@ import ButtonNormal from '../button-normal';
 import { useSessionContext, useSessionActionsContext } from '../../context/SessionContext';
 
 // DESC: global navbar
-function Gnb() {
+function Gnb({ storeSelected, storeName, username }) {
   const navigate = useNavigate();
   const { logout } = useSessionActionsContext();
   const { user, isLoggedIn } = useSessionContext();
@@ -25,14 +25,29 @@ function Gnb() {
 
   return (
     <header className="gnb-wrapper">
-      <Link to="/">
-        <div className="gnb-title-wrapper">
+      <div className="gnb-title-wrapper">
+        <Link to="/">
           <div className="gnb-img-wrapper">
             <img className="gnb-img" alt="gnb" src={logoImg} />
           </div>
-          <span className="gnb-title">와플스튜디오 메뉴 관리</span>
-        </div>
-      </Link>
+        </Link>
+        <>
+          {!storeSelected ? (
+            <Link to="/">
+              <span className="gnb-title">와플스튜디오 메뉴 관리</span>
+            </Link>
+          ) : (
+            <div className="gnb-selected">
+              <h1 className="gnb-title-sm">와플스튜디오 메뉴 관리</h1>
+              <div className="gnb-store">
+                <h1 className="gnb-store-name">{storeName || '이름 없는 가게'}</h1>
+                <span className="gnb-username">{`by ${username}` || '주인 없는 가게'}</span>
+              </div>
+            </div>
+          )}
+        </>
+      </div>
+
       <div className="gnb-auth-wrapper">
         {isLoggedIn ? (
           <>
