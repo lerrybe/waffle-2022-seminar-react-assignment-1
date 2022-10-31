@@ -10,3 +10,13 @@ export const requestMenus = async (ownerId) => {
     return null;
   }
 };
+
+export const requestMenu = async (menuId) => {
+  try {
+    const res = await axios.get(`${BASE_URL}/menus/${menuId}`);
+    return res.data;
+  } catch (err) {
+    console.log(err);
+    return null;
+  }
+};
