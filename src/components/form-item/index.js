@@ -1,14 +1,25 @@
 import "./form-item.css";
 
-const FormItem = ({ label, placeholder, content, handleChangeContent }) => {
+const FormItem = ({
+  name,
+  type,
+  label,
+  content,
+  required,
+  placeholder,
+  handleChangeContent,
+}) => {
   return (
     <div className="form-wrapper">
-      <span className="form-label">{label}</span>
+      <label className="form-label">{label}</label>
       <input
         className="form-input"
-        placeholder={placeholder}
+        name={name}
         value={content}
+        required={required}
+        placeholder={placeholder}
         onChange={handleChangeContent}
+        type={type === "password" ? "password" : "text"}
       />
       {label === "가격" && <span className="form-unit">{"원"}</span>}
     </div>

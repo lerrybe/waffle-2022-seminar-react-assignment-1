@@ -1,9 +1,11 @@
 import "./menu-item.css";
 
-import { numberToStringNumber } from "../../utils/price";
+import { convertTypeEnToKo } from "../../utils/menu/type";
+import { toStringNumberWithComma } from "../../utils/menu/price";
 
-const MenuItem = ({ menuItem, selectedMenu, handleOpenDetail }) => {
-  const { id, name, price } = menuItem;
+const MenuItem = ({ menuItem, selectedMenu, handleOpenOverview }) => {
+  const { id, name, type, price } = menuItem;
+
   return (
     <li
       className={`menu-item-wrapper ${
@@ -11,11 +13,12 @@ const MenuItem = ({ menuItem, selectedMenu, handleOpenDetail }) => {
           ? "selected-menu-item"
           : "not-selected-menu-item"
       }`}
-      onClick={() => handleOpenDetail(menuItem)}
+      onClick={() => handleOpenOverview(menuItem)}
     >
       <span className="menu-item-id">{id}</span>
       <span className="menu-item-name">{name}</span>
-      <span className="menu-item-price">{numberToStringNumber(price)}</span>
+      <span className="menu-item-type">{convertTypeEnToKo(type)}</span>
+      <span className="menu-item-price">{toStringNumberWithComma(price)}</span>
     </li>
   );
 };

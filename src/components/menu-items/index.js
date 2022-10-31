@@ -1,6 +1,9 @@
 import MenuItem from "../menu-item";
+import { useMenuDataContext } from "../../context/MenuDataContext";
 
-const MenuItems = ({ menuItems, selectedMenu, handleOpenDetail }) => {
+const MenuItems = ({ handleOpenOverview }) => {
+  const { selectedMenu, searchedMenus: menuItems } = useMenuDataContext();
+
   return (
     <ul>
       {menuItems?.map((menuItem) => (
@@ -8,7 +11,7 @@ const MenuItems = ({ menuItems, selectedMenu, handleOpenDetail }) => {
           key={menuItem.id}
           menuItem={menuItem}
           selectedMenu={selectedMenu}
-          handleOpenDetail={handleOpenDetail}
+          handleOpenOverview={handleOpenOverview}
         />
       ))}
     </ul>

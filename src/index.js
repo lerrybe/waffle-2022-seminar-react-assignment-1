@@ -1,16 +1,24 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 
 // import css
 import "./styles/global.css";
 import "./styles/reset.css";
 
+// import components
+import EntryRoute from "./routes";
+import SessionProvider from "./context/SessionContext";
+import MenuDataProvider from "./context/MenuDataContext";
+
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <App />
+    <SessionProvider>
+      <MenuDataProvider>
+        <EntryRoute />
+      </MenuDataProvider>
+    </SessionProvider>
   </React.StrictMode>
 );
 

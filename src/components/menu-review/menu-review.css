@@ -1,0 +1,8 @@
+.menu-review-wrapper {
+  width: calc((100% - 20px) * 0.55);
+  min-width: 320px;
+  height: calc(100vh - 120px);
+  border: 1px solid #000000;
+  border-radius: 10px;
+  padding: 20px;
+}

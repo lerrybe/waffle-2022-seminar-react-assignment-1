@@ -1,0 +1,81 @@
+export const initialSelectedMenu = null;
+
+export const initialMenus = [
+  {
+    id: 1,
+    name: "초코와플",
+    price: 7000,
+    image: "",
+    type: "waffle",
+    description: "",
+  },
+  {
+    id: 2,
+    name: "아메리카노",
+    price: 4000,
+    image: "",
+    type: "coffee",
+    description: "",
+  },
+  {
+    id: 3,
+    name: "블루베리스무디",
+    price: 6000,
+    image:
+      "https://upload.wikimedia.org/wikipedia/commons/1/15/Blueberries.jpg",
+    type: "beverage",
+    description: "이 스무디에는 슬픈 전설이 있습니다.",
+  },
+  {
+    id: 4,
+    name: "딸기와플",
+    price: 7000,
+    image:
+      "https://upload.wikimedia.org/wikipedia/commons/2/29/PerfectStrawberry.jpg",
+    type: "waffle",
+    description: "",
+  },
+];
+
+export const initialSearchedMenus = [
+  {
+    id: 1,
+    name: "초코와플",
+    price: 7000,
+    image: "",
+    type: "waffle",
+    description: "",
+  },
+  {
+    id: 2,
+    name: "아메리카노",
+    price: 4000,
+    image: "",
+    type: "coffee",
+    description: "",
+  },
+  {
+    id: 3,
+    name: "블루베리스무디",
+    price: 6000,
+    image:
+      "https://upload.wikimedia.org/wikipedia/commons/1/15/Blueberries.jpg",
+    type: "beverage",
+    description: "이 스무디에는 슬픈 전설이 있습니다.",
+  },
+  {
+    id: 4,
+    name: "딸기와플",
+    price: 7000,
+    image:
+      "https://upload.wikimedia.org/wikipedia/commons/2/29/PerfectStrawberry.jpg",
+    type: "waffle",
+    description: "",
+  },
+];
+
+export const initialMenuDataActions = {
+  dispatchMenus: () => void 0,
+  dispatchSelectedMenu: () => void 0,
+  dispatchSearchedMenus: () => void 0,
+};
