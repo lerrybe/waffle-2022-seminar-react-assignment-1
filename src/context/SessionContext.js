@@ -1,6 +1,8 @@
 import { createContext, useContext, useState } from 'react';
 
-import { saveItem } from '../services/storage';
+import { toast } from 'react-toastify';
+
+import { saveItem, clearAll } from '../services/storage';
 import { requestLogin, requestLogout } from '../api/auth';
 import { initialUser, initialUserActions } from '../data/initialSessionStates';
 
@@ -10,26 +12,44 @@ const SessionActionsContext = createContext(initialUserActions);
 function SessionProvider({ children }) {
   const [user, setUser] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [accessToken, setAccessToken] = useState(false);
+  const [accessToken, setAccessToken] = useState(null);
 
   const login = async ({ id, password }) => {
-    const userData = await requestLogin({ id, password });
+    try {
+      const userData = await requestLogin({ id, password });
 
-    if (userData) {
-      setIsLoggedIn(true);
-      setUser(userData?.owner);
-      setAccessToken(userData?.access_token);
+      if (userData) {
+        toast.success(`${id}님, 환영합니다!`, {
+          theme: 'colored',
+        });
 
-      saveItem('username', userData?.owner.username);
-      saveItem('isLoggedIn', true);
+        setIsLoggedIn(true);
+        setUser(userData?.owner);
+        setAccessToken(userData?.access_token);
+
+        saveItem('username', userData?.owner.username);
+        saveItem('isLoggedIn', true);
+
+        return true;
+      }
+      toast.error('로그인에 실패했습니다.', {
+        theme: 'colored',
+      });
+    } catch (err) {
+      console.log(err);
     }
+
+    return false;
   };
 
   const logout = async () => {
-    requestLogout();
+    await requestLogout();
+    clearAll();
     setUser(null);
     setIsLoggedIn(false);
     setAccessToken(null);
+
+    toast.info('로그아웃 되었습니다.');
   };
 
   return (

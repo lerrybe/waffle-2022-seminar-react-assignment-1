@@ -1,6 +1,5 @@
 import axios from 'axios';
 import { BASE_URL } from '../constant/constant';
-import { clearAll } from '../services/storage';
 
 export const requestLogin = async ({ id, password }) => {
   try {
@@ -15,6 +14,10 @@ export const requestLogin = async ({ id, password }) => {
   }
 };
 
-export const requestLogout = () => {
-  clearAll();
+export const requestLogout = async () => {
+  try {
+    await axios.post(`${BASE_URL}/auth/logout`, {});
+  } catch (err) {
+    console.log(err);
+  }
 };
