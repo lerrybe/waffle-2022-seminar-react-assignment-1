@@ -5,12 +5,11 @@ import './login.css';
 
 import FormItem from '../form-item';
 
-import { login } from '../../api/auth';
 import { useSessionActionsContext } from '../../context/SessionContext';
 
 function Login() {
   const navigate = useNavigate();
-  const { dispatchUserId, dispatchIsLoggedIn } = useSessionActionsContext();
+  const { login } = useSessionActionsContext();
 
   const [formData, setFormData] = useState({
     id: '',
@@ -33,15 +32,10 @@ function Login() {
     (e) => {
       e.preventDefault();
 
-      const { id, password } = formData;
-      if (login(id, password)) {
-        dispatchUserId(id);
-        dispatchIsLoggedIn(true);
-        // DESC: 성공 시 로그인 직전 페이지로 이동
-        navigate(-1);
-      }
+      login(formData);
+      navigate('/');
     },
-    [dispatchIsLoggedIn, dispatchUserId, formData, navigate],
+    [formData, navigate],
   );
 
   return (

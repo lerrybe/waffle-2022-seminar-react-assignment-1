@@ -1,21 +1,20 @@
-import { clearAll, saveItem } from '../services/storage';
-import { checkValidId, checkValidPassword } from '../utils/auth';
+import axios from 'axios';
+import { BASE_URL } from '../constant/constant';
+import { clearAll } from '../services/storage';
 
-// TODO: backend API 연결
-export const login = (id, password) => {
-  if (checkValidId(id) && checkValidPassword(password)) {
-    alert(`${id}님, 환영합니다!`);
-
-    // DESC: localStorage에 로그인 상태 및 userId 저장
-    saveItem('isLoggedIn', true);
-    saveItem('userId', id);
-    return true;
+export const requestLogin = async ({ id, password }) => {
+  try {
+    const res = await axios.post(`${BASE_URL}/auth/login`, {
+      username: id,
+      password,
+    });
+    return res.data;
+  } catch (err) {
+    console.log(err);
+    return null;
   }
-  // TODO: 로그인 실패 시 처리 로직
-  alert('로그인에 실패하였습니다.');
-  return false;
 };
 
-export const logout = () => {
+export const requestLogout = () => {
   clearAll();
 };

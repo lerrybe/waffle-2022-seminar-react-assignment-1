@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
 import './gnb.css';
@@ -6,24 +6,22 @@ import logoImg from '../../assets/logo.svg';
 
 import ButtonNormal from '../button-normal';
 
-import { logout } from '../../api/auth';
-import {
-  useSessionContext,
-  useSessionActionsContext,
-} from '../../context/SessionContext';
+import { useSessionContext, useSessionActionsContext } from '../../context/SessionContext';
 
 // DESC: global navbar
 function Gnb() {
   const navigate = useNavigate();
-  const { isLoggedIn, userId } = useSessionContext();
-  const { dispatchUserId, dispatchIsLoggedIn } = useSessionActionsContext();
+  const { logout } = useSessionActionsContext();
+  const { user, isLoggedIn } = useSessionContext();
+  const [loggedInUser, setLoggedInUser] = useState(null);
 
-  // DESC: 로그아웃, context 비워주기
+  useEffect(() => {
+    setLoggedInUser(user);
+  }, [user, isLoggedIn]);
+
   const handleLogout = useCallback(() => {
     logout();
-    dispatchUserId(null);
-    dispatchIsLoggedIn(false);
-  }, [dispatchIsLoggedIn, dispatchUserId]);
+  }, []);
 
   return (
     <header className="gnb-wrapper">
@@ -39,20 +37,14 @@ function Gnb() {
         {isLoggedIn ? (
           <>
             <span className="gnb-greeting">
-              {userId}
+              {loggedInUser?.username}
               님, 환영합니다!
             </span>
-            <ButtonNormal
-              text="내 가게"
-              handleClick={() => navigate('/stores/1')}
-            />
+            <ButtonNormal text="내 가게" handleClick={() => navigate('/stores/1')} />
             <ButtonNormal text="로그아웃" handleClick={handleLogout} />
           </>
         ) : (
-          <ButtonNormal
-            text="로그인"
-            handleClick={() => navigate('/login')}
-          />
+          <ButtonNormal text="로그인" handleClick={() => navigate('/login')} />
         )}
       </div>
     </header>

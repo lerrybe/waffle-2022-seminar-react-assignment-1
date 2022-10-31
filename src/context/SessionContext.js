@@ -1,38 +1,44 @@
-import { createContext, useContext, useEffect, useMemo, useState } from 'react';
-import { initialUser, initialUserActions } from '../data/initialSessionStates';
+import { createContext, useContext, useState } from 'react';
 
-import { loadItem } from '../services/storage';
+import { saveItem } from '../services/storage';
+import { requestLogin, requestLogout } from '../api/auth';
+import { initialUser, initialUserActions } from '../data/initialSessionStates';
 
 const SessionContext = createContext(initialUser);
 const SessionActionsContext = createContext(initialUserActions);
 
 function SessionProvider({ children }) {
-  const [userId, setUserId] = useState(null);
+  const [user, setUser] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [accessToken, setAccessToken] = useState(false);
 
-  const actions = useMemo(
-    () => ({
-      dispatchUserId(userId) {
-        setUserId(userId);
-      },
-      dispatchIsLoggedIn(isLoggedIn) {
-        setIsLoggedIn(isLoggedIn);
-      },
-    }),
-    [],
-  );
+  const login = async ({ id, password }) => {
+    const userData = await requestLogin({ id, password });
 
-  useEffect(() => {
-    actions.dispatchUserId(loadItem('userId'));
-    actions.dispatchIsLoggedIn(loadItem('isLoggedIn'));
-  }, [actions]);
+    if (userData) {
+      setIsLoggedIn(true);
+      setUser(userData?.owner);
+      setAccessToken(userData?.access_token);
+
+      saveItem('username', userData?.owner.username);
+      saveItem('isLoggedIn', true);
+    }
+  };
+
+  const logout = async () => {
+    requestLogout();
+    setUser(null);
+    setIsLoggedIn(false);
+    setAccessToken(null);
+  };
 
   return (
-    <SessionActionsContext.Provider value={actions}>
+    <SessionActionsContext.Provider value={{ login, logout }}>
       <SessionContext.Provider
         value={{
-          userId,
+          user,
           isLoggedIn,
+          accessToken,
         }}
       >
         {children}
