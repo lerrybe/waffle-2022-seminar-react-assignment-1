@@ -1,14 +1,14 @@
 import './home-page.css';
 
 import Gnb from '../../components/gnb';
-import ShopList from '../../components/shop-list';
+import StoreList from '../../components/store-list';
 
 function HomePage() {
   return (
     <>
       <Gnb />
       <div className="page-content-wrapper">
-        <ShopList />
+        <StoreList />
       </div>
     </>
   );
