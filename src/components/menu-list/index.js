@@ -10,7 +10,7 @@ import { useSessionContext } from '../../context/SessionContext';
 
 function MenuList({ keyword, handleOpenOverview, handleChangeKeyword }) {
   const navigate = useNavigate();
-  const { isLoggedIn } = useSessionContext();
+  const { accessToken } = useSessionContext();
 
   return (
     <div className="menu-outer-wrapper">
@@ -28,7 +28,7 @@ function MenuList({ keyword, handleOpenOverview, handleChangeKeyword }) {
           <span className="menu-category-rating">평점</span>
         </div>
         <MenuItems handleOpenOverview={handleOpenOverview} />
-        {isLoggedIn && (
+        {accessToken && (
           <button onClick={() => navigate('/menus/new')}>
             <img className="menu-create-icon" src={createIcon} alt="create" />
           </button>

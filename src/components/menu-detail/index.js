@@ -18,7 +18,7 @@ import { useMenuDataContext, useMenuDataActionsContext } from '../../context/Men
 function MenuDetail() {
   const { menuId } = useParams();
   const navigate = useNavigate();
-  const { isLoggedIn } = useSessionContext();
+  const { accessToken } = useSessionContext();
   const { menus, selectedMenu } = useMenuDataContext();
   const { dispatchMenus, dispatchSelectedMenu, dispatchSearchedMenus } = useMenuDataActionsContext();
 
@@ -94,7 +94,7 @@ function MenuDetail() {
           </>
         )}
 
-        {isLoggedIn && (
+        {accessToken && (
           <div className="interaction-wrapper">
             <button className="icon-wrapper" onClick={() => navigate(`/menus/${selectedMenu?.id}/edit`)}>
               <img alt="update" src={updateIcon} />

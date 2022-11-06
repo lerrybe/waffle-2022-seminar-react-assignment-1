@@ -9,17 +9,17 @@ import MenuNew from '../../components/menu-new';
 import { useSessionContext } from '../../context/SessionContext';
 
 function MenusNewPage() {
-  const { isLoggedIn } = useSessionContext();
+  const { accessToken } = useSessionContext();
 
   useEffect(() => {
-    if (!isLoggedIn) {
+    if (!accessToken) {
       alert('접근할 수 없습니다.');
     }
-  }, [isLoggedIn]);
+  }, [accessToken]);
 
   return (
     <>
-      {!isLoggedIn ? (
+      {!accessToken ? (
         <Navigate to={-1} />
       ) : (
         <>

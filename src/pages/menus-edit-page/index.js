@@ -13,19 +13,19 @@ import { useMenuDataContext } from '../../context/MenuDataContext';
 function MenusEditPage() {
   const { menuId } = useParams();
   const { menus } = useMenuDataContext();
-  const { isLoggedIn } = useSessionContext();
+  const { accessToken } = useSessionContext();
 
   useEffect(() => {
     if (!isValidMenuParams(menuId, menus)) {
       alert('유효하지 않은 메뉴 아이디입니다.');
-    } else if (!isLoggedIn) {
+    } else if (!accessToken) {
       alert('접근할 수 없습니다.');
     }
-  }, [isLoggedIn, menuId, menus]);
+  }, [accessToken, menuId, menus]);
 
   return (
     <>
-      {!isLoggedIn || !isValidMenuParams(menuId, menus) ? (
+      {!accessToken || !isValidMenuParams(menuId, menus) ? (
         <Navigate to={-1} />
       ) : (
         <>

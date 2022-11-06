@@ -12,15 +12,15 @@ import { useSessionContext, useSessionActionsContext } from '../../context/Sessi
 function Gnb({ storeSelected, storeName, username }) {
   const navigate = useNavigate();
   const { logout } = useSessionActionsContext();
-  const { user, isLoggedIn } = useSessionContext();
+  const { user, accessToken } = useSessionContext();
   const [loggedInUser, setLoggedInUser] = useState(null);
 
   useEffect(() => {
     setLoggedInUser(user);
-  }, [user, isLoggedIn]);
+  }, [user, accessToken]);
 
   const handleLogout = useCallback(() => {
-    logout();
+    logout(accessToken);
   }, []);
 
   return (
@@ -49,7 +49,7 @@ function Gnb({ storeSelected, storeName, username }) {
       </div>
 
       <div className="gnb-auth-wrapper">
-        {isLoggedIn ? (
+        {accessToken ? (
           <>
             <span className="gnb-greeting">
               {loggedInUser?.username}

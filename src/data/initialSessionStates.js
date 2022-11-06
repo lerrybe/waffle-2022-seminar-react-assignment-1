@@ -1,6 +1,5 @@
 export const initialUser = {
   user: null,
-  isLoggedIn: false,
   accessToken: null,
 };
 

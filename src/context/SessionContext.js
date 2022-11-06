@@ -11,7 +11,6 @@ const SessionActionsContext = createContext(initialUserActions);
 
 function SessionProvider({ children }) {
   const [user, setUser] = useState(null);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [accessToken, setAccessToken] = useState(null);
 
   const login = async ({ name, password }) => {
@@ -23,33 +22,26 @@ function SessionProvider({ children }) {
           theme: 'colored',
         });
 
-        setIsLoggedIn(true);
         setUser(userData?.owner);
         setAccessToken(userData?.access_token);
 
         saveItem('username', userData?.owner.username);
-        saveItem('isLoggedIn', true);
-
-        return true;
       }
-      toast.error('로그인에 실패했습니다.', {
-        theme: 'colored',
-      });
     } catch (err) {
       console.log(err);
     }
-
-    return false;
   };
 
-  const logout = async () => {
-    await requestLogout();
-    clearAll();
-    setUser(null);
-    setIsLoggedIn(false);
-    setAccessToken(null);
+  const logout = async (accessToken) => {
+    const res = await requestLogout(accessToken);
 
-    toast.info('로그아웃 되었습니다.');
+    if (res) {
+      clearAll();
+      setUser(null);
+      setAccessToken(null);
+
+      toast.info('로그아웃 되었습니다.');
+    }
   };
 
   return (
@@ -57,7 +49,6 @@ function SessionProvider({ children }) {
       <SessionContext.Provider
         value={{
           user,
-          isLoggedIn,
           accessToken,
         }}
       >
