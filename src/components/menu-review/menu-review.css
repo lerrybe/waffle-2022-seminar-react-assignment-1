@@ -5,6 +5,7 @@
   border-radius: 10px;
   padding: 7px 13px;
   overflow: auto;
+  margin-bottom: 10px;
 }
 
 .menu-review-header {
@@ -15,6 +16,7 @@
   font-weight: 400;
   font-size: 16px;
   line-height: 20px;
+  margin-right: 5px;
 }
 
 .menu-review-rating {

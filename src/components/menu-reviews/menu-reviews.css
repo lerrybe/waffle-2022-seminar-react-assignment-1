@@ -5,6 +5,7 @@
   border: 1px solid #000000;
   border-radius: 10px;
   padding: 15px 20px;
+  overflow: auto;
 }
 
 .menu-review-rating-wrapper {
@@ -28,5 +29,13 @@
 .menu-reviews-rating-text {
   font-weight: 400;
   font-size: 16px;
-  line-height: 20px;
+  line-height: 24px;
+  margin-left: 5px;
+}
+
+.menu-reviews-content-wrapper {
+  overflow: auto;
+  width: 100%;
+  height: calc(100vh - 400px);
+  margin: 20px 0 40px 0;
 }
