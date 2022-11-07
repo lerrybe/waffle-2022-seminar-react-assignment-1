@@ -10,31 +10,37 @@ import StoreCard from '../store-card';
 import { requestOwners } from '../../api/owners';
 
 function StoreList() {
-  // 각각의 카드에 onClick 이벤트!
   const navigate = useNavigate();
+
+  const [keyword, setKeyword] = useState('');
   const [storeList, setStoreList] = useState(null);
 
+  // 💡 DESC: 초기 stores fetching
   useEffect(() => {
     (async () => {
-      try {
-        const stores = await requestOwners();
-        setStoreList(stores);
-      } catch (err) {
-        console.log(err);
-      }
+      const stores = await requestOwners(keyword);
+      setStoreList(stores);
     })();
+  }, [keyword, requestOwners]);
+
+  const handleChangeKeyword = useCallback((e) => {
+    setKeyword(e.target.value);
   }, []);
 
   const handleClickStore = useCallback((storeId) => {
     navigate(`/stores/${storeId}`);
   }, []);
 
-  // TODO: 난수생성 -> API 정보로
-  const randomStarRating = () => Math.floor(Math.random() * 5) + 1;
+  // 💡 DESC: 가게의 rating 정보, 현재는 난수 생성 * TODO: API Fetching
+  const randomStarRating = () => Math.floor(Math.random() * 10) + 1;
 
   return (
     <div className="store-outer-wrapper">
-      <SearchBar label="가게 검색: " />
+      <SearchBar
+        keyword={keyword}
+        label="가게 검색: "
+        handleChangeKeyword={handleChangeKeyword}
+      />
       <>
         {!storeList ? (
           <Loading />
@@ -46,7 +52,7 @@ function StoreList() {
                 storeName={el?.store_name || '이름 없는 가게'}
                 username={el?.username || '주인 없는 가게'}
                 storeDesc={el?.store_description || '설명이 없는 가게'}
-                starRating={randomStarRating()}
+                rating={randomStarRating()}
                 handleClick={() => handleClickStore(el?.id)}
               />
             ))}
