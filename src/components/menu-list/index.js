@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import './menu-list.css';
 import createIcon from '../../assets/create-icon.svg';
@@ -6,11 +6,12 @@ import createIcon from '../../assets/create-icon.svg';
 import MenuItems from '../menu-items';
 import SearchBar from '../search-bar';
 
-import { useSessionContext } from '../../context/SessionContext';
+import { loadObjItem } from '../../services/storage';
 
 function MenuList({ keyword, handleOpenOverview, handleChangeKeyword }) {
   const navigate = useNavigate();
-  const { accessToken } = useSessionContext();
+  const { storeId } = useParams();
+  const user = loadObjItem('user');
 
   return (
     <div className="menu-outer-wrapper">
@@ -28,10 +29,12 @@ function MenuList({ keyword, handleOpenOverview, handleChangeKeyword }) {
           <span className="menu-category-rating">평점</span>
         </div>
         <MenuItems handleOpenOverview={handleOpenOverview} />
-        {accessToken && (
+        {Number(user?.id) === Number(storeId) ? (
           <button onClick={() => navigate('/menus/new')}>
             <img className="menu-create-icon" src={createIcon} alt="create" />
           </button>
+        ) : (
+          <></>
         )}
       </div>
     </div>

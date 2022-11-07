@@ -2,6 +2,7 @@ import { useCallback, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import './menu-edit.css';
+import { toast } from 'react-toastify';
 
 import ButtonNormal from '../button-normal';
 
@@ -11,19 +12,17 @@ import {
   toNumberWithoutComma,
 } from '../../utils/menu/price';
 import { convertTypeEnToKo } from '../../utils/menu/type';
+import { requestUpdateMenu } from '../../api/menus';
 
-import {
-  useMenuDataContext,
-  useMenuDataActionsContext,
-} from '../../context/MenuDataContext';
+import { useMenuDataContext } from '../../context/MenuDataContext';
+import { useSessionContext } from '../../context/SessionContext';
 
 function MenuEdit() {
   const navigate = useNavigate();
-  const { menus, selectedMenu } = useMenuDataContext();
-  const { dispatchMenus, dispatchSelectedMenu, dispatchSearchedMenus } = useMenuDataActionsContext();
+  const { accessToken } = useSessionContext();
+  const { selectedMenu } = useMenuDataContext();
 
   const [formData, setFormData] = useState({
-    id: selectedMenu?.id,
     name: selectedMenu?.name,
     price: selectedMenu?.price,
     image: selectedMenu?.image,
@@ -56,24 +55,22 @@ function MenuEdit() {
     const { isValidPrice, announcement } = checkValidPrice(formData.price);
 
     if (!isValidPrice) {
-      alert(announcement);
+      toast.error(announcement);
       return;
     }
-    const updatedMenu = menus.map((item) => (selectedMenu.id === item.id ? formData : item));
-    dispatchMenus(updatedMenu);
-    dispatchSelectedMenu(formData);
-    dispatchSearchedMenus(updatedMenu);
-    // DESC: 수정한 메뉴 상세보기로 이동
-    navigate(`/menus/${formData?.id}`);
-  }, [
-    dispatchMenus,
-    dispatchSearchedMenus,
-    dispatchSelectedMenu,
-    formData,
-    menus,
-    navigate,
-    selectedMenu?.id,
-  ]);
+
+    (async () => {
+      const res = await requestUpdateMenu(
+        selectedMenu?.id,
+        formData,
+        accessToken,
+      );
+      if (res) {
+        toast.success('메뉴가 수정되었습니다!');
+        navigate(`/menus/${res.id}}`);
+      }
+    })();
+  }, [formData, navigate, selectedMenu?.id]);
 
   return (
     <>
@@ -128,10 +125,7 @@ function MenuEdit() {
           bgColor="#D3FFC3"
           handleClick={handleSubmit}
         />
-        <ButtonNormal
-          text="취소"
-          handleClick={() => navigate(`/menus/${selectedMenu?.id}`)}
-        />
+        <ButtonNormal text="취소" handleClick={() => navigate(-1)} />
       </div>
     </>
   );

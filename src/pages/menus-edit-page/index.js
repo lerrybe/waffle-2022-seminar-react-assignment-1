@@ -3,6 +3,7 @@ import { Navigate, useParams } from 'react-router-dom';
 
 import './menus-edit-page.css';
 
+import { toast } from 'react-toastify';
 import Gnb from '../../components/gnb';
 import MenuEdit from '../../components/menu-edit';
 
@@ -17,9 +18,9 @@ function MenusEditPage() {
 
   useEffect(() => {
     if (!isValidMenuParams(menuId, menus)) {
-      alert('유효하지 않은 메뉴 아이디입니다.');
+      toast.error('유효하지 않은 메뉴 아이디입니다.');
     } else if (!accessToken) {
-      alert('접근할 수 없습니다.');
+      toast.error('접근할 수 없습니다.');
     }
   }, [accessToken, menuId, menus]);
 

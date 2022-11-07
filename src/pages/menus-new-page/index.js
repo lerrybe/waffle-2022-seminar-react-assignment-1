@@ -3,6 +3,7 @@ import { Navigate } from 'react-router-dom';
 
 import './menus-new-page.css';
 
+import { toast } from 'react-toastify';
 import Gnb from '../../components/gnb';
 import MenuNew from '../../components/menu-new';
 
@@ -13,7 +14,7 @@ function MenusNewPage() {
 
   useEffect(() => {
     if (!accessToken) {
-      alert('접근할 수 없습니다.');
+      toast.error('접근할 수 없습니다.');
     }
   }, [accessToken]);
 

@@ -2,21 +2,24 @@ import { useCallback, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import './menu-new.css';
-
+import { toast } from 'react-toastify';
 import ButtonNormal from '../button-normal';
 
-import { checkValidPrice, toStringNumberWithComma, toNumberWithoutComma } from '../../utils/menu/price';
+import {
+  checkValidPrice,
+  toStringNumberWithComma,
+  toNumberWithoutComma,
+} from '../../utils/menu/price';
+import { requestCreateMenu } from '../../api/menus';
 import { checkValidName } from '../../utils/menu/name';
 
-import { useMenuDataContext, useMenuDataActionsContext } from '../../context/MenuDataContext';
+import { useSessionContext } from '../../context/SessionContext';
 
 function MenusNewPage() {
   const navigate = useNavigate();
-  const { menus } = useMenuDataContext();
-  const { dispatchMenus, dispatchSelectedMenu, dispatchSearchedMenus } = useMenuDataActionsContext();
+  const { accessToken } = useSessionContext();
 
   const [formData, setFormData] = useState({
-    id: menus[menus.length - 1].id + 1,
     name: '',
     price: '',
     image: '',
@@ -32,7 +35,9 @@ function MenusNewPage() {
         value: e.target.value,
       };
       if (target.name === 'price') {
-        target.value = toNumberWithoutComma(e.target.value.replace(/[^0-9]/g, ''));
+        target.value = toNumberWithoutComma(
+          e.target.value.replace(/[^0-9]/g, ''),
+        );
       }
       setFormData({
         ...formData,
@@ -44,25 +49,33 @@ function MenusNewPage() {
 
   // DESC: 메뉴 추가 등록하기
   const handleSubmit = useCallback(() => {
-    const { isValidName, announcement: nameAnnouncement } = checkValidName(formData.name, menus, formData.id);
-    const { isValidPrice, announcement: priceAnnouncement } = checkValidPrice(formData.price);
+    const { isValidName, announcement: nameAnnouncement } = checkValidName(
+      formData.name,
+    );
+    const { isValidPrice, announcement: priceAnnouncement } = checkValidPrice(
+      formData.price,
+    );
 
     if (!isValidName) {
-      alert(nameAnnouncement);
+      toast.error(nameAnnouncement);
       return;
     }
     if (!isValidPrice) {
-      alert(priceAnnouncement);
+      toast.error(priceAnnouncement);
       return;
     }
 
-    const newmenus = [...menus, formData];
-    dispatchMenus(newmenus);
-    dispatchSelectedMenu(formData);
-    dispatchSearchedMenus(newmenus);
+    // DESC: 요청
+    (async () => {
+      const res = await requestCreateMenu(formData, accessToken);
+      if (res) {
+        toast.success('메뉴가 생성되었습니다!');
+        navigate(`/menus/${res.id}}`);
+      }
+    })();
+
     // DESC: 생성한 메뉴 상세보기로 이동
-    navigate(`/menus/${formData?.id}`);
-  }, [dispatchMenus, dispatchSearchedMenus, dispatchSelectedMenu, formData, menus, navigate]);
+  }, [formData, navigate]);
 
   return (
     <>
@@ -130,8 +143,12 @@ function MenusNewPage() {
       </div>
 
       <div className="menu-new-button-wrapper">
-        <ButtonNormal text="추가" bgColor="#D3FFC3" handleClick={handleSubmit} />
-        <ButtonNormal text="취소" handleClick={() => navigate('/stores/1')} />
+        <ButtonNormal
+          text="추가"
+          bgColor="#D3FFC3"
+          handleClick={handleSubmit}
+        />
+        <ButtonNormal text="취소" handleClick={() => navigate(-1)} />
       </div>
     </>
   );

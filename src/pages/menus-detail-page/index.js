@@ -1,5 +1,4 @@
-import { useEffect } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 
 import './menus-detail-page.css';
 
@@ -7,29 +6,23 @@ import Gnb from '../../components/gnb';
 import MenuDetail from '../../components/menu-detail';
 import MenuReviews from '../../components/menu-reviews';
 
-import { requestMenu } from '../../api/menus';
-import { useMenuDataActionsContext } from '../../context/MenuDataContext';
+import { loadObjItem } from '../../services/storage';
 
 function MenusDetailPage() {
-  const { menuId } = useParams();
-  const navigate = useNavigate();
-  const { dispatchSelectedMenu } = useMenuDataActionsContext();
+  const [store, setStore] = useState(null);
 
   useEffect(() => {
-    (async () => {
-      try {
-        const res = await requestMenu(menuId);
-        dispatchSelectedMenu(res.data);
-      } catch (err) {
-        console.log(err);
-        navigate(-1);
-      }
-    })();
+    const storeData = loadObjItem('owner');
+    setStore(storeData);
   }, []);
 
   return (
     <>
-      <Gnb />
+      <Gnb
+        storeSelected
+        storeName={store?.owner?.store_name}
+        username={store?.owner?.username}
+      />
       <div className="menu-detail-wrapper">
         <MenuDetail />
         <MenuReviews />

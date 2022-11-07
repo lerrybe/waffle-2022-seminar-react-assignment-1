@@ -1,6 +1,5 @@
-import { useState } from 'react';
-
 import './menu-item.css';
+import { Rating } from '@mui/material';
 
 import { convertTypeEnToKo } from '../../utils/menu/type';
 import { toStringNumberWithComma } from '../../utils/menu/price';
@@ -8,12 +7,13 @@ import { toStringNumberWithComma } from '../../utils/menu/price';
 function MenuItem({ menuItem, selectedMenu, handleOpenOverview }) {
   const { id, name, type, price } = menuItem;
 
-  // TODO: res 정보로 바꾸기
-  const [starRating] = useState(3);
-
   return (
     <li
-      className={`menu-item-wrapper ${selectedMenu === menuItem ? 'selected-menu-item' : 'not-selected-menu-item'}`}
+      className={`menu-item-wrapper ${
+        selectedMenu === menuItem
+          ? 'selected-menu-item'
+          : 'not-selected-menu-item'
+      }`}
       onClick={() => handleOpenOverview(menuItem)}
     >
       <span className="menu-item-id">{id}</span>
@@ -21,8 +21,17 @@ function MenuItem({ menuItem, selectedMenu, handleOpenOverview }) {
       <span className="menu-item-type">{convertTypeEnToKo(type)}</span>
       <span className="menu-item-price">{toStringNumberWithComma(price)}</span>
       <span className="menu-item-rating">
-        {'★'.repeat(starRating) + '☆'.repeat(5 - starRating)}
-        <span className="menu-item-rating-text">{starRating}</span>
+        <Rating
+          name="half-rating-read"
+          value={
+            menuItem?.rating ? (Number(menuItem.rating) / 2).toFixed(1) : 0
+          }
+          precision={0.5}
+          readOnly
+        />
+        <span className="menu-item-rating-text">
+          {menuItem?.rating ? (Number(menuItem.rating) / 2).toFixed(1) : 0}
+        </span>
       </span>
     </li>
   );

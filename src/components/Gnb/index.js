@@ -6,14 +6,17 @@ import logoImg from '../../assets/logo.svg';
 
 import ButtonNormal from '../button-normal';
 
-import { useSessionContext, useSessionActionsContext } from '../../context/SessionContext';
+import {
+  useSessionContext,
+  useSessionActionsContext,
+} from '../../context/SessionContext';
 
 // DESC: global navbar
 function Gnb({ storeSelected, storeName, username }) {
   const navigate = useNavigate();
+  const [loggedInUser, setLoggedInUser] = useState(null);
   const { logout } = useSessionActionsContext();
   const { user, accessToken } = useSessionContext();
-  const [loggedInUser, setLoggedInUser] = useState(null);
 
   useEffect(() => {
     setLoggedInUser(user);
@@ -21,6 +24,7 @@ function Gnb({ storeSelected, storeName, username }) {
 
   const handleLogout = useCallback(() => {
     logout(accessToken);
+    window.location.href = '/';
   }, []);
 
   return (
@@ -40,8 +44,12 @@ function Gnb({ storeSelected, storeName, username }) {
             <div className="gnb-selected">
               <h1 className="gnb-title-sm">와플스튜디오 메뉴 관리</h1>
               <div className="gnb-store">
-                <h1 className="gnb-store-name">{storeName || '이름 없는 가게'}</h1>
-                <span className="gnb-username">{`by ${username}` || '주인 없는 가게'}</span>
+                <h1 className="gnb-store-name">
+                  {storeName || '이름 없는 가게'}
+                </h1>
+                <span className="gnb-username">
+                  {`by ${username}` || '주인 없는 가게'}
+                </span>
               </div>
             </div>
           )}
@@ -55,7 +63,10 @@ function Gnb({ storeSelected, storeName, username }) {
               {loggedInUser?.username}
               님, 환영합니다!
             </span>
-            <ButtonNormal text="내 가게" handleClick={() => navigate('/stores/1')} />
+            <ButtonNormal
+              text="내 가게"
+              handleClick={() => navigate(`/stores/${loggedInUser.id}`)}
+            />
             <ButtonNormal text="로그아웃" handleClick={handleLogout} />
           </>
         ) : (

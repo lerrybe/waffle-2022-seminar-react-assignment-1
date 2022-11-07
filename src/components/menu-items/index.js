@@ -1,8 +1,30 @@
+import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+
 import MenuItem from '../menu-item';
-import { useMenuDataContext } from '../../context/MenuDataContext';
+
+import {
+  useMenuDataActionsContext,
+  useMenuDataContext,
+} from '../../context/MenuDataContext';
+
+import { requestMenus } from '../../api/menus';
 
 function MenuItems({ handleOpenOverview }) {
-  const { selectedMenu, searchedMenus: menuItems } = useMenuDataContext();
+  const { storeId } = useParams();
+
+  const [menuItems, setMenuItems] = useState();
+
+  const { selectedMenu } = useMenuDataContext();
+  const { dispatchMenus } = useMenuDataActionsContext();
+
+  useEffect(() => {
+    (async () => {
+      const res = await requestMenus(storeId);
+      dispatchMenus(res.data);
+      setMenuItems(res.data);
+    })();
+  }, [storeId]);
 
   return (
     <ul>

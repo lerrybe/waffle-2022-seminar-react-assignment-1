@@ -1,7 +1,7 @@
-import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import './menu-overview.css';
+import { Rating } from '@mui/material';
 import closeIcon from '../../assets/close-icon.svg';
 
 import ButtonNormal from '../button-normal';
@@ -12,8 +12,6 @@ import { toStringNumberWithComma } from '../../utils/menu/price';
 import { useMenuDataContext } from '../../context/MenuDataContext';
 
 function MenuOverview({ handleCloseOverview }) {
-  const [starRating] = useState(3);
-
   const navigate = useNavigate();
   const { selectedMenu } = useMenuDataContext();
 
@@ -42,11 +40,18 @@ function MenuOverview({ handleCloseOverview }) {
               {convertTypeEnToKo(selectedMenu?.type)}
             </span>
             <span className="overview-price">
-              {toStringNumberWithComma(selectedMenu?.price)}
-              원
+              {toStringNumberWithComma(selectedMenu?.price)}원
             </span>
             <span className="overview-rating">
-              {'★'.repeat(starRating) + '☆'.repeat(5 - starRating)}
+              <Rating
+                name="half-rating-read"
+                value={
+                  selectedMenu?.rating ? (Number(selectedMenu.rating) / 2).toFixed(1) : 0
+                }
+                precision={0.5}
+                size="large"
+                readOnly
+              />
             </span>
           </>
         )}
