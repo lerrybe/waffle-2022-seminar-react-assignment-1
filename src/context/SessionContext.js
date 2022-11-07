@@ -2,7 +2,7 @@ import { createContext, useContext, useState } from 'react';
 
 import { toast } from 'react-toastify';
 
-import { saveItem, clearAll } from '../services/storage';
+import { clearAll, saveObjItem } from '../services/storage';
 import { requestLogin, requestLogout } from '../api/auth';
 import { initialUser, initialUserActions } from '../data/initialSessionStates';
 
@@ -25,7 +25,7 @@ function SessionProvider({ children }) {
         setUser(userData?.owner);
         setAccessToken(userData?.access_token);
 
-        saveItem('username', userData?.owner.username);
+        saveObjItem('user', userData?.owner);
       }
     } catch (err) {
       console.log(err);

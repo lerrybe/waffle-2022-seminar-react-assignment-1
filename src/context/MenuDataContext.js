@@ -2,21 +2,18 @@ import { createContext, useContext, useMemo, useState } from 'react';
 import {
   initialMenus,
   initialSelectedMenu,
-  initialSearchedMenus,
   initialMenuDataActions,
 } from '../data/initialMenuDataStates';
 
 const MenuDataContext = createContext({
   initialMenus,
   initialSelectedMenu,
-  initialSearchedMenus,
 });
 const MenuDataActionsContext = createContext(initialMenuDataActions);
 
 function MenuDataProvider({ children }) {
   const [menus, setMenus] = useState(initialMenus);
   const [selectedMenu, setSelectedMenu] = useState(initialSelectedMenu);
-  const [searchedMenus, setSearchedMenus] = useState(initialSearchedMenus);
 
   const actions = useMemo(
     () => ({
@@ -26,16 +23,15 @@ function MenuDataProvider({ children }) {
       dispatchSelectedMenu(newMenu) {
         setSelectedMenu(newMenu);
       },
-      dispatchSearchedMenus(newMenus) {
-        setSearchedMenus(newMenus);
-      },
     }),
     [],
   );
 
   return (
     <MenuDataActionsContext.Provider value={actions}>
-      <MenuDataContext.Provider value={{ menus, selectedMenu, searchedMenus }}>{children}</MenuDataContext.Provider>
+      <MenuDataContext.Provider value={{ menus, selectedMenu }}>
+        {children}
+      </MenuDataContext.Provider>
     </MenuDataActionsContext.Provider>
   );
 }
