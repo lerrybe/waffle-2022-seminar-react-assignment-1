@@ -1,5 +1,7 @@
 import { forwardRef } from 'react';
 
+import Moment from 'react-moment';
+
 import './menu-review.css';
 import { Rating } from '@mui/material';
 import updateIcon from '../../assets/update-icon.svg';
@@ -34,7 +36,12 @@ const MenuReview = forwardRef(
             readOnly
             size="small"
           />
-          <span className="menu-review-time">{createdAt}</span>
+          <span className="menu-review-time">
+            <Moment fromNow ago>
+              {createdAt}
+            </Moment>
+            {' ago'}
+          </span>
           {/* DESC: 작성자만 수정/삭제 가능 */}
           {user?.username === author?.username && (
             <div className="menu-review-action">
