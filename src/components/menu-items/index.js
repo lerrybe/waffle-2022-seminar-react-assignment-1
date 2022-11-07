@@ -1,34 +1,13 @@
-import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-
 import MenuItem from '../menu-item';
 
-import {
-  useMenuDataActionsContext,
-  useMenuDataContext,
-} from '../../context/MenuDataContext';
-
-import { requestMenus } from '../../api/menus';
+import { useMenuDataContext } from '../../context/MenuDataContext';
 
 function MenuItems({ handleOpenOverview }) {
-  const { storeId } = useParams();
-
-  const [menuItems, setMenuItems] = useState();
-
-  const { selectedMenu } = useMenuDataContext();
-  const { dispatchMenus } = useMenuDataActionsContext();
-
-  useEffect(() => {
-    (async () => {
-      const res = await requestMenus(storeId);
-      dispatchMenus(res.data);
-      setMenuItems(res.data);
-    })();
-  }, [storeId]);
+  const { menus, selectedMenu } = useMenuDataContext();
 
   return (
     <ul>
-      {menuItems?.map((menuItem) => (
+      {menus?.map((menuItem) => (
         <MenuItem
           key={menuItem.id}
           menuItem={menuItem}

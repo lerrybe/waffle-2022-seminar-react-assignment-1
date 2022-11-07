@@ -27,7 +27,7 @@ function MenuDetail() {
   const navigate = useNavigate();
   const { accessToken } = useSessionContext();
   const { menus, selectedMenu } = useMenuDataContext();
-  const { dispatchMenus, dispatchSelectedMenu } = useMenuDataActionsContext();
+  const { dispatchSelectedMenu } = useMenuDataActionsContext();
 
   const [isModalOpened, setIsModalOpened] = useState(false);
   const [modalAnimation, setModalAnimation] = useState(false);
@@ -67,7 +67,6 @@ function MenuDetail() {
     handleToggleDeleteModal();
     navigate(-1);
   }, [
-    dispatchMenus,
     dispatchSelectedMenu,
     handleToggleDeleteModal,
     selectedMenu?.id,

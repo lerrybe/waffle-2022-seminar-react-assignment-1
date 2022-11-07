@@ -51,7 +51,7 @@ function MenuListContainer() {
       const res = await requestMenus(storeId);
       dispatchMenus(res.data);
     })();
-  }, []);
+  }, [storeId]);
 
   useEffect(() => {
     searchMenu(keyword);
@@ -60,6 +60,11 @@ function MenuListContainer() {
   useEffect(() => {
     if (selectedMenu) setOpenDetail(true);
   }, [selectedMenu]);
+
+  // DESC: 초기화
+  useEffect(() => {
+    setOpenDetail(false);
+  }, [storeId]);
 
   return (
     <>
