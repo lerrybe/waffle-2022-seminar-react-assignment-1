@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { toast } from 'react-toastify';
 
 import { BASE_URL } from '../constant/constant';
 
@@ -17,7 +16,6 @@ export const requestMenu = async (menuId) => {
     const res = await axios.get(`${BASE_URL}/menus/${menuId}`);
     return res.data;
   } catch (e) {
-    toast.error(e.response.data.message);
     return null;
   }
 };

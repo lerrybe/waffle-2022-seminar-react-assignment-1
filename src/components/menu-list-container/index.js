@@ -1,19 +1,24 @@
 import { useCallback, useEffect, useState } from 'react';
-
 import { useParams } from 'react-router-dom';
+
 import MenuList from '../menu-list';
 import MenuOverview from '../menu-overview';
 
-import { useMenuDataContext, useMenuDataActionsContext } from '../../context/MenuDataContext';
+import {
+  useMenuDataContext,
+  useMenuDataActionsContext,
+} from '../../context/MenuDataContext';
+
 import { requestMenus } from '../../api/menus';
 
 function MenuListContainer() {
   const { storeId } = useParams();
+
   const [keyword, setKeyword] = useState('');
   const [openDetail, setOpenDetail] = useState(false);
 
-  const { menus, selectedMenu } = useMenuDataContext();
-  const { dispatchMenus, dispatchSelectedMenu, dispatchSearchedMenus } = useMenuDataActionsContext();
+  const { selectedMenu } = useMenuDataContext();
+  const { dispatchMenus, dispatchSelectedMenu } = useMenuDataActionsContext();
 
   // DESC: 가게 페이지 Overview - open, close 이벤트 핸들러 함수
   const handleOpenOverview = useCallback(
@@ -35,39 +40,34 @@ function MenuListContainer() {
   }, []);
 
   // DESC: 키워드로 메뉴 찾는 함수
-  const searchMenu = useCallback(
-    (keyword, menus) => {
-      if (keyword === '') {
-        dispatchSearchedMenus(menus);
-      } else {
-        dispatchSearchedMenus(menus.filter((item) => item.name.includes(keyword)));
-      }
-    },
-    [dispatchSearchedMenus],
-  );
+  const searchMenu = useCallback((keyword) => {
+    // 데이터 불러와서 menus에 dispatch
+    console.log(keyword);
+  }, []);
+
+  // DESC: menus fetching
+  useEffect(() => {
+    (async () => {
+      const res = await requestMenus(storeId);
+      dispatchMenus(res.data);
+    })();
+  }, []);
 
   useEffect(() => {
-    searchMenu(keyword, menus);
-  }, [keyword, menus, searchMenu]);
+    searchMenu(keyword);
+  }, [keyword, searchMenu]);
 
   useEffect(() => {
     if (selectedMenu) setOpenDetail(true);
   }, [selectedMenu]);
 
-  useEffect(() => {
-    (async () => {
-      try {
-        const res = await requestMenus(storeId);
-        dispatchMenus(res.data);
-      } catch (err) {
-        console.log(err);
-      }
-    })();
-  }, []);
-
   return (
     <>
-      <MenuList keyword={keyword} handleOpenOverview={handleOpenOverview} handleChangeKeyword={handleChangeKeyword} />
+      <MenuList
+        keyword={keyword}
+        handleOpenOverview={handleOpenOverview}
+        handleChangeKeyword={handleChangeKeyword}
+      />
       {openDetail && <MenuOverview handleCloseOverview={handleCloseOverview} />}
     </>
   );
