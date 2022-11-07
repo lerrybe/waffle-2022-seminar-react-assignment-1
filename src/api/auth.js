@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { toast } from 'react-toastify';
+
 import { getURL } from '../utils/urls';
 
 export const requestLogin = async ({ name, password }) => {
