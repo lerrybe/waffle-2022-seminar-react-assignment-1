@@ -11,6 +11,15 @@ export const requestMenus = async (ownerId) => {
   }
 };
 
+export const requestSearchedMenus = async (ownerId, keyword) => {
+  try {
+    const res = await axios.get(`${BASE_URL}/menus/?owner=${ownerId}&search=${keyword}`);
+    return res.data;
+  } catch (e) {
+    return null;
+  }
+};
+
 export const requestMenu = async (menuId) => {
   try {
     const res = await axios.get(`${BASE_URL}/menus/${menuId}`);

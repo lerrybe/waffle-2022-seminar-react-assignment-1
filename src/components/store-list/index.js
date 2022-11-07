@@ -1,6 +1,8 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import _ from 'lodash';
+
 import './store-list.css';
 
 import Loading from '../loading';
@@ -9,23 +11,34 @@ import StoreCard from '../store-card';
 
 import { requestOwners } from '../../api/owners';
 
+import {
+  useStoreDataContext,
+  useStoreDataActionsContext,
+} from '../../context/StoreDataContext';
+
 function StoreList() {
   const navigate = useNavigate();
 
+  const { stores } = useStoreDataContext();
+
   const [keyword, setKeyword] = useState('');
-  const [storeList, setStoreList] = useState(null);
+  const [storeList, setStoreList] = useState(stores);
+
+  const { dispatchStores } = useStoreDataActionsContext();
 
   // 💡 DESC: 초기 stores fetching
   useEffect(() => {
     (async () => {
-      const stores = await requestOwners(keyword);
-      setStoreList(stores);
+      const res = await requestOwners(keyword);
+      dispatchStores(res);
+      setStoreList(res);
     })();
   }, [keyword, requestOwners]);
 
-  const handleChangeKeyword = useCallback((e) => {
+  // DESC: 검색어 변화 감지 이벤트 핸들러 함수
+  const handleChangeKeyword = _.throttle((e) => {
     setKeyword(e.target.value);
-  }, []);
+  }, 500);
 
   const handleClickStore = useCallback((storeId) => {
     navigate(`/stores/${storeId}`);

@@ -5,8 +5,6 @@ import { convertTypeEnToKo } from '../../utils/menu/type';
 import { toStringNumberWithComma } from '../../utils/menu/price';
 
 function MenuItem({ menuItem, selectedMenu, handleOpenOverview }) {
-  const { id, name, type, price } = menuItem;
-
   return (
     <li
       className={`menu-item-wrapper ${
@@ -16,10 +14,14 @@ function MenuItem({ menuItem, selectedMenu, handleOpenOverview }) {
       }`}
       onClick={() => handleOpenOverview(menuItem)}
     >
-      <span className="menu-item-id">{id}</span>
-      <span className="menu-item-name">{name}</span>
-      <span className="menu-item-type">{convertTypeEnToKo(type)}</span>
-      <span className="menu-item-price">{toStringNumberWithComma(price)}</span>
+      <span className="menu-item-id">{menuItem?.id}</span>
+      <span className="menu-item-name">{menuItem?.name}</span>
+      <span className="menu-item-type">
+        {convertTypeEnToKo(menuItem?.type)}
+      </span>
+      <span className="menu-item-price">
+        {toStringNumberWithComma(menuItem?.price)}
+      </span>
       <span className="menu-item-rating">
         <Rating
           name="half-rating-read"

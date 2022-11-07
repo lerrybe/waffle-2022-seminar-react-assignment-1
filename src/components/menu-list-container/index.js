@@ -1,6 +1,8 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
+import _ from 'lodash';
+
 import MenuList from '../menu-list';
 import MenuOverview from '../menu-overview';
 
@@ -9,7 +11,7 @@ import {
   useMenuDataActionsContext,
 } from '../../context/MenuDataContext';
 
-import { requestMenus } from '../../api/menus';
+import { requestMenus, requestSearchedMenus } from '../../api/menus';
 
 function MenuListContainer() {
   const { storeId } = useParams();
@@ -35,15 +37,22 @@ function MenuListContainer() {
   }, [dispatchSelectedMenu]);
 
   // DESC: 검색어 변화 감지 이벤트 핸들러 함수
-  const handleChangeKeyword = useCallback((e) => {
+  const handleChangeKeyword = _.throttle((e) => {
     setKeyword(e.target.value);
-  }, []);
+  }, 500);
 
-  // DESC: 키워드로 메뉴 찾는 함수
-  const searchMenu = useCallback((keyword) => {
-    // 데이터 불러와서 menus에 dispatch
-    console.log(keyword);
-  }, []);
+  useEffect(() => {
+    if (!keyword) {
+      (async () => {
+        const res = await requestMenus(storeId);
+        dispatchMenus(res?.data);
+      })();
+    }
+    (async () => {
+      const res = await requestSearchedMenus(storeId, keyword);
+      dispatchMenus(res?.data);
+    })();
+  }, [keyword]);
 
   // DESC: menus fetching
   useEffect(() => {
@@ -52,10 +61,6 @@ function MenuListContainer() {
       dispatchMenus(res.data);
     })();
   }, [storeId]);
-
-  useEffect(() => {
-    searchMenu(keyword);
-  }, [keyword, searchMenu]);
 
   useEffect(() => {
     if (selectedMenu) setOpenDetail(true);
