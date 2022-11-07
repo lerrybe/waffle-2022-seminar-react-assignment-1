@@ -34,5 +34,7 @@ module.exports = {
     'react/jsx-one-expression-per-line': 'off',
     'jsx-a11y/no-noninteractive-element-interactions': 'off',
     'no-console': 'off',
+    'react/function-component-definition': 'off',
+    'no-nested-ternary': 'off',
   },
 };
