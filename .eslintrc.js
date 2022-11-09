@@ -14,6 +14,7 @@ module.exports = {
   plugins: ['react'],
   rules: {
     // DESC: 일단 off, 리팩토링하며 off된 rules 수정 예정
+    'no-use-before-define': 'off',
     'react/jsx-uses-react': 'off',
     'react/react-in-jsx-scope': 'off',
     'react/jsx-filename-extension': [1, { extensions: ['.js', '.jsx'] }],
