@@ -1,6 +1,5 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 
-# temporary lint off for ts refactoring
-# echo "🧇 lint test...🧇"
-# yarn lint:fix
+echo "🧇 lint test...🧇"
+yarn lint:fix
