@@ -1,13 +1,7 @@
 import { Rating } from '@mui/material';
 import './store-card.css';
 
-function StoreCard({
-  storeName,
-  username,
-  storeDesc,
-  rating,
-  handleClick,
-}) {
+function StoreCard({ storeName, username, storeDesc, rating, handleClick }) {
   return (
     <div className="card-wrapper" onClick={handleClick}>
       <h1 className="store-name">{storeName}</h1>

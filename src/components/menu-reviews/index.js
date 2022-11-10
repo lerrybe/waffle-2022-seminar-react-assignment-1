@@ -216,39 +216,41 @@ function MenuReviews() {
       </div>
       <div className="menu-reviews-content-wrapper">
         <ul>
-          {reviews?.map((review, idx) => (targetReviewForUpdate === review?.id && !closeUpdateWindow ? (
-            <MenuReviewEdit
-              handleSubmitUpdate={handleSubmitUpdate}
-              updateReviewRating={updateReviewRating}
-              updateReviewContent={updateReviewContent}
-              handleChangeRating={handleChangeUpdateRating}
-              handleChangeContent={handleChangeUpdateContent}
-              handleCloseWindow={handleCloseWindow}
-            />
-          ) : reviews.length - 1 === idx ? (
-            <MenuReview
-              ref={ref}
-              key={review.id}
-              reviewId={review?.id}
-              author={review?.author}
-              content={review?.content}
-              rating={Number(review?.rating)}
-              createdAt={review?.created_at}
-              handleOpenUpdateWindow={handleOpenUpdateWindow}
-              handleToggleDeleteModal={handleToggleDeleteModal}
-            />
-          ) : (
-            <MenuReview
-              key={review.id}
-              reviewId={review?.id}
-              author={review?.author}
-              content={review?.content}
-              rating={Number(review?.rating)}
-              createdAt={review?.created_at}
-              handleOpenUpdateWindow={handleOpenUpdateWindow}
-              handleToggleDeleteModal={handleToggleDeleteModal}
-            />
-          )))}
+          {reviews?.map((review, idx) =>
+            targetReviewForUpdate === review?.id && !closeUpdateWindow ? (
+              <MenuReviewEdit
+                handleSubmitUpdate={handleSubmitUpdate}
+                updateReviewRating={updateReviewRating}
+                updateReviewContent={updateReviewContent}
+                handleChangeRating={handleChangeUpdateRating}
+                handleChangeContent={handleChangeUpdateContent}
+                handleCloseWindow={handleCloseWindow}
+              />
+            ) : reviews.length - 1 === idx ? (
+              <MenuReview
+                ref={ref}
+                key={review.id}
+                reviewId={review?.id}
+                author={review?.author}
+                content={review?.content}
+                rating={Number(review?.rating)}
+                createdAt={review?.created_at}
+                handleOpenUpdateWindow={handleOpenUpdateWindow}
+                handleToggleDeleteModal={handleToggleDeleteModal}
+              />
+            ) : (
+              <MenuReview
+                key={review.id}
+                reviewId={review?.id}
+                author={review?.author}
+                content={review?.content}
+                rating={Number(review?.rating)}
+                createdAt={review?.created_at}
+                handleOpenUpdateWindow={handleOpenUpdateWindow}
+                handleToggleDeleteModal={handleToggleDeleteModal}
+              />
+            ),
+          )}
         </ul>
       </div>
       <MenuReviewCreate

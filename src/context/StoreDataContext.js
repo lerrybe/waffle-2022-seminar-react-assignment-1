@@ -35,6 +35,7 @@ function StoreDataProvider({ children }) {
   );
 }
 export const useStoreDataContext = () => useContext(StoreDataContext);
-export const useStoreDataActionsContext = () => useContext(StoreDataActionsContext);
+export const useStoreDataActionsContext = () =>
+  useContext(StoreDataActionsContext);
 
 export default StoreDataProvider;

@@ -36,6 +36,7 @@ function MenuDataProvider({ children }) {
   );
 }
 export const useMenuDataContext = () => useContext(MenuDataContext);
-export const useMenuDataActionsContext = () => useContext(MenuDataActionsContext);
+export const useMenuDataActionsContext = () =>
+  useContext(MenuDataActionsContext);
 
 export default MenuDataProvider;
