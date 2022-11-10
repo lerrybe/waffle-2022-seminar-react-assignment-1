@@ -8,7 +8,7 @@ interface ButtonNormal {
 
 function ButtonNormal({ text, bgColor, handleClick }: ButtonNormal) {
   return (
-    <Button onClick={handleClick} bgColor={bgColor || '#fff'}>
+    <Button onClick={handleClick} bgColor={bgColor}>
       {text}
     </Button>
   );

@@ -1,14 +1,13 @@
 import { HTMLAttributes } from 'react';
-
 import styled from '@emotion/styled';
 
 interface Button extends HTMLAttributes<HTMLButtonElement> {
-  bgColor: string;
+  bgColor?: string;
 }
 
 export const Button = styled.button<Button>(
   ({ bgColor }) => `
-  background-color: ${bgColor};
+  background-color: ${bgColor || '#fff'};
   border: 1px solid #8a8a8a;
   border-radius: 5px;
   padding: 5px 10px;
