@@ -1,9 +1,9 @@
-const checkHangeulName = (name) => {
+const checkHangeulName = (name: string) => {
   const regex = /^[ㄱ-ㅎ|가-힣]+$/;
   return regex.test(name.replace(/(\s*)/g, ''));
 };
 
-export const checkValidName = (name) => {
+export const checkValidName = (name: string) => {
   if (!name.trim()) {
     return {
       isValidName: false,
