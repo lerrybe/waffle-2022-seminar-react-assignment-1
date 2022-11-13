@@ -7,9 +7,9 @@ import { Rating } from '@mui/material';
 import { toast } from 'react-toastify';
 
 import MenuReview from '../menu-review';
-import ModalDelete from '../modal-delete-menu';
+import ModalDelete from '../modal-delete';
 import MenuReviewEdit from '../menu-review-edit';
-import MenuReviewCreate from '../menu-review-create';
+import MenuReviewNew from '../menu-review-new';
 
 import {
   requestCreateReview,
@@ -253,7 +253,7 @@ function MenuReviews() {
           )}
         </ul>
       </div>
-      <MenuReviewCreate
+      <MenuReviewNew
         handleSubmitCreate={handleSubmitCreate}
         newReviewRating={newReviewRating}
         newReviewContent={newReviewContent}

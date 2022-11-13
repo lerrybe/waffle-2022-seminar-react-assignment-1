@@ -1,9 +1,9 @@
-import './menu-review-create.css';
+import './menu-review-new.css';
 
 import { Rating } from '@mui/material';
 import ButtonNormal from '../button-normal';
 
-function MenuReviewCreate({
+function MenuReviewNew({
   handleSubmitCreate,
   newReviewRating,
   newReviewContent,
@@ -36,4 +36,4 @@ function MenuReviewCreate({
   );
 }
 
-export default MenuReviewCreate;
+export default MenuReviewNew;

@@ -6,7 +6,7 @@ import updateIcon from '../../assets/update-icon.svg';
 import deleteIcon from '../../assets/delete-icon.svg';
 import arrowBackIcon from '../../assets/arrow-back-icon.svg';
 
-import ModalDelete from '../modal-delete-menu';
+import ModalDelete from '../modal-delete';
 
 import { loadObjItem } from '../../services/storage';
 import { convertTypeEnToKo } from '../../utils/menu/type';

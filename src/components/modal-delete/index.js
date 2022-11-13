@@ -1,4 +1,4 @@
-import './modal-delete-menu.css';
+import './modal-delete.css';
 
 import ButtonNormal from '../button-normal';
 import ModalWrapper from '../modal-wrapper';
