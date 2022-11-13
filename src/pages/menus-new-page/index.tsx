@@ -1,37 +1,40 @@
 import { useEffect } from 'react';
-import { Navigate } from 'react-router-dom';
-
-import './menus-new-page.css';
+import { useNavigate } from 'react-router-dom';
 
 import { toast } from 'react-toastify';
+import { ContentWrapper } from './menus-new-page.styled';
+
+import ErrorPage from '../error-page';
 import Gnb from '../../components/gnb';
 import MenuNew from '../../components/menu-new';
 
 import { useSessionContext } from '../../context/SessionContext';
 
-function MenusNewPage() {
-  const { accessToken } = useSessionContext();
+const MenusNewPage: React.FC = () => {
+  const navigate = useNavigate();
+  const { accessToken } = useSessionContext()!;
 
   useEffect(() => {
     if (!accessToken) {
       toast.error('접근할 수 없습니다.');
+      navigate(-1);
     }
   }, [accessToken]);
 
   return (
     <>
       {!accessToken ? (
-        <Navigate to={-1} />
+        <ErrorPage />
       ) : (
         <>
           <Gnb />
-          <div className="menus-new-page-wrapper">
+          <ContentWrapper>
             <MenuNew />
-          </div>
+          </ContentWrapper>
         </>
       )}
     </>
   );
-}
+};
 
 export default MenusNewPage;

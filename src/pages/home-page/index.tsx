@@ -1,17 +1,17 @@
-import './home-page.css';
+import { Wrapper } from './home-page.styled';
 
 import Gnb from '../../components/gnb';
 import StoreList from '../../components/store-list';
 
-function HomePage() {
+const HomePage: React.FC = () => {
   return (
     <>
       <Gnb />
-      <div className="page-content-wrapper">
+      <Wrapper>
         <StoreList />
-      </div>
+      </Wrapper>
     </>
   );
-}
+};
 
 export default HomePage;

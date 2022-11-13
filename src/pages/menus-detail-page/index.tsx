@@ -1,15 +1,16 @@
-import { useEffect, useState } from 'react';
-
-import './menus-detail-page.css';
+import React, { useEffect, useState } from 'react';
 
 import Gnb from '../../components/gnb';
 import MenuDetail from '../../components/menu-detail';
 import MenuReviews from '../../components/menu-reviews';
 
+import { ContentWrapper } from './menus-detail-page.styled';
+
+import { Owner } from '../../types/auth';
 import { loadObjItem } from '../../services/storage';
 
-function MenusDetailPage() {
-  const [store, setStore] = useState(null);
+const MenusDetailPage: React.FC = () => {
+  const [store, setStore] = useState<Owner | null>(null);
 
   useEffect(() => {
     const storeData = loadObjItem('owner');
@@ -20,15 +21,15 @@ function MenusDetailPage() {
     <>
       <Gnb
         storeSelected
-        storeName={store?.owner?.store_name}
-        username={store?.owner?.username}
+        storeName={store?.store_name}
+        username={store?.username}
       />
-      <div className="menu-detail-wrapper">
+      <ContentWrapper>
         <MenuDetail />
         <MenuReviews />
-      </div>
+      </ContentWrapper>
     </>
   );
-}
+};
 
 export default MenusDetailPage;

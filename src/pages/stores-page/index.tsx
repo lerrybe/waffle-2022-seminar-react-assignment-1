@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
-import './stores-page.css';
+import { ContentWrapper } from './stores-page.styled';
 
 import Gnb from '../../components/gnb';
 import MenuListContainer from '../../components/menu-list-container';
@@ -11,12 +11,13 @@ import { useStoreDataActionsContext } from '../../context/StoreDataContext';
 import { useMenuDataActionsContext } from '../../context/MenuDataContext';
 
 import { saveObjItem } from '../../services/storage';
+import { Owner } from '../../types/auth';
 
 function StoresPage() {
   const { storeId } = useParams();
-  const [store, setStore] = useState(null);
-  const { dispatchSelectedMenu } = useMenuDataActionsContext();
-  const { dispatchSelectedStore } = useStoreDataActionsContext();
+  const [store, setStore] = useState<Owner | null>(null);
+  const { dispatchSelectedMenu } = useMenuDataActionsContext()!;
+  const { dispatchSelectedStore } = useStoreDataActionsContext()!;
 
   // 💡 DESC: store 선택에 따른 data fetching
   useEffect(() => {
@@ -37,12 +38,12 @@ function StoresPage() {
     <>
       <Gnb
         storeSelected
-        storeName={store?.owner?.store_name}
-        username={store?.owner?.username}
+        storeName={store?.store_name}
+        username={store?.username}
       />
-      <div className="page-content-wrapper">
+      <ContentWrapper>
         <MenuListContainer />
-      </div>
+      </ContentWrapper>
     </>
   );
 }

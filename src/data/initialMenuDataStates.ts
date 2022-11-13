@@ -2,8 +2,8 @@ import { MenuType } from '../types/menus';
 
 // about context states
 export interface State {
-  selectedMenu?: MenuType | null;
-  menus?: MenuType[] | null;
+  selectedMenu: MenuType | null;
+  menus: MenuType[] | null;
 }
 
 export const initialMenuData: State = {
