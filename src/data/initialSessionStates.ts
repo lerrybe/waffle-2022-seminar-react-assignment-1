@@ -13,8 +13,8 @@ export const initialUser: State = {
 
 // about dispatch states
 export interface Dispatches {
-  login?: ({ username, password }: LoginRequest) => Promise<void>;
-  logout?: (accessToken: string) => Promise<void>;
+  login: ({ username, password }: LoginRequest) => Promise<void>;
+  logout: (accessToken: string) => Promise<void>;
 }
 
 export const initialUserActions: Dispatches = {

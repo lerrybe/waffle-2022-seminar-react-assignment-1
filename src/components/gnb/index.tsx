@@ -46,10 +46,8 @@ function Gnb({ storeSelected, storeName, username }: Gnb) {
   }, [user, accessToken]);
 
   const handleLogout = useCallback(() => {
-    if (accessToken && logout) {
-      logout(accessToken);
-      window.location.href = '/';
-    }
+    logout(accessToken || '');
+    window.location.href = '/';
   }, []);
 
   return (

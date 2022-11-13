@@ -1,15 +1,21 @@
 import { useCallback, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import './login.css';
-
 import FormItem from '../form-item';
 
 import { useSessionActionsContext } from '../../context/SessionContext';
+import {
+  Header,
+  Wrapper,
+  LoginForm,
+  LoginButton,
+  InnerWrapper,
+  InputsWrapper,
+} from './login.styled';
 
 function Login() {
   const navigate = useNavigate();
-  const { login } = useSessionActionsContext();
+  const { login } = useSessionActionsContext()!;
 
   const [formData, setFormData] = useState({
     name: '',
@@ -17,7 +23,7 @@ function Login() {
   });
 
   const handleChangeFormData = useCallback(
-    (e) => {
+    (e: React.ChangeEvent<HTMLInputElement>) => {
       const { name } = e.target;
       const { value } = e.target;
       setFormData({
@@ -28,22 +34,26 @@ function Login() {
     [formData],
   );
 
-  const handleSubmit = useCallback(
-    (e) => {
+  const handleClick = useCallback(
+    (e: React.MouseEvent) => {
       e.preventDefault();
 
-      login(formData);
+      login({
+        username: formData?.name,
+        password: formData?.password,
+      });
+
       navigate('/');
     },
     [formData, navigate],
   );
 
   return (
-    <div className="login-wrapper">
-      <div className="login-inner-wrapper">
-        <h1 className="login-header">로그인</h1>
-        <form className="login-form" onSubmit={handleSubmit}>
-          <div className="login-inputs">
+    <Wrapper>
+      <InnerWrapper>
+        <Header>로그인</Header>
+        <LoginForm>
+          <InputsWrapper>
             <FormItem
               required
               name="name"
@@ -61,13 +71,11 @@ function Login() {
               placeholder="비밀번호를 입력해주세요."
               handleChangeContent={handleChangeFormData}
             />
-          </div>
-          <button className="login-button" type="submit">
-            로그인
-          </button>
-        </form>
-      </div>
-    </div>
+          </InputsWrapper>
+          <LoginButton onClick={handleClick}>로그인</LoginButton>
+        </LoginForm>
+      </InnerWrapper>
+    </Wrapper>
   );
 }
 

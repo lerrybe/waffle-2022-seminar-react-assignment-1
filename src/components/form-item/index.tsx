@@ -7,7 +7,7 @@ interface FormItem {
   content?: string;
   required: boolean;
   placeholder?: string;
-  handleChangeContent?: () => void;
+  handleChangeContent?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 function FormItem({
