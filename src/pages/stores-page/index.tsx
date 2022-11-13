@@ -24,6 +24,7 @@ function StoresPage() {
     dispatchSelectedMenu(null);
     (async () => {
       try {
+        // 😹 TODO: request type 지정
         const res = await requestOwner(storeId);
         setStore(res);
         dispatchSelectedStore(res);
