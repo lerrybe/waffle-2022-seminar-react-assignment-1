@@ -39,7 +39,7 @@ function MenuEdit() {
       };
       if (target.name === 'price') {
         target.value = toNumberWithoutComma(
-          e.target.value.replace(/[^0-9]/g, ''),
+          String(e.target.value.replace(/[^0-9]/g, '')),
         );
       }
       setFormData({
@@ -52,7 +52,9 @@ function MenuEdit() {
 
   // DESC: 메뉴 수정 저장하기
   const handleSubmit = useCallback(() => {
-    const { isValidPrice, announcement } = checkValidPrice(formData.price);
+    const { isValidPrice, announcement } = checkValidPrice(
+      String(formData.price),
+    );
 
     if (!isValidPrice) {
       toast.error(announcement);
@@ -92,7 +94,7 @@ function MenuEdit() {
             className="menu-field-input"
             name="price"
             placeholder="5,000"
-            value={toStringNumberWithComma(formData.price)}
+            value={toStringNumberWithComma(String(formData.price))}
             onChange={handleChangeFormData}
           />
           <span className="menu-field-input-unit">원</span>

@@ -36,7 +36,7 @@ function MenusNewPage() {
       };
       if (target.name === 'price') {
         target.value = toNumberWithoutComma(
-          e.target.value.replace(/[^0-9]/g, ''),
+          String(e.target.value.replace(/[^0-9]/g, '')),
         );
       }
       setFormData({
@@ -53,7 +53,7 @@ function MenusNewPage() {
       formData.name,
     );
     const { isValidPrice, announcement: priceAnnouncement } = checkValidPrice(
-      formData.price,
+      String(formData.price),
     );
 
     if (!isValidName) {
@@ -115,7 +115,7 @@ function MenusNewPage() {
             className="menu-field-input"
             name="price"
             placeholder="5,000"
-            value={toStringNumberWithComma(formData.price)}
+            value={toStringNumberWithComma(String(formData.price))}
             onChange={handleChangeFormData}
           />
           <span className="menu-field-input-unit">원</span>

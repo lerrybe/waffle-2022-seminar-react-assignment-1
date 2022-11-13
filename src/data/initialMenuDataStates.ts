@@ -1,8 +1,27 @@
-export const initialSelectedMenu = null;
+import { MenuType } from '../types/menus';
 
-export const initialMenus = null;
+// about context states
+export interface State {
+  selectedMenu?: MenuType | null;
+  menus?: MenuType[] | null;
+}
 
-export const initialMenuDataActions = {
-  dispatchMenus: () => void 0,
-  dispatchSelectedMenu: () => void 0,
+export const initialMenuData: State = {
+  selectedMenu: null,
+  menus: null,
+};
+
+// about dispatch states
+export interface Dispatches {
+  dispatchMenus: (newMenus: MenuType[] | null) => void;
+  dispatchSelectedMenu: (newMenu: MenuType | null) => void;
+}
+
+export const initialMenuDataActions: Dispatches = {
+  dispatchMenus() {
+    throw new Error('MenuDataContext not provided');
+  },
+  dispatchSelectedMenu() {
+    throw new Error('MenuDataContext not provided');
+  },
 };

@@ -40,7 +40,7 @@ function MenuOverview({ handleCloseOverview }) {
               {convertTypeEnToKo(selectedMenu?.type)}
             </span>
             <span className="overview-price">
-              {toStringNumberWithComma(selectedMenu?.price)}원
+              {toStringNumberWithComma(String(selectedMenu?.price))}원
             </span>
             <span className="overview-rating">
               <Rating

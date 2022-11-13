@@ -1,12 +1,12 @@
-// DESC: 타입의 경우 무조건 string으로, String 타입 캐스팅이 필요하다면 호출부에서 캐스팅
+// DESC: 타입의 경우 무조건 string, String 타입 캐스팅이 필요하다면 호출부에서 캐스팅
 export const toStringNumberWithComma = (input: string) =>
   input.replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',');
 
-// DESC: 타입의 경우 무조건 string으로, String 타입 캐스팅이 필요하다면 호출부에서 캐스팅
+// DESC: 타입의 경우 무조건 string, String 타입 캐스팅이 필요하다면 호출부에서 캐스팅
 export const toNumberWithoutComma = (input: string) =>
   Number(input.replace(/,/g, ''));
 
-// DESC: 타입의 경우 무조건 string으로, String 타입 캐스팅이 필요하다면 호출부에서 캐스팅
+// DESC: 타입의 경우 무조건 string, String 타입 캐스팅이 필요하다면 호출부에서 캐스팅
 export const checkValidPrice = (input: string) => {
   const price = toNumberWithoutComma(input);
   const strPrice = String(price);

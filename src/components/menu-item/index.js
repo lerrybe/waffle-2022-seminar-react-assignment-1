@@ -7,6 +7,7 @@ import { toStringNumberWithComma } from '../../utils/menu/price';
 function MenuItem({ menuItem, selectedMenu, handleOpenOverview }) {
   return (
     <li
+      key={menuItem?.id}
       className={`menu-item-wrapper ${
         selectedMenu === menuItem
           ? 'selected-menu-item'
@@ -20,7 +21,7 @@ function MenuItem({ menuItem, selectedMenu, handleOpenOverview }) {
         {convertTypeEnToKo(menuItem?.type)}
       </span>
       <span className="menu-item-price">
-        {toStringNumberWithComma(menuItem?.price)}
+        {toStringNumberWithComma(String(menuItem?.price))}
       </span>
       <span className="menu-item-rating">
         <Rating

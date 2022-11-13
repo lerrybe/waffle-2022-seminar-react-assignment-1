@@ -99,7 +99,7 @@ function MenuDetail() {
               {convertTypeEnToKo(selectedMenu?.type)}
             </span>
             <span className="detail-price">
-              {toStringNumberWithComma(selectedMenu?.price)}원
+              {toStringNumberWithComma(String(selectedMenu?.price))}원
             </span>
             <span className="detail-description">
               {selectedMenu?.description}
