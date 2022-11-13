@@ -1,23 +1,27 @@
 import axios from 'axios';
 import { toast } from 'react-toastify';
-
 import { getURL } from '../utils/urls';
 
-export const requestLogin = async ({ name, password }) => {
+// import types
+import { LoginRequest, LoginResponse } from '../types/auth';
+
+export const requestLogin = async ({ username, password }: LoginRequest) => {
   try {
     const res = await axios.post(getURL('/auth/login'), {
-      username: name,
+      username,
       password,
     });
     return res.data;
-  } catch (e) {
+    // QUESTION: error type not using any
+  } catch (e: any) {
     toast.error(e.response.data.message, {
       theme: 'colored',
     });
+    return null;
   }
 };
 
-export const requestLogout = async (accessToken) => {
+export const requestLogout = async (accessToken: string) => {
   try {
     await axios.post(getURL('/auth/logout'), null, {
       headers: {
@@ -26,9 +30,11 @@ export const requestLogout = async (accessToken) => {
       withCredentials: true,
     });
     return true;
-  } catch (e) {
+    // QUESTION: error type not using any
+  } catch (e: any) {
     toast.error(e.response.data.message, {
       theme: 'colored',
     });
+    return false;
   }
 };

@@ -1,40 +1,53 @@
 import { createContext, useContext, useState } from 'react';
-
 import { toast } from 'react-toastify';
 
+// functions
 import { clearAll, saveObjItem } from '../services/storage';
 import { requestLogin, requestLogout } from '../api/auth';
-import { initialUser, initialUserActions } from '../data/initialSessionStates';
 
-const SessionContext = createContext(initialUser);
-const SessionActionsContext = createContext(initialUserActions);
+// states of types
+import {
+  State,
+  Dispatches,
+  initialUser,
+  initialUserActions,
+} from '../data/initialSessionStates';
+import { LoginRequest, Owner } from '../types/auth';
 
-function SessionProvider({ children }) {
-  const [user, setUser] = useState(null);
-  const [accessToken, setAccessToken] = useState(null);
+const SessionContext = createContext<State | null>(initialUser);
+const SessionActionsContext = createContext<Dispatches | null>(
+  initialUserActions,
+);
 
-  const login = async ({ name, password }) => {
+interface SessionProvider {
+  children: React.ReactNode;
+}
+
+function SessionProvider({ children }: SessionProvider) {
+  const [user, setUser] = useState<Owner | null>(null);
+  const [accessToken, setAccessToken] = useState<string | null>(null);
+
+  const login = async ({ username, password }: LoginRequest) => {
     try {
-      const userData = await requestLogin({ name, password });
+      const userData = await requestLogin({ username, password });
 
       if (userData) {
-        toast.success(`${name}님, 환영합니다!`, {
+        toast.success(`${username}님, 환영합니다!`, {
           theme: 'colored',
         });
 
         setUser(userData?.owner);
         setAccessToken(userData?.access_token);
-
         saveObjItem('user', userData?.owner);
       }
     } catch (err) {
       console.log(err);
     }
+    return;
   };
 
-  const logout = async (accessToken) => {
+  const logout = async (accessToken: string) => {
     const res = await requestLogout(accessToken);
-
     if (res) {
       clearAll();
       setUser(null);
@@ -42,6 +55,7 @@ function SessionProvider({ children }) {
 
       toast.info('로그아웃 되었습니다.');
     }
+    return;
   };
 
   return (
