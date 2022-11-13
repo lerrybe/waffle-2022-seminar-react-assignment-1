@@ -1,14 +1,16 @@
 import { createContext, useContext, useState } from 'react';
+
 import {
-  State,
-  Dispatches,
   initialMenuData,
   initialMenuDataActions,
 } from '../data/initialMenuDataStates';
-import { MenuType } from '../types/menus';
 
-const MenuDataContext = createContext<State | null>(initialMenuData);
-const MenuDataActionsContext = createContext<Dispatches | null>(
+// Types
+import { MenuType } from '../types/menus';
+import { MenuDispatches, MenuState } from '../types/context/menu-data-states';
+
+const MenuDataContext = createContext<MenuState | null>(initialMenuData);
+const MenuDataActionsContext = createContext<MenuDispatches | null>(
   initialMenuDataActions,
 );
 

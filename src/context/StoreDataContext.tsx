@@ -1,14 +1,19 @@
 import { createContext, useContext, useState } from 'react';
+
 import {
-  State,
-  Dispatches,
   initialStoreData,
   initialStoreDataActions,
 } from '../data/initialStoreDataStates';
+
+// Types
+import {
+  StoreState,
+  StoreDispatches,
+} from '../types/context/store-data-states';
 import { Store } from '../types/owners';
 
-const StoreDataContext = createContext<State | null>(initialStoreData);
-const StoreDataActionsContext = createContext<Dispatches | null>(
+const StoreDataContext = createContext<StoreState | null>(initialStoreData);
+const StoreDataActionsContext = createContext<StoreDispatches | null>(
   initialStoreDataActions,
 );
 

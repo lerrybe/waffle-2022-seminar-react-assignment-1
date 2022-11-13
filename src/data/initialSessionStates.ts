@@ -1,23 +1,16 @@
-import { LoginRequest, Owner } from '../types/auth';
+import {
+  SessionDispatches,
+  SessionState,
+} from '../types/context/session-states';
 
 // about context states
-export interface State {
-  user?: Owner | null;
-  accessToken?: string | null;
-}
-
-export const initialUser: State = {
+export const initialUser: SessionState = {
   user: null,
   accessToken: null,
 };
 
 // about dispatch states
-export interface Dispatches {
-  login: ({ username, password }: LoginRequest) => Promise<void>;
-  logout: (accessToken: string) => Promise<void>;
-}
-
-export const initialUserActions: Dispatches = {
+export const initialUserActions: SessionDispatches = {
   login() {
     throw new Error('SessionContext not provided');
   },

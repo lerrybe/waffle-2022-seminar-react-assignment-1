@@ -1,23 +1,13 @@
-import { MenuType } from '../types/menus';
+import { MenuDispatches, MenuState } from '../types/context/menu-data-states';
 
 // about context states
-export interface State {
-  selectedMenu: MenuType | null;
-  menus: MenuType[] | null;
-}
-
-export const initialMenuData: State = {
+export const initialMenuData: MenuState = {
   selectedMenu: null,
   menus: null,
 };
 
 // about dispatch states
-export interface Dispatches {
-  dispatchMenus: (newMenus: MenuType[] | null) => void;
-  dispatchSelectedMenu: (newMenu: MenuType | null) => void;
-}
-
-export const initialMenuDataActions: Dispatches = {
+export const initialMenuDataActions: MenuDispatches = {
   dispatchMenus() {
     throw new Error('MenuDataContext not provided');
   },

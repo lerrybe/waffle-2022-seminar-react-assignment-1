@@ -5,17 +5,18 @@ import { toast } from 'react-toastify';
 import { clearAll, saveObjItem } from '../services/storage';
 import { requestLogin, requestLogout } from '../api/auth';
 
-// states of types
+// states
+import { initialUser, initialUserActions } from '../data/initialSessionStates';
+
+// Types
 import {
-  State,
-  Dispatches,
-  initialUser,
-  initialUserActions,
-} from '../data/initialSessionStates';
+  SessionDispatches,
+  SessionState,
+} from '../types/context/session-states';
 import { LoginRequest, Owner } from '../types/auth';
 
-const SessionContext = createContext<State | null>(initialUser);
-const SessionActionsContext = createContext<Dispatches | null>(
+const SessionContext = createContext<SessionState | null>(initialUser);
+const SessionActionsContext = createContext<SessionDispatches | null>(
   initialUserActions,
 );
 
