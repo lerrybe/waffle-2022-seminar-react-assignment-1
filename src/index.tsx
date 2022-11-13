@@ -12,6 +12,7 @@ import ModalToast from './components/modal-toast';
 // import contexts
 import SessionProvider from './context/SessionContext';
 import MenuDataProvider from './context/MenuDataContext';
+import StoreDataProvider from './context/StoreDataContext';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement,
@@ -19,10 +20,12 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <SessionProvider>
-      <MenuDataProvider>
-        <EntryRoute />
-        <ModalToast />
-      </MenuDataProvider>
+      <StoreDataProvider>
+        <MenuDataProvider>
+          <EntryRoute />
+          <ModalToast />
+        </MenuDataProvider>
+      </StoreDataProvider>
     </SessionProvider>
   </React.StrictMode>,
 );

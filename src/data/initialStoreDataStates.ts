@@ -1,8 +1,27 @@
-export const initialSelectedStore = null;
+import { Store } from '../types/owners';
 
-export const initialStores = null;
+// about context states
+export interface State {
+  selectedStore?: Store | null;
+  stores?: Store[] | null;
+}
 
-export const initialStoreDataActions = {
-  dispatchStores: () => void 0,
-  dispatchSelectedStore: () => void 0,
+export const initialStoreData: State = {
+  selectedStore: null,
+  stores: null,
+};
+
+// about dispatch states
+export interface Dispatches {
+  dispatchStores: (newStores: Store[] | null) => void;
+  dispatchSelectedStore: (newStore: Store | null) => void;
+}
+
+export const initialStoreDataActions: Dispatches = {
+  dispatchSelectedStore() {
+    throw new Error('StoreDataContext not provided');
+  },
+  dispatchStores() {
+    throw new Error('StoreDataContext not provided');
+  },
 };
