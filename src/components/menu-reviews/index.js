@@ -211,7 +211,7 @@ function MenuReviews() {
           readOnly
         />
         <span className="menu-reviews-rating-text">
-          {(Number(menuRating) / 2).toFixed(1)}
+          {Number((Number(menuRating) / 2).toFixed(1))}
         </span>
       </div>
       <div className="menu-reviews-content-wrapper">

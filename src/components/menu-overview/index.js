@@ -47,7 +47,7 @@ function MenuOverview({ handleCloseOverview }) {
                 name="half-rating-read"
                 value={
                   selectedMenu?.rating
-                    ? (Number(selectedMenu.rating) / 2).toFixed(1)
+                    ? Number((Number(selectedMenu.rating) / 2).toFixed(1))
                     : 0
                 }
                 precision={0.5}

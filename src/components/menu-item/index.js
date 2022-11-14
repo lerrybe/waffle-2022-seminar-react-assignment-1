@@ -27,13 +27,17 @@ function MenuItem({ menuItem, selectedMenu, handleOpenOverview }) {
         <Rating
           name="half-rating-read"
           value={
-            menuItem?.rating ? (Number(menuItem.rating) / 2).toFixed(1) : 0
+            menuItem?.rating
+              ? Number((Number(menuItem.rating) / 2).toFixed(1))
+              : 0
           }
           precision={0.5}
           readOnly
         />
         <span className="menu-item-rating-text">
-          {menuItem?.rating ? (Number(menuItem.rating) / 2).toFixed(1) : 0}
+          {menuItem?.rating
+            ? Number((Number(menuItem.rating) / 2).toFixed(1))
+            : 0}
         </span>
       </span>
     </li>
