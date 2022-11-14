@@ -6,12 +6,16 @@ interface ButtonNormal {
   handleClick: () => void;
 }
 
-function ButtonNormal({ text, bgColor, handleClick }: ButtonNormal) {
+const ButtonNormal: React.FC<ButtonNormal> = ({
+  text,
+  bgColor,
+  handleClick,
+}: ButtonNormal) => {
   return (
     <Button onClick={handleClick} bgColor={bgColor}>
       {text}
     </Button>
   );
-}
+};
 
 export default ButtonNormal;

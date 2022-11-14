@@ -33,7 +33,7 @@ interface Gnb {
 }
 
 // DESC: global navbar
-function Gnb({ storeSelected, storeName, username }: Gnb) {
+const Gnb: React.FC<Gnb> = ({ storeSelected, storeName, username }: Gnb) => {
   const navigate = useNavigate();
   const { logout } = useSessionActionsContext()!;
   const { user, accessToken } = useSessionContext()!;
@@ -96,6 +96,6 @@ function Gnb({ storeSelected, storeName, username }: Gnb) {
       </AuthWrapper>
     </Wrapper>
   );
-}
+};
 
 export default Gnb;

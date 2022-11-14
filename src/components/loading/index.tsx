@@ -1,7 +1,7 @@
 import { Wrapper } from './loading.styled';
 
-function Loading() {
+const Loading: React.FC = () => {
   return <Wrapper>Loading...</Wrapper>;
-}
+};
 
 export default Loading;

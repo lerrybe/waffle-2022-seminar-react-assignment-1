@@ -13,7 +13,7 @@ import { useMenuDataActionsContext } from '../../context/MenuDataContext';
 import { saveObjItem } from '../../services/storage';
 import { Owner } from '../../types/auth';
 
-function StoresPage() {
+const StoresPage: React.FC = () => {
   const { storeId } = useParams();
   const [store, setStore] = useState<Owner | null>(null);
   const { dispatchSelectedMenu } = useMenuDataActionsContext()!;
@@ -47,6 +47,6 @@ function StoresPage() {
       </ContentWrapper>
     </>
   );
-}
+};
 
 export default StoresPage;

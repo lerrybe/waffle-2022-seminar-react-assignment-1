@@ -13,7 +13,7 @@ import {
   InputsWrapper,
 } from './login.styled';
 
-function Login() {
+const Login: React.FC = () => {
   const navigate = useNavigate();
   const { login } = useSessionActionsContext()!;
 
@@ -77,6 +77,6 @@ function Login() {
       </InnerWrapper>
     </Wrapper>
   );
-}
+};
 
 export default Login;

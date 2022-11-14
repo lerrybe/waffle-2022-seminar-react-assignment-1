@@ -10,7 +10,7 @@ interface FormItem {
   handleChangeContent?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-function FormItem({
+const FormItem: React.FC<FormItem> = ({
   name,
   type,
   label,
@@ -18,7 +18,7 @@ function FormItem({
   required,
   placeholder,
   handleChangeContent,
-}: FormItem) {
+}: FormItem) => {
   return (
     <Wrapper>
       <FormLabel>{label}</FormLabel>
@@ -33,6 +33,6 @@ function FormItem({
       {label === '가격' && <FormUnit>원</FormUnit>}
     </Wrapper>
   );
-}
+};
 
 export default FormItem;
