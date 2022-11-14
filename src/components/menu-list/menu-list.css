@@ -13,6 +13,7 @@
   border: 1px solid #000000;
   border-radius: 10px;
   overflow: auto;
+  min-width: 680px;
 }
 
 .menu-category-wrapper {
@@ -63,8 +64,21 @@
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  flex-grow: 1;
   margin-left: 15px;
+  width: 140px;
+
+  font-weight: 700;
+  font-size: 15px;
+  line-height: 18px;
+}
+
+.menu-category-rating {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-grow: 1;
+  margin-left: 50px;
+  min-width: 140px;
 
   font-weight: 700;
   font-size: 15px;

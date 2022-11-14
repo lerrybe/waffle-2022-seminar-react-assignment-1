@@ -1,31 +1,47 @@
-import { useCallback, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useCallback, useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 
-import "./menu-detail.css";
-import updateIcon from "../../assets/update-icon.svg";
-import deleteIcon from "../../assets/delete-icon.svg";
-import arrowBackIcon from "../../assets/arrow-back-icon.svg";
+import './menu-detail.css';
+import updateIcon from '../../assets/update-icon.svg';
+import deleteIcon from '../../assets/delete-icon.svg';
+import arrowBackIcon from '../../assets/arrow-back-icon.svg';
 
-import ModalDeleteMenu from "../modal-delete-menu";
+import ModalDelete from '../modal-delete-menu';
 
-import { convertTypeEnToKo } from "../../utils/menu/type";
-import { toStringNumberWithComma } from "../../utils/menu/price";
+import { loadObjItem } from '../../services/storage';
+import { convertTypeEnToKo } from '../../utils/menu/type';
+import { toStringNumberWithComma } from '../../utils/menu/price';
+import { requestDeleteMenu, requestMenu } from '../../api/menus';
 
+import { useSessionContext } from '../../context/SessionContext';
 import {
   useMenuDataContext,
   useMenuDataActionsContext,
-} from "../../context/MenuDataContext";
-import { useSessionContext } from "../../context/SessionContext";
+} from '../../context/MenuDataContext';
 
-const MenuDetail = () => {
+function MenuDetail() {
+  const user = loadObjItem('user');
+  const { owner } = loadObjItem('owner');
+
+  const { menuId } = useParams();
   const navigate = useNavigate();
-  const { isLoggedIn } = useSessionContext();
-  const { menus, selectedMenu: menu } = useMenuDataContext();
-  const { dispatchMenus, dispatchSelectedMenu, dispatchSearchedMenus } =
-    useMenuDataActionsContext();
+  const { accessToken } = useSessionContext();
+  const { menus, selectedMenu } = useMenuDataContext();
+  const { dispatchSelectedMenu } = useMenuDataActionsContext();
 
   const [isModalOpened, setIsModalOpened] = useState(false);
   const [modalAnimation, setModalAnimation] = useState(false);
+
+  useEffect(() => {
+    (async () => {
+      const res = await requestMenu(menuId);
+      if (res) {
+        dispatchSelectedMenu(res);
+      } else {
+        navigate(-1);
+      }
+    })();
+  }, []);
 
   const handleToggleDeleteModal = useCallback(() => {
     setModalAnimation((prev) => !prev);
@@ -41,20 +57,19 @@ const MenuDetail = () => {
   }, [modalAnimation]);
 
   const handleDeleteMenu = useCallback(() => {
-    const newMenus = menus.filter((targetMenu) => targetMenu.id !== menu.id);
-    dispatchMenus(newMenus);
-    dispatchSelectedMenu(null);
-    dispatchSearchedMenus(newMenus);
+    (async () => {
+      await requestDeleteMenu(menuId, accessToken);
+    })();
 
-    // DESC: 모달 닫고 /stores/1로 리다이렉트
+    dispatchSelectedMenu(null);
+
+    // DESC: 모달 닫고 이전 페이지로 리다이렉트
     handleToggleDeleteModal();
-    navigate("/stores/1");
+    navigate(-1);
   }, [
-    dispatchMenus,
-    dispatchSearchedMenus,
     dispatchSelectedMenu,
     handleToggleDeleteModal,
-    menu?.id,
+    selectedMenu?.id,
     menus,
     navigate,
   ]);
@@ -62,40 +77,41 @@ const MenuDetail = () => {
   return (
     <div className="menu-info-outer-wrapper">
       <div className="go-back-stores-wrapper">
-        <button
-          className="go-back-stores-button"
-          onClick={() => navigate("/stores/1")}
-        >
+        <button className="go-back-stores-button" onClick={() => navigate(-1)}>
           <img alt="goback" src={arrowBackIcon} />
           메뉴 목록
         </button>
       </div>
       <div className="menu-info-wrapper">
-        {menu?.image ? (
+        {selectedMenu?.image ? (
           <img
             className="detail-img"
             alt="대표 이미지가 없습니다."
-            src={menu.image}
+            src={selectedMenu.image}
           />
         ) : (
           <div className="detail-img">대표 이미지가 없습니다.</div>
         )}
-        {menu && (
+        {selectedMenu && (
           <>
-            <span className="detail-name">{menu?.name}</span>
-            <span className="detail-type">{convertTypeEnToKo(menu?.type)}</span>
-            <span className="detail-price">
-              {toStringNumberWithComma(menu?.price)}원
+            <span className="detail-name">{selectedMenu?.name}</span>
+            <span className="detail-type">
+              {convertTypeEnToKo(selectedMenu?.type)}
             </span>
-            <span className="detail-description">{menu?.description}</span>
+            <span className="detail-price">
+              {toStringNumberWithComma(selectedMenu?.price)}원
+            </span>
+            <span className="detail-description">
+              {selectedMenu?.description}
+            </span>
           </>
         )}
 
-        {isLoggedIn && (
+        {Number(user?.id) === Number(owner?.id) ? (
           <div className="interaction-wrapper">
             <button
               className="icon-wrapper"
-              onClick={() => navigate(`/menus/${menu?.id}/edit`)}
+              onClick={() => navigate(`/menus/${selectedMenu?.id}/edit`)}
             >
               <img alt="update" src={updateIcon} />
             </button>
@@ -103,18 +119,21 @@ const MenuDetail = () => {
               <img alt="delete" src={deleteIcon} />
             </button>
           </div>
+        ) : (
+          <></>
         )}
 
         {isModalOpened && (
-          <ModalDeleteMenu
+          <ModalDelete
+            title="메뉴 삭제"
             deleteModalToggle={modalAnimation}
-            handleDeleteMenu={handleDeleteMenu}
+            handleDelete={handleDeleteMenu}
             handleToggleDeleteModal={handleToggleDeleteModal}
           />
         )}
       </div>
     </div>
   );
-};
+}
 
 export default MenuDetail;

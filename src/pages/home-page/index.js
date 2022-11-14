@@ -1,17 +1,17 @@
-import "./home-page.css";
+import './home-page.css';
 
-import Gnb from "../../components/gnb";
-import ShopList from "../../components/shop-list";
+import Gnb from '../../components/gnb';
+import StoreList from '../../components/store-list';
 
-const HomePage = () => {
+function HomePage() {
   return (
     <>
       <Gnb />
       <div className="page-content-wrapper">
-        <ShopList />
+        <StoreList />
       </div>
     </>
   );
-};
+}
 
 export default HomePage;

@@ -1,7 +1,7 @@
-import "./search-bar.css";
-import searchImg from "../../assets/search-icon.svg";
+import './search-bar.css';
+import searchImg from '../../assets/search-icon.svg';
 
-const SearchBar = ({ label, keyword, handleChangeKeyword }) => {
+function SearchBar({ label, keyword, handleChangeKeyword }) {
   return (
     <div className="search-wrapper">
       <span className="search-label">{label}</span>
@@ -16,6 +16,6 @@ const SearchBar = ({ label, keyword, handleChangeKeyword }) => {
       </div>
     </div>
   );
-};
+}
 
 export default SearchBar;

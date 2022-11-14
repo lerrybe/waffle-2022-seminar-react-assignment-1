@@ -1,16 +1,17 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
 
-import "./menu-overview.css";
-import closeIcon from "../../assets/close-icon.svg";
+import './menu-overview.css';
+import { Rating } from '@mui/material';
+import closeIcon from '../../assets/close-icon.svg';
 
-import ButtonNormal from "../button-normal";
+import ButtonNormal from '../button-normal';
 
-import { convertTypeEnToKo } from "../../utils/menu/type";
-import { toStringNumberWithComma } from "../../utils/menu/price";
+import { convertTypeEnToKo } from '../../utils/menu/type';
+import { toStringNumberWithComma } from '../../utils/menu/price';
 
-import { useMenuDataContext } from "../../context/MenuDataContext";
+import { useMenuDataContext } from '../../context/MenuDataContext';
 
-const MenuOverview = ({ handleCloseOverview }) => {
+function MenuOverview({ handleCloseOverview }) {
   const navigate = useNavigate();
   const { selectedMenu } = useMenuDataContext();
 
@@ -41,16 +42,27 @@ const MenuOverview = ({ handleCloseOverview }) => {
             <span className="overview-price">
               {toStringNumberWithComma(selectedMenu?.price)}원
             </span>
+            <span className="overview-rating">
+              <Rating
+                name="half-rating-read"
+                value={
+                  selectedMenu?.rating ? (Number(selectedMenu.rating) / 2).toFixed(1) : 0
+                }
+                precision={0.5}
+                size="large"
+                readOnly
+              />
+            </span>
           </>
         )}
 
         <ButtonNormal
-          text={"자세히"}
+          text="자세히"
           handleClick={() => navigate(`/menus/${selectedMenu?.id}`)}
         />
       </div>
     </div>
   );
-};
+}
 
 export default MenuOverview;

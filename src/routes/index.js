@@ -1,15 +1,15 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
-import HomePage from "../pages/home-page";
-import ErrorPage from "../pages/error-page";
-import LoginPage from "../pages/login-page";
-import StoresPage from "../pages/stores-page";
-import MenusNewPage from "../pages/menus-new-page";
-import MenusEditPage from "../pages/menus-edit-page";
-import MenusDetailPage from "../pages/menus-detail-page";
+import HomePage from '../pages/home-page';
+import ErrorPage from '../pages/error-page';
+import LoginPage from '../pages/login-page';
+import StoresPage from '../pages/stores-page';
+import MenusNewPage from '../pages/menus-new-page';
+import MenusEditPage from '../pages/menus-edit-page';
+import MenusDetailPage from '../pages/menus-detail-page';
 
 // DESC: 라우팅 관리를 위한 EntryRoute, 기존 App을 대체
-const EntryRoute = () => {
+function EntryRoute() {
   return (
     <BrowserRouter>
       <Routes>
@@ -23,6 +23,6 @@ const EntryRoute = () => {
       </Routes>
     </BrowserRouter>
   );
-};
+}
 
 export default EntryRoute;

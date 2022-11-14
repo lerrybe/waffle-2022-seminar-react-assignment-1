@@ -1,9 +1,13 @@
 export const initialUser = {
-  userId: null,
-  isLoggedIn: false,
+  user: null,
+  accessToken: null,
 };
 
 export const initialUserActions = {
-  dispatchUserId: () => void 0,
-  dispatchIsLoggedIn: () => void 0,
+  login() {
+    throw new Error('SessionContext not provided');
+  },
+  logout() {
+    throw new Error('SessionContext not provided');
+  },
 };

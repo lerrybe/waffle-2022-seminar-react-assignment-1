@@ -1,22 +1,34 @@
-import { clearAll, saveItem } from "../services/storage";
-import { checkValidId, checkValidPassword } from "../utils/auth";
+import axios from 'axios';
+import { toast } from 'react-toastify';
 
-// TODO: backend API 연결
-export const login = (id, password) => {
-  if (checkValidId(id) && checkValidPassword(password)) {
-    alert(`${id}님, 환영합니다!`);
+import { getURL } from '../utils/urls';
 
-    // DESC: localStorage에 로그인 상태 및 userId 저장
-    saveItem("isLoggedIn", true);
-    saveItem("userId", id);
-    return true;
-  } else {
-    // TODO: 로그인 실패 시 처리 로직
-    alert("로그인에 실패하였습니다.");
-    return false;
+export const requestLogin = async ({ name, password }) => {
+  try {
+    const res = await axios.post(getURL('/auth/login'), {
+      username: name,
+      password,
+    });
+    return res.data;
+  } catch (e) {
+    toast.error(e.response.data.message, {
+      theme: 'colored',
+    });
   }
 };
 
-export const logout = () => {
-  clearAll();
+export const requestLogout = async (accessToken) => {
+  try {
+    await axios.post(getURL('/auth/logout'), null, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+      withCredentials: true,
+    });
+    return true;
+  } catch (e) {
+    toast.error(e.response.data.message, {
+      theme: 'colored',
+    });
+  }
 };

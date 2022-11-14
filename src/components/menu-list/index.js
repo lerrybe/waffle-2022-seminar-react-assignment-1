@@ -1,22 +1,23 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from 'react-router-dom';
 
-import "./menu-list.css";
-import createIcon from "../../assets/create-icon.svg";
+import './menu-list.css';
+import createIcon from '../../assets/create-icon.svg';
 
-import MenuItems from "../menu-items";
-import SearchBar from "../search-bar";
+import MenuItems from '../menu-items';
+import SearchBar from '../search-bar';
 
-import { useSessionContext } from "../../context/SessionContext";
+import { loadObjItem } from '../../services/storage';
 
-const MenuList = ({ keyword, handleOpenOverview, handleChangeKeyword }) => {
+function MenuList({ keyword, handleOpenOverview, handleChangeKeyword }) {
   const navigate = useNavigate();
-  const { isLoggedIn } = useSessionContext();
+  const { storeId } = useParams();
+  const user = loadObjItem('user');
 
   return (
     <div className="menu-outer-wrapper">
       <SearchBar
         keyword={keyword}
-        label={"메뉴 이름 검색: "}
+        label="메뉴 이름 검색: "
         handleChangeKeyword={handleChangeKeyword}
       />
       <div className="menu-content-wrapper">
@@ -25,16 +26,19 @@ const MenuList = ({ keyword, handleOpenOverview, handleChangeKeyword }) => {
           <span className="menu-category-name">이름</span>
           <span className="menu-category-type">종류</span>
           <span className="menu-category-price">가격</span>
+          <span className="menu-category-rating">평점</span>
         </div>
         <MenuItems handleOpenOverview={handleOpenOverview} />
-        {isLoggedIn && (
-          <button onClick={() => navigate("/menus/new")}>
+        {Number(user?.id) === Number(storeId) ? (
+          <button onClick={() => navigate('/menus/new')}>
             <img className="menu-create-icon" src={createIcon} alt="create" />
           </button>
+        ) : (
+          <></>
         )}
       </div>
     </div>
   );
-};
+}
 
 export default MenuList;

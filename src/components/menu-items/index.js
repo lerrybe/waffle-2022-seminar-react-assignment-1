@@ -1,12 +1,13 @@
-import MenuItem from "../menu-item";
-import { useMenuDataContext } from "../../context/MenuDataContext";
+import MenuItem from '../menu-item';
 
-const MenuItems = ({ handleOpenOverview }) => {
-  const { selectedMenu, searchedMenus: menuItems } = useMenuDataContext();
+import { useMenuDataContext } from '../../context/MenuDataContext';
+
+function MenuItems({ handleOpenOverview }) {
+  const { menus, selectedMenu } = useMenuDataContext();
 
   return (
     <ul>
-      {menuItems?.map((menuItem) => (
+      {menus?.map((menuItem) => (
         <MenuItem
           key={menuItem.id}
           menuItem={menuItem}
@@ -16,6 +17,6 @@ const MenuItems = ({ handleOpenOverview }) => {
       ))}
     </ul>
   );
-};
+}
 
 export default MenuItems;
