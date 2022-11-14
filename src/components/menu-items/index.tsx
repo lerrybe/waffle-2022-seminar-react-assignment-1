@@ -2,8 +2,12 @@ import MenuItem from '../menu-item';
 
 import { useMenuDataContext } from '../../context/MenuDataContext';
 
-function MenuItems({ handleOpenOverview }) {
-  const { menus, selectedMenu } = useMenuDataContext();
+interface MenuItems {
+  handleOpenOverview: () => void;
+}
+
+const MenuItems: React.FC<MenuItems> = ({ handleOpenOverview }: MenuItems) => {
+  const { menus, selectedMenu } = useMenuDataContext()!;
 
   return (
     <ul>
@@ -17,6 +21,6 @@ function MenuItems({ handleOpenOverview }) {
       ))}
     </ul>
   );
-}
+};
 
 export default MenuItems;

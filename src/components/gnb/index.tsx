@@ -33,6 +33,7 @@ interface Gnb {
 }
 
 // DESC: global navbar
+// TODO: store 정보 안 보이는 버그 해결
 const Gnb: React.FC<Gnb> = ({ storeSelected, storeName, username }: Gnb) => {
   const navigate = useNavigate();
   const { logout } = useSessionActionsContext()!;
