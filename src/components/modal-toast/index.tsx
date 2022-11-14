@@ -2,7 +2,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 import { ToastContainer } from 'react-toastify';
 
-function ModalToast() {
+const ModalToast: React.FC = () => {
   // DESC: common default setting
   return (
     <ToastContainer
@@ -18,6 +18,6 @@ function ModalToast() {
       theme="light"
     />
   );
-}
+};
 
 export default ModalToast;
