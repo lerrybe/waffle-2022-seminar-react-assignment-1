@@ -1,41 +1,39 @@
-.search-wrapper {
+import styled from '@emotion/styled';
+
+export const Wrapper = styled.div`
   width: auto;
   height: 54px;
   display: flex;
   justify-content: flex-start;
   align-items: center;
-}
+`;
 
-.search-label {
+export const Label = styled.span`
   width: auto;
   font-weight: 400;
   font-size: 15px;
   margin-right: 10px;
-}
+`;
 
-.search-input-wrapper {
+export const InputWrapper = styled.div`
   position: relative;
   width: 413px;
   display: flex;
   align-items: center;
-}
+`;
 
-.search-input {
+export const Input = styled.input`
   padding: 5px;
   width: 100%;
   height: 34px;
   border: 1px solid #8a8a8a;
   border-radius: 5px;
-}
+`;
 
-.search-icon {
+export const SearchIcon = styled.img`
   width: 18px;
   height: 18px;
   position: absolute;
 
   right: 10px;
-}
-
-.search-icon:hover {
-  cursor: pointer;
-}
+`;

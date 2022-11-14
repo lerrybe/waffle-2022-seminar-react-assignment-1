@@ -14,13 +14,13 @@ interface StoreCard {
   handleClick: () => void;
 }
 
-function StoreCard({
+const StoreCard: React.FC<StoreCard> = ({
   storeName,
   username,
   storeDesc,
   rating,
   handleClick,
-}: StoreCard) {
+}: StoreCard) => {
   return (
     <Wrapper onClick={handleClick}>
       <Storename>{storeName}</Storename>
@@ -34,6 +34,6 @@ function StoreCard({
       />
     </Wrapper>
   );
-}
+};
 
 export default StoreCard;
