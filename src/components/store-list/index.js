@@ -9,7 +9,7 @@ import Loading from '../loading';
 import SearchBar from '../search-bar';
 import StoreCard from '../store-card';
 
-import { requestOwners } from '../../api/owners';
+import { requestOwners, requestSearchedOwners } from '../../api/owners';
 
 import {
   useStoreDataContext,
@@ -28,17 +28,29 @@ function StoreList() {
 
   // 💡 DESC: 초기 stores fetching
   useEffect(() => {
-    (async () => {
-      const res = await requestOwners(keyword);
-      dispatchStores(res);
-      setStoreList(res);
-    })();
-  }, [keyword, requestOwners]);
+    if (!keyword) {
+      (async () => {
+        const res = await requestOwners();
+        dispatchStores(res);
+        setStoreList(res);
+      })();
+    } else {
+      (async () => {
+        const res = await requestSearchedOwners(keyword);
+        dispatchStores(res);
+        setStoreList(res);
+      })();
+    }
+  }, [keyword]);
 
   // DESC: 검색어 변화 감지 이벤트 핸들러 함수
-  const handleChangeKeyword = _.throttle((e) => {
+  // const handleChangeKeyword = _.throttle((e) => {
+  //   setKeyword(e.target.value);
+  // }, 500);
+
+  const handleChangeKeyword = useCallback((e) => {
     setKeyword(e.target.value);
-  }, 500);
+  }, []);
 
   const handleClickStore = useCallback((storeId) => {
     navigate(`/stores/${storeId}`);

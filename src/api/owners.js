@@ -2,9 +2,18 @@ import axios from 'axios';
 
 import { BASE_URL } from '../constant/constant';
 
-export const requestOwners = async (name) => {
+export const requestOwners = async () => {
   try {
-    const res = await axios.get(`${BASE_URL}/owners/?=${name}`);
+    const res = await axios.get(`${BASE_URL}/owners/`);
+    return res.data;
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+export const requestSearchedOwners = async (name) => {
+  try {
+    const res = await axios.get(`${BASE_URL}/owners/?name=${name}`);
     return res.data;
   } catch (e) {
     console.log(e);
