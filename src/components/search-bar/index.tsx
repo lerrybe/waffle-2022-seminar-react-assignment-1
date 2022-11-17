@@ -9,8 +9,8 @@ import {
 
 interface SearchBar {
   label: string;
-  keyword: string;
-  handleChangeKeyword: (e: React.ChangeEvent) => void;
+  keyword: string | undefined;
+  handleChangeKeyword: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 const SearchBar: React.FC<SearchBar> = ({

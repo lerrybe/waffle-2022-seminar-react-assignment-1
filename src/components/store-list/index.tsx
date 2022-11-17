@@ -3,11 +3,10 @@ import { useNavigate } from 'react-router-dom';
 
 import _ from 'lodash';
 
-import './store-list.css';
-
 import Loading from '../loading';
 import SearchBar from '../search-bar';
 import StoreCard from '../store-card';
+import { InnerWrapper, Wrapper } from './store-list.styled';
 
 import { requestOwners, requestSearchedOwners } from '../../api/owners';
 
@@ -16,15 +15,15 @@ import {
   useStoreDataActionsContext,
 } from '../../context/StoreDataContext';
 
-function StoreList() {
+const StoreList: React.FC = () => {
   const navigate = useNavigate();
 
-  const { stores } = useStoreDataContext();
+  const { stores } = useStoreDataContext()!;
 
-  const [keyword, setKeyword] = useState('');
+  const [keyword, setKeyword] = useState<string>();
   const [storeList, setStoreList] = useState(stores);
 
-  const { dispatchStores } = useStoreDataActionsContext();
+  const { dispatchStores } = useStoreDataActionsContext()!;
 
   // 💡 DESC: 초기 stores fetching
   useEffect(() => {
@@ -43,16 +42,20 @@ function StoreList() {
     }
   }, [keyword]);
 
+  // TODO: throttle
   // DESC: 검색어 변화 감지 이벤트 핸들러 함수
   // const handleChangeKeyword = _.throttle((e) => {
   //   setKeyword(e.target.value);
   // }, 500);
 
-  const handleChangeKeyword = useCallback((e) => {
-    setKeyword(e.target.value);
-  }, []);
+  const handleChangeKeyword = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      setKeyword(e.currentTarget.value);
+    },
+    [],
+  );
 
-  const handleClickStore = useCallback((storeId) => {
+  const handleClickStore = useCallback((storeId: number) => {
     navigate(`/stores/${storeId}`);
   }, []);
 
@@ -60,7 +63,7 @@ function StoreList() {
   const randomStarRating = () => Math.floor(Math.random() * 10) + 1;
 
   return (
-    <div className="store-outer-wrapper">
+    <Wrapper>
       <SearchBar
         keyword={keyword}
         label="가게 검색: "
@@ -70,22 +73,22 @@ function StoreList() {
         {!storeList ? (
           <Loading />
         ) : (
-          <div className="store-content-wrapper">
+          <InnerWrapper>
             {storeList?.map((el) => (
               <StoreCard
                 key={el?.id}
-                storeName={el?.store_name || '이름 없는 가게'}
-                username={el?.username || '주인 없는 가게'}
-                storeDesc={el?.store_description || '설명이 없는 가게'}
+                storeName={el?.store_name || '-'}
+                username={el?.username || '-'}
+                storeDesc={el?.store_description || '-'}
                 rating={randomStarRating()}
                 handleClick={() => handleClickStore(el?.id)}
               />
             ))}
-          </div>
+          </InnerWrapper>
         )}
       </>
-    </div>
+    </Wrapper>
   );
-}
+};
 
 export default StoreList;

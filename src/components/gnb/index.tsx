@@ -68,10 +68,8 @@ const Gnb: React.FC<Gnb> = ({ storeSelected, storeName, username }: Gnb) => {
             <InnerTitleWrapper>
               <TitleSmall>와플스튜디오 메뉴 관리</TitleSmall>
               <StoreWrapper>
-                <StoreName>{storeName || '이름 없는 가게'}</StoreName>
-                <OwnerWrapper>
-                  {`by ${username}` || '주인 없는 가게'}
-                </OwnerWrapper>
+                <StoreName>{storeName || '-'}</StoreName>
+                <OwnerWrapper>{`by ${username}` || '-'}</OwnerWrapper>
               </StoreWrapper>
             </InnerTitleWrapper>
           )}
