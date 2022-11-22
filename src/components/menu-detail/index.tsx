@@ -20,6 +20,9 @@ import updateIcon from '../../assets/update-icon.svg';
 import deleteIcon from '../../assets/delete-icon.svg';
 import arrowBackIcon from '../../assets/arrow-back-icon.svg';
 
+// import types
+import { Owner } from '../../types/auth';
+
 // import components
 import ModalDelete from '../modal-delete';
 
@@ -37,7 +40,7 @@ import {
 } from '../../context/MenuDataContext';
 
 const MenuDetail: React.FC = () => {
-  const user = loadObjItem('user');
+  const user: Owner = loadObjItem('user');
   const { owner } = loadObjItem('owner');
 
   const { menuId } = useParams();

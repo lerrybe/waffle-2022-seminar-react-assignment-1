@@ -29,7 +29,7 @@ const MenuReviewNew: React.FC<MenuReviewNew> = ({
       <RatingWrapper>
         <Rating
           name="simple-controlled"
-          value={Number(newReviewRating) || 0}
+          value={newReviewRating || 0}
           onChange={handleChangeRating}
         />
       </RatingWrapper>

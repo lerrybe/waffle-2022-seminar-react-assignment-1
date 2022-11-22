@@ -44,17 +44,13 @@ const MenuItem: React.FC<MenuItem> = ({
         <Rating
           name="half-rating-read"
           value={
-            menuItem?.rating
-              ? Number((Number(menuItem.rating) / 2).toFixed(1))
-              : 0
+            menuItem?.rating ? Number((menuItem.rating / 2).toFixed(1)) : 0
           }
           precision={0.5}
           readOnly
         />
         <MenuItemRatingText>
-          {menuItem?.rating
-            ? Number((Number(menuItem.rating) / 2).toFixed(1))
-            : 0}
+          {menuItem?.rating ? Number((menuItem.rating / 2).toFixed(1)) : 0}
         </MenuItemRatingText>
       </MenuItemRating>
     </Item>

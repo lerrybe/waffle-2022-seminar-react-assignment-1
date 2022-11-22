@@ -59,7 +59,7 @@ const MenuReview = forwardRef<HTMLDivElement | null, MenuReview>(
             readOnly
             precision={0.5}
             name="half-rating-read"
-            value={Number((Number(rating) / 2).toFixed(1))}
+            value={Number((rating / 2).toFixed(1))}
           />
           <CreatedAtTime>
             <Moment fromNow ago>

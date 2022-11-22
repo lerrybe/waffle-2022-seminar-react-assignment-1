@@ -19,6 +19,7 @@ import MenuItems from '../menu-items';
 import SearchBar from '../search-bar';
 
 // import types
+import { Owner } from '../../types/auth';
 import { MenuType } from '../../types/menus';
 
 // import util functions
@@ -37,7 +38,7 @@ const MenuList: React.FC<MenuList> = ({
 }: MenuList) => {
   const navigate = useNavigate();
   const { storeId } = useParams();
-  const user = loadObjItem('user');
+  const user: Owner = loadObjItem('user');
 
   return (
     <Wrapper>

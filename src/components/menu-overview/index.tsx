@@ -61,7 +61,7 @@ const MenuOverview: React.FC<MenuOverview> = ({
                 name="half-rating-read"
                 value={
                   selectedMenu?.rating
-                    ? Number((Number(selectedMenu.rating) / 2).toFixed(1))
+                    ? Number((selectedMenu.rating / 2).toFixed(1))
                     : 0
                 }
                 precision={0.5}

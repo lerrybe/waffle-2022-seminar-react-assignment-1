@@ -45,6 +45,7 @@ const MenuReviews: React.FC = () => {
   const { accessToken } = useSessionContext()!;
 
   const [next, setNext] = useState('');
+  const [currMenuId] = useState(Number(menuId));
   const [menuRating, setMenuRating] = useState(0);
   const [reviews, setReviews] = useState<Review[] | null>();
   const [reviewId, setReviewId] = useState<number | undefined>();
@@ -67,9 +68,9 @@ const MenuReviews: React.FC = () => {
   useEffect(() => {
     if (reviewId && !closeUpdateWindow) {
       (async () => {
-        const res = await requestReview(Number(reviewId));
+        const res: Review = await requestReview(reviewId);
         setUpdateReviewContent(res?.content);
-        setUpdateReviewRating(Number(res?.rating));
+        setUpdateReviewRating(res?.rating);
       })();
     }
   }, [requestReview, reviewId]);
@@ -84,9 +85,9 @@ const MenuReviews: React.FC = () => {
   const handleCloseWindow = useCallback(() => {
     setCloseUpdateWindow(true);
     (async () => {
-      const res = await requestReview(Number(reviewId));
+      const res: Review = await requestReview(reviewId);
       setUpdateReviewContent(res?.content);
-      setUpdateReviewRating(Number(res?.rating));
+      setUpdateReviewRating(res?.rating);
     })();
   }, [reviewId]);
 
@@ -112,6 +113,7 @@ const MenuReviews: React.FC = () => {
   const handleChangeRating = useCallback(
     (e: React.SyntheticEvent<Element, Event>) => {
       const target = e.target as HTMLInputElement;
+      // DESC: target.value: string -> type casting needed
       setNewReviewRating(Number(target.value));
     },
     [],
@@ -127,6 +129,7 @@ const MenuReviews: React.FC = () => {
   const handleChangeUpdateRating = useCallback(
     (e: React.SyntheticEvent<Element, Event>) => {
       const target = e.target as HTMLInputElement;
+      // DESC: target.value: string -> type casting needed
       setUpdateReviewRating(Number(target.value));
     },
     [],
@@ -151,13 +154,13 @@ const MenuReviews: React.FC = () => {
     }
     const data = {
       content: newReviewContent,
-      rating: Number(newReviewRating) * 2,
-      menu: Number(menuId),
+      rating: newReviewRating * 2,
+      menu: currMenuId,
     };
     (async () => {
       const res = await requestCreateReview(data, accessToken);
       if (res) {
-        const res = await requestReviews(menuId, '', 6);
+        const res = await requestReviews(currMenuId, '', 6);
         setReviews(res.data);
         setNext(res?.next);
         setNewReviewContent('');
@@ -177,12 +180,12 @@ const MenuReviews: React.FC = () => {
     }
     const data = {
       content: updateReviewContent,
-      rating: Number(updateReviewRating) * 2,
+      rating: updateReviewRating * 2,
     };
     (async () => {
       const res = await requestUpdateReview(reviewId, data, accessToken);
       if (res) {
-        const res = await requestReviews(menuId, '', 6);
+        const res = await requestReviews(currMenuId, '', 6);
         setReviews(res.data);
         setNext(res?.next);
         setCloseUpdateWindow(true);
@@ -195,7 +198,7 @@ const MenuReviews: React.FC = () => {
     (async () => {
       await requestDeleteReview(reviewId, accessToken);
 
-      const res = await requestReviews(menuId, '', 6);
+      const res = await requestReviews(currMenuId, '', 6);
       setReviews(res.data);
       setNext(res?.next);
     })();
@@ -208,7 +211,7 @@ const MenuReviews: React.FC = () => {
   useEffect(() => {
     (async () => {
       // initial request
-      const res = await requestReviews(menuId, '', 6);
+      const res = await requestReviews(currMenuId, '', 6);
       setReviews(res.data);
       setNext(res?.next);
 
@@ -222,7 +225,7 @@ const MenuReviews: React.FC = () => {
   useEffect(() => {
     (async () => {
       if (inView) {
-        const res = await requestReviews(menuId, next, 6);
+        const res = await requestReviews(currMenuId, next, 6);
         setReviews((prevReviews) => [...prevReviews!, ...res.data]);
         setNext(res?.next);
       }
