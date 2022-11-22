@@ -1,48 +1,62 @@
 import { useNavigate } from 'react-router-dom';
 
-import './menu-overview.css';
-import { Rating } from '@mui/material';
+// import styles
+import {
+  Wrapper,
+  CloseIcon,
+  ContentWrapper,
+  OverviewMenuName,
+  OverviewMenuPrice,
+  OverviewMenuRating,
+  OverviewMenuType,
+  ThumbnailImg,
+  ThumbnailReplaceImg,
+} from './menu-overview.styled';
 import closeIcon from '../../assets/close-icon.svg';
 
+// import components
+import { Rating } from '@mui/material';
 import ButtonNormal from '../button-normal';
 
+// import utils and type
 import { convertTypeEnToKo } from '../../utils/menu/type';
 import { toStringNumberWithComma } from '../../utils/menu/price';
 
+// import context
 import { useMenuDataContext } from '../../context/MenuDataContext';
 
-function MenuOverview({ handleCloseOverview }) {
+interface MenuOverview {
+  handleCloseOverview: () => void;
+}
+
+const MenuOverview: React.FC<MenuOverview> = ({
+  handleCloseOverview,
+}: MenuOverview) => {
   const navigate = useNavigate();
-  const { selectedMenu } = useMenuDataContext();
+  const { selectedMenu } = useMenuDataContext()!;
 
   return (
-    <div className="menu-overview-wrapper">
-      <img
-        className="close-icon"
-        alt="close"
-        src={closeIcon}
-        onClick={handleCloseOverview}
-      />
-      <div className="menu-overview-content-wrapper">
+    <Wrapper>
+      <CloseIcon alt="close" src={closeIcon} onClick={handleCloseOverview} />
+      <ContentWrapper>
         {selectedMenu?.image ? (
-          <img
-            className="overview-img"
+          <ThumbnailImg
             alt="대표 이미지가 없습니다."
             src={selectedMenu?.image}
           />
         ) : (
-          <div className="overview-img">대표 이미지가 없습니다.</div>
+          <ThumbnailReplaceImg>대표 이미지가 없습니다.</ThumbnailReplaceImg>
         )}
         {selectedMenu && (
           <>
-            <span className="overview-name">{selectedMenu?.name}</span>
-            <span className="overview-type">
+            <OverviewMenuName>{selectedMenu?.name}</OverviewMenuName>
+            <OverviewMenuType>
               {convertTypeEnToKo(selectedMenu?.type)}
-            </span>
-            <span className="overview-price">
+            </OverviewMenuType>
+            <OverviewMenuPrice>
               {toStringNumberWithComma(String(selectedMenu?.price))}원
-            </span>
-            <span className="overview-rating">
+            </OverviewMenuPrice>
+            <OverviewMenuRating>
               <Rating
                 name="half-rating-read"
                 value={
@@ -54,7 +68,7 @@ function MenuOverview({ handleCloseOverview }) {
                 size="large"
                 readOnly
               />
-            </span>
+            </OverviewMenuRating>
           </>
         )}
 
@@ -62,9 +76,9 @@ function MenuOverview({ handleCloseOverview }) {
           text="자세히"
           handleClick={() => navigate(`/menus/${selectedMenu?.id}`)}
         />
-      </div>
-    </div>
+      </ContentWrapper>
+    </Wrapper>
   );
-}
+};
 
 export default MenuOverview;
