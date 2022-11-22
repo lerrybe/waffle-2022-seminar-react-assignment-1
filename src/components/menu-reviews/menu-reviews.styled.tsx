@@ -1,4 +1,6 @@
-.menu-reviews-wrapper {
+import styled from '@emotion/styled';
+
+export const Wrapper = styled.div`
   width: calc((100% - 20px) * 0.55);
   min-width: 320px;
   height: calc(100vh - 120px);
@@ -6,36 +8,32 @@
   border-radius: 10px;
   padding: 15px 20px;
   overflow: auto;
-}
+`;
 
-.menu-review-rating-wrapper {
+export const RatingWrapper = styled.div`
   display: flex;
   align-items: center;
-}
+`;
 
-.menu-reviews-rating-title {
+export const RatingTitle = styled.span`
   font-weight: 400;
   font-size: 16px;
   line-height: 20px;
   margin-right: 5px;
-}
+`;
 
-.menu-reviews-rating {
-  font-size: 25px;
-  color: #f0975e;
-  margin-right: 5px;
-}
-
-.menu-reviews-rating-text {
+export const RatingText = styled.span`
   font-weight: 400;
   font-size: 16px;
-  line-height: 24px;
-  margin-left: 5px;
-}
+  line-height: 20px;
+  margin-right: 5px;
+`;
 
-.menu-reviews-content-wrapper {
+export const ReviewContentWrapper = styled.div`
   overflow: auto;
   width: 100%;
   height: calc(100vh - 400px);
   margin: 20px 0 40px 0;
-}
+`;
+
+export const UlWrapper = styled.ul``;
