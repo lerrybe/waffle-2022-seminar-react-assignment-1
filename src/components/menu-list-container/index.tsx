@@ -3,28 +3,32 @@ import { useParams } from 'react-router-dom';
 
 import _ from 'lodash';
 
+// import components
 import MenuList from '../menu-list';
 import MenuOverview from '../menu-overview';
 
+// import contexts
 import {
   useMenuDataContext,
   useMenuDataActionsContext,
 } from '../../context/MenuDataContext';
 
+// import types and utils or API functions
+import { MenuType } from '../../types/menus';
 import { requestMenus, requestSearchedMenus } from '../../api/menus';
 
-function MenuListContainer() {
+const MenuListContainer: React.FC = () => {
   const { storeId } = useParams();
 
   const [keyword, setKeyword] = useState('');
   const [openDetail, setOpenDetail] = useState(false);
 
-  const { selectedMenu } = useMenuDataContext();
-  const { dispatchMenus, dispatchSelectedMenu } = useMenuDataActionsContext();
+  const { selectedMenu } = useMenuDataContext()!;
+  const { dispatchMenus, dispatchSelectedMenu } = useMenuDataActionsContext()!;
 
   // DESC: 가게 페이지 Overview - open, close 이벤트 핸들러 함수
   const handleOpenOverview = useCallback(
-    (item) => {
+    (item: MenuType) => {
       setOpenDetail(true);
       dispatchSelectedMenu(item);
     },
@@ -81,6 +85,6 @@ function MenuListContainer() {
       {openDetail && <MenuOverview handleCloseOverview={handleCloseOverview} />}
     </>
   );
-}
+};
 
 export default MenuListContainer;

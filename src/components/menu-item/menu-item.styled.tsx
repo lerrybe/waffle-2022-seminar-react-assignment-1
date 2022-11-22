@@ -1,36 +1,37 @@
-.menu-item-wrapper {
+import { HTMLAttributes } from 'react';
+import styled from '@emotion/styled';
+
+interface List extends HTMLAttributes<HTMLLIElement> {
+  isSelected?: boolean;
+}
+
+export const Item = styled.li<List>(
+  ({ isSelected }) => `
+  ${isSelected ? 'background: #ffd2d2;' : 'background: #fff;'}
+
   width: 100%;
   height: 41px;
   border-bottom: 1px solid #000;
-
   display: flex;
-}
 
-.menu-item-wrapper:hover {
-  cursor: pointer;
-  background: #ffd2d2;
-}
+  &:hover {
+    cursor: pointer;
+    background: #ffd2d2;
+  }
+`,
+);
 
-.selected-menu-item {
-  background: #ffd2d2;
-}
-
-.not-selected-menu-item {
-  background: #fff;
-}
-
-.menu-item-id {
+export const MenuItemId = styled.span`
   display: flex;
   justify-content: center;
   align-items: center;
   min-width: 56px;
-
   font-weight: 400;
   font-size: 15px;
   line-height: 20px;
-}
+`;
 
-.menu-item-name {
+export const MenuItemName = styled.span`
   display: flex;
   justify-content: flex-start;
   align-items: center;
@@ -40,9 +41,9 @@
   font-weight: 400;
   font-size: 15px;
   line-height: 20px;
-}
+`;
 
-.menu-item-type {
+export const MenuItemType = styled.span`
   display: flex;
   justify-content: flex-start;
   align-items: center;
@@ -52,9 +53,9 @@
   font-weight: 400;
   font-size: 15px;
   line-height: 20px;
-}
+`;
 
-.menu-item-price {
+export const MenuItemPrice = styled.span`
   display: flex;
   justify-content: flex-start;
   align-items: center;
@@ -64,9 +65,9 @@
   font-weight: 400;
   font-size: 15px;
   line-height: 20px;
-}
+`;
 
-.menu-item-rating {
+export const MenuItemRating = styled.span`
   display: flex;
   justify-content: flex-start;
   align-items: center;
@@ -77,5 +78,13 @@
   font-weight: 400;
   font-size: 25px;
   line-height: 25px;
-  color: #F0975E;
-}
+  color: #f0975e;
+`;
+
+export const MenuItemRatingText = styled.span`
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 20px;
+  color: #000000;
+  margin-left: 6px;
+`;

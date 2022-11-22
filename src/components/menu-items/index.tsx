@@ -1,9 +1,10 @@
 import MenuItem from '../menu-item';
 
+import { MenuType } from '../../types/menus';
 import { useMenuDataContext } from '../../context/MenuDataContext';
 
 interface MenuItems {
-  handleOpenOverview: () => void;
+  handleOpenOverview: (item: MenuType) => void;
 }
 
 const MenuItems: React.FC<MenuItems> = ({ handleOpenOverview }: MenuItems) => {
