@@ -3,7 +3,7 @@ import { toast } from 'react-toastify';
 import { getURL } from '../utils/urls';
 
 // import types
-import { LoginRequest, LoginResponse } from '../types/auth';
+import { LoginRequest } from '../types/auth';
 
 export const requestLogin = async ({ username, password }: LoginRequest) => {
   try {
@@ -12,16 +12,15 @@ export const requestLogin = async ({ username, password }: LoginRequest) => {
       password,
     });
     return res.data;
-    // QUESTION: error type not using any
-  } catch (e: any) {
-    toast.error(e.response.data.message, {
-      theme: 'colored',
-    });
+  } catch (e: unknown) {
+    if (axios.isAxiosError(e)) {
+      toast.error(e.response?.data.message);
+    }
     return null;
   }
 };
 
-export const requestLogout = async (accessToken: string) => {
+export const requestLogout = async (accessToken: string | null) => {
   try {
     await axios.post(getURL('/auth/logout'), null, {
       headers: {
@@ -30,11 +29,10 @@ export const requestLogout = async (accessToken: string) => {
       withCredentials: true,
     });
     return true;
-    // QUESTION: error type not using any
-  } catch (e: any) {
-    toast.error(e.response.data.message, {
-      theme: 'colored',
-    });
-    return false;
+  } catch (e: unknown) {
+    if (axios.isAxiosError(e)) {
+      toast.error(e.response?.data.message);
+    }
+    return null;
   }
 };
