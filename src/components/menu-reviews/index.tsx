@@ -170,7 +170,6 @@ const MenuReviews: React.FC = () => {
   }, [newReviewContent, newReviewRating]);
 
   const handleSubmitUpdate = useCallback(() => {
-    console.log('updateReviewRating', updateReviewRating);
     if (!accessToken) {
       toast.warn('로그인 후 리뷰 작성 가능합니다.');
       return;
@@ -194,6 +193,9 @@ const MenuReviews: React.FC = () => {
         setReviews(res.data);
         setNext(res?.next);
         setCloseUpdateWindow(true);
+        if (res?.data.length !== 0) {
+          setMenuRating(res.data[0]?.menu?.rating);
+        }
       }
     })();
   }, [updateReviewContent, updateReviewRating]);
@@ -209,6 +211,9 @@ const MenuReviews: React.FC = () => {
       const res = await requestReviews(currMenuId, null, 6);
       setReviews(res.data);
       setNext(res?.next);
+      if (res?.data.length !== 0) {
+        setMenuRating(res.data[0]?.menu?.rating);
+      }
     })();
 
     handleToggleDeleteModal();

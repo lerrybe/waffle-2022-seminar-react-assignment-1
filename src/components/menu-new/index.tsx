@@ -101,7 +101,6 @@ const MenusNew: React.FC = () => {
     if (accessToken) {
       (async () => {
         const res = await requestCreateMenu(formData, accessToken);
-        console.log('res의 res', res);
 
         if (res) {
           toast.success('메뉴가 생성되었습니다!');

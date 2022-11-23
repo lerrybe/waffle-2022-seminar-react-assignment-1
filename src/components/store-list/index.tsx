@@ -30,6 +30,7 @@ const StoreList: React.FC = () => {
     if (!keyword) {
       (async () => {
         const res = await requestOwners();
+
         dispatchStores(res);
         setStoreList(res);
       })();
@@ -55,9 +56,6 @@ const StoreList: React.FC = () => {
     navigate(`/stores/${storeId}`);
   }, []);
 
-  // 💡 DESC: 가게의 rating 정보, 현재는 난수 생성 * TODO: API Fetching
-  const randomStarRating = () => Math.floor(Math.random() * 10) + 1;
-
   return (
     <Wrapper>
       <SearchBar
@@ -73,10 +71,10 @@ const StoreList: React.FC = () => {
             {storeList?.map((el) => (
               <StoreCard
                 key={el?.id}
-                storeName={el?.store_name || '-'}
+                storeName={el?.store_name || '🧇'}
                 username={el?.username || '-'}
-                storeDesc={el?.store_description || '-'}
-                rating={randomStarRating()}
+                storeDesc={el?.store_description || '👥'}
+                rating={el?.rating || 0}
                 handleClick={() => handleClickStore(el?.id)}
               />
             ))}

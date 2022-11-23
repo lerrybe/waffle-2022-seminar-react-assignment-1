@@ -40,7 +40,6 @@ export const requestCreateMenu = async (
         Authorization: `Bearer ${accessToken}`,
       },
     });
-    console.log(res);
     return res;
   } catch (e: unknown) {
     if (axios.isAxiosError(e)) {
