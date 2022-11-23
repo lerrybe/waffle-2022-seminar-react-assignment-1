@@ -64,23 +64,10 @@ const MenusNew: React.FC = () => {
         ...prev,
         [target.name]: target.value,
       }));
-
-      // DESC: set image & description undefined when ''
-      if (!formData.image) {
-        setFormData((prev) => ({
-          ...prev,
-          image: undefined,
-        }));
-      }
-      if (!formData.description) {
-        setFormData((prev) => ({
-          ...prev,
-          description: undefined,
-        }));
-      }
     },
     [formData],
   );
+  console.log(formData);
 
   // DESC: 메뉴 추가 등록하기
   const handleSubmit = useCallback(() => {
@@ -99,6 +86,20 @@ const MenusNew: React.FC = () => {
     if (!isValidPrice) {
       toast.error(priceAnnouncement);
       return;
+    }
+
+    // DESC: set image & description undefined when ''
+    if (!formData.image) {
+      setFormData((prev) => ({
+        ...prev,
+        image: undefined,
+      }));
+    }
+    if (!formData.description) {
+      setFormData((prev) => ({
+        ...prev,
+        description: undefined,
+      }));
     }
 
     (async () => {

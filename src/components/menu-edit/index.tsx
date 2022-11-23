@@ -74,20 +74,6 @@ const MenuEdit: React.FC = () => {
         ...prev,
         [target.name]: target.value,
       }));
-
-      // DESC: set image & description undefined when ''
-      if (!formData.image) {
-        setFormData((prev) => ({
-          ...prev,
-          image: undefined,
-        }));
-      }
-      if (!formData.description) {
-        setFormData((prev) => ({
-          ...prev,
-          description: undefined,
-        }));
-      }
     },
     [formData],
   );
@@ -101,6 +87,20 @@ const MenuEdit: React.FC = () => {
     if (!isValidPrice) {
       toast.error(announcement);
       return;
+    }
+
+    // DESC: set image & description undefined when ''
+    if (!formData.image) {
+      setFormData((prev) => ({
+        ...prev,
+        image: undefined,
+      }));
+    }
+    if (!formData.description) {
+      setFormData((prev) => ({
+        ...prev,
+        description: undefined,
+      }));
     }
 
     // TODO: 리다이렉트 문제
