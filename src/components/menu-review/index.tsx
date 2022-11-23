@@ -24,6 +24,9 @@ import { Owner } from '../../types/auth';
 // import util functions
 import { loadObjItem } from '../../services/storage';
 
+// import contexts
+import { useSessionContext } from '../../context/SessionContext';
+
 interface MenuReview {
   reviewId: number;
   author: Owner;
@@ -48,7 +51,8 @@ const MenuReview = forwardRef<HTMLDivElement | null, MenuReview>(
     },
     ref,
   ) => {
-    const user = loadObjItem('user');
+    const user: Owner | null = loadObjItem('user');
+    const { accessToken } = useSessionContext()!;
 
     return (
       <Wrapper ref={ref}>
@@ -70,7 +74,7 @@ const MenuReview = forwardRef<HTMLDivElement | null, MenuReview>(
 
           {/* DESC: 작성자만 수정/삭제 가능 */}
 
-          {user?.username === author?.username && (
+          {user?.username === author?.username && accessToken && (
             <ButtonWrapper>
               <Button onClick={() => handleOpenUpdateWindow(reviewId)}>
                 <Icon alt="update" src={updateIcon} />

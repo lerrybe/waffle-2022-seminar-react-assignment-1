@@ -31,6 +31,7 @@ import { useSessionContext } from '../../context/SessionContext';
 const MenusNew: React.FC = () => {
   const navigate = useNavigate();
   const { accessToken } = useSessionContext()!;
+  const [newMenuId, setNewMenuId] = useState<number | null>();
 
   const [formData, setFormData] = useState({
     name: '',
@@ -80,35 +81,37 @@ const MenusNew: React.FC = () => {
 
   // DESC: 메뉴 추가 등록하기
   const handleSubmit = useCallback(() => {
-    // DESC: formData 유효성 검증
-    const { isValidName, announcement: nameAnnouncement } = checkValidName(
-      formData.name,
-    );
-    const { isValidPrice, announcement: priceAnnouncement } = checkValidPrice(
-      String(formData.price),
-    );
-
-    if (!isValidName) {
-      toast.error(nameAnnouncement);
-      return;
-    }
-    if (!isValidPrice) {
-      toast.error(priceAnnouncement);
-      return;
-    }
-
-    // DESC: 요청
+    // DESC: 토큰 확인
     if (accessToken) {
+      // DESC: formData 유효성 검증
+      const { isValidName, announcement: nameAnnouncement } = checkValidName(
+        formData.name,
+      );
+      const { isValidPrice, announcement: priceAnnouncement } = checkValidPrice(
+        String(formData.price),
+      );
+
+      if (!isValidName) {
+        toast.error(nameAnnouncement);
+        return;
+      }
+      if (!isValidPrice) {
+        toast.error(priceAnnouncement);
+        return;
+      }
+
       (async () => {
         const res = await requestCreateMenu(formData, accessToken);
-
+        console.log(res);
+        setNewMenuId(res?.data.id);
         if (res) {
           toast.success('메뉴가 생성되었습니다!');
-          navigate(`/menus/${res.data?.id}}`);
+          navigate(newMenuId ? `/menus/${newMenuId}}` : '0');
         }
       })();
     } else {
       toast.error('토큰이 필요합니다.');
+      navigate('/login');
     }
 
     // DESC: 생성한 메뉴 상세보기로 이동

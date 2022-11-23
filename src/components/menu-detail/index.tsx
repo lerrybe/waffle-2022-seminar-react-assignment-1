@@ -40,8 +40,8 @@ import {
 import { useSessionContext } from '../../context/SessionContext';
 
 const MenuDetail: React.FC = () => {
-  const user: Owner = loadObjItem('user');
-  const { owner } = loadObjItem('owner');
+  const user: Owner | null = loadObjItem('user');
+  const owner: Owner | null = loadObjItem('owner');
 
   const { menuId } = useParams();
   const navigate = useNavigate();
@@ -125,7 +125,7 @@ const MenuDetail: React.FC = () => {
           </>
         )}
 
-        {Number(user?.id) === Number(owner?.id) ? (
+        {Number(user?.id) === Number(owner?.id) && accessToken ? (
           <CRUDWrapper>
             <IconButton
               onClick={() => navigate(`/menus/${selectedMenu?.id}/edit`)}

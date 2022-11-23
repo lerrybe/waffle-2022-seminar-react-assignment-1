@@ -13,7 +13,7 @@ const MenusDetailPage: React.FC = () => {
   const [store, setStore] = useState<Owner | null>(null);
 
   useEffect(() => {
-    const storeData = loadObjItem('owner');
+    const storeData: Owner | null = loadObjItem('owner');
     setStore(storeData);
   }, []);
 

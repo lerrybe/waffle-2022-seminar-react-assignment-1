@@ -165,6 +165,9 @@ const MenuReviews: React.FC = () => {
         setNext(res?.next);
         setNewReviewContent('');
         setNewReviewRating(0);
+        if (res?.data.length !== 0) {
+          setMenuRating(res.data[0]?.menu?.rating);
+        }
       }
     })();
   }, [newReviewContent, newReviewRating]);

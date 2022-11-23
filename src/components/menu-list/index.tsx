@@ -25,6 +25,9 @@ import { MenuType } from '../../types/menus';
 // import util functions
 import { loadObjItem } from '../../services/storage';
 
+// import contexts
+import { useSessionContext } from '../../context/SessionContext';
+
 interface MenuList {
   keyword: string;
   handleOpenOverview: (item: MenuType) => void;
@@ -38,7 +41,8 @@ const MenuList: React.FC<MenuList> = ({
 }: MenuList) => {
   const navigate = useNavigate();
   const { storeId } = useParams();
-  const user: Owner = loadObjItem('user');
+  const { accessToken } = useSessionContext()!;
+  const user: Owner | null = loadObjItem('user');
 
   return (
     <Wrapper>
@@ -56,7 +60,7 @@ const MenuList: React.FC<MenuList> = ({
           <CategoryRating>평점</CategoryRating>
         </CategoryWrapper>
         <MenuItems handleOpenOverview={handleOpenOverview} />
-        {Number(user?.id) === Number(storeId) ? (
+        {Number(user?.id) === Number(storeId) && accessToken ? (
           <button onClick={() => navigate('/menus/new')}>
             <CreateMenuIcon src={createIcon} alt="create" />
           </button>
