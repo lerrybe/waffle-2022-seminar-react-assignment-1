@@ -70,7 +70,7 @@ const MenuReviews: React.FC = () => {
       (async () => {
         const res: Review = await requestReview(reviewId);
         setUpdateReviewContent(res?.content);
-        setUpdateReviewRating(res?.rating);
+        setUpdateReviewRating(res?.rating / 2);
       })();
     }
   }, [requestReview, reviewId]);
@@ -87,7 +87,7 @@ const MenuReviews: React.FC = () => {
     (async () => {
       const res: Review = await requestReview(reviewId);
       setUpdateReviewContent(res?.content);
-      setUpdateReviewRating(res?.rating);
+      setUpdateReviewRating(res?.rating / 2);
     })();
   }, [reviewId]);
 
@@ -160,7 +160,7 @@ const MenuReviews: React.FC = () => {
     (async () => {
       const res = await requestCreateReview(data, accessToken);
       if (res) {
-        const res = await requestReviews(currMenuId, '', 6);
+        const res = await requestReviews(currMenuId, null, 6);
         setReviews(res.data);
         setNext(res?.next);
         setNewReviewContent('');
@@ -170,6 +170,7 @@ const MenuReviews: React.FC = () => {
   }, [newReviewContent, newReviewRating]);
 
   const handleSubmitUpdate = useCallback(() => {
+    console.log('updateReviewRating', updateReviewRating);
     if (!accessToken) {
       toast.warn('로그인 후 리뷰 작성 가능합니다.');
       return;
@@ -183,9 +184,13 @@ const MenuReviews: React.FC = () => {
       rating: updateReviewRating * 2,
     };
     (async () => {
-      const res = await requestUpdateReview(reviewId, data, accessToken);
+      const res = await requestUpdateReview(
+        Number(reviewId) === NaN ? null : Number(reviewId),
+        data,
+        accessToken ? accessToken : null,
+      );
       if (res) {
-        const res = await requestReviews(currMenuId, '', 6);
+        const res = await requestReviews(currMenuId, null, 6);
         setReviews(res.data);
         setNext(res?.next);
         setCloseUpdateWindow(true);
@@ -196,9 +201,12 @@ const MenuReviews: React.FC = () => {
   // 💡 DESC: 리뷰 삭제 이벤트 핸들러 함수
   const handleDeleteReview = useCallback(() => {
     (async () => {
-      await requestDeleteReview(reviewId, accessToken);
+      await requestDeleteReview(
+        Number(reviewId) === NaN ? null : Number(reviewId),
+        accessToken ? accessToken : null,
+      );
 
-      const res = await requestReviews(currMenuId, '', 6);
+      const res = await requestReviews(currMenuId, null, 6);
       setReviews(res.data);
       setNext(res?.next);
     })();
@@ -211,7 +219,7 @@ const MenuReviews: React.FC = () => {
   useEffect(() => {
     (async () => {
       // initial request
-      const res = await requestReviews(currMenuId, '', 6);
+      const res = await requestReviews(currMenuId, null, 6);
       setReviews(res.data);
       setNext(res?.next);
 

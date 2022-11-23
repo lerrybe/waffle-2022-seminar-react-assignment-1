@@ -10,3 +10,14 @@ export interface Review {
   menu: MenuType;
   author: Owner;
 }
+
+export interface CreateReviewParams {
+  content: string;
+  rating: number;
+  menu: number;
+}
+
+export interface UpdateReviewParams {
+  content: string;
+  rating: number;
+}
