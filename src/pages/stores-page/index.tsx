@@ -28,9 +28,9 @@ const StoresPage: React.FC = () => {
         const res = await requestOwner(
           Number(storeId) === NaN ? null : Number(storeId),
         );
-        setStore(res);
-        dispatchSelectedStore(res);
-        saveObjItem('owner', res);
+        setStore(res?.owner);
+        dispatchSelectedStore(res?.owner);
+        saveObjItem('owner', res?.owner);
       } catch (err) {
         console.log(err);
       }
