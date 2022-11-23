@@ -1,8 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
-import _ from 'lodash';
-
 // import components
 import MenuList from '../menu-list';
 import MenuOverview from '../menu-overview';
@@ -19,10 +17,7 @@ import { requestMenus } from '../../api/menus';
 
 const MenuListContainer: React.FC = () => {
   const { storeId } = useParams();
-
-  const [keyword, setKeyword] = useState('');
   const [openDetail, setOpenDetail] = useState(false);
-
   const { selectedMenu } = useMenuDataContext()!;
   const { dispatchMenus, dispatchSelectedMenu } = useMenuDataActionsContext()!;
 
@@ -40,20 +35,9 @@ const MenuListContainer: React.FC = () => {
     dispatchSelectedMenu(null);
   }, [dispatchSelectedMenu]);
 
-  // DESC: 검색어 변화 감지 이벤트 핸들러 함수
-  const handleChangeKeyword = _.throttle((e) => {
-    setKeyword(e.target.value);
-  }, 500);
-
-  useEffect(() => {
-    if (!keyword) {
-      (async () => {
-        const res = await requestMenus(
-          Number(storeId) === NaN ? null : Number(storeId),
-        );
-        dispatchMenus(res?.data);
-      })();
-    } else {
+  // DESC: 메뉴 검색 함수
+  const searchMenuList = useCallback((keyword: string | null) => {
+    if (keyword?.trim()) {
       (async () => {
         const res = await requestMenus(
           Number(storeId) === NaN ? null : Number(storeId),
@@ -61,10 +45,17 @@ const MenuListContainer: React.FC = () => {
         );
         dispatchMenus(res?.data);
       })();
+    } else {
+      (async () => {
+        const res = await requestMenus(
+          Number(storeId) === NaN ? null : Number(storeId),
+        );
+        dispatchMenus(res?.data);
+      })();
     }
-  }, [keyword]);
+  }, []);
 
-  // DESC: menus fetching
+  // DESC: Initial menus fetching
   useEffect(() => {
     (async () => {
       const res = await requestMenus(
@@ -86,9 +77,8 @@ const MenuListContainer: React.FC = () => {
   return (
     <>
       <MenuList
-        keyword={keyword}
+        searchMenuList={searchMenuList}
         handleOpenOverview={handleOpenOverview}
-        handleChangeKeyword={handleChangeKeyword}
       />
       {openDetail && <MenuOverview handleCloseOverview={handleCloseOverview} />}
     </>

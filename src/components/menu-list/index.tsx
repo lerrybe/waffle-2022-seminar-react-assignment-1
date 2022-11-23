@@ -29,15 +29,13 @@ import { loadObjItem } from '../../services/storage';
 import { useSessionContext } from '../../context/SessionContext';
 
 interface MenuList {
-  keyword: string;
+  searchMenuList: (keyword: string | null) => void;
   handleOpenOverview: (item: MenuType) => void;
-  handleChangeKeyword: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 const MenuList: React.FC<MenuList> = ({
-  keyword,
+  searchMenuList,
   handleOpenOverview,
-  handleChangeKeyword,
 }: MenuList) => {
   const navigate = useNavigate();
   const { storeId } = useParams();
@@ -46,11 +44,7 @@ const MenuList: React.FC<MenuList> = ({
 
   return (
     <Wrapper>
-      <SearchBar
-        keyword={keyword}
-        label="메뉴 이름 검색: "
-        handleChangeKeyword={handleChangeKeyword}
-      />
+      <SearchBar label="메뉴 이름 검색: " search={searchMenuList} />
       <ContentWrapper>
         <CategoryWrapper>
           <CategoryID>ID</CategoryID>

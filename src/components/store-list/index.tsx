@@ -1,8 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import _ from 'lodash';
-
 import Loading from '../loading';
 import SearchBar from '../search-bar';
 import StoreCard from '../store-card';
@@ -17,40 +15,35 @@ import {
 
 const StoreList: React.FC = () => {
   const navigate = useNavigate();
-
   const { stores } = useStoreDataContext()!;
-
-  const [keyword, setKeyword] = useState<string>();
   const [storeList, setStoreList] = useState(stores);
-
   const { dispatchStores } = useStoreDataActionsContext()!;
 
   // 💡 DESC: 초기 stores fetching
   useEffect(() => {
-    if (!keyword) {
-      (async () => {
-        const res = await requestOwners();
+    (async () => {
+      const res = await requestOwners();
+      dispatchStores(res);
+      setStoreList(res);
+    })();
+  }, []);
 
-        dispatchStores(res);
-        setStoreList(res);
-      })();
-    } else {
+  // DESC: 스토어 검색 함수
+  const searchStores = useCallback((keyword: string | null) => {
+    if (keyword?.trim()) {
       (async () => {
         const res = await requestOwners(keyword);
         dispatchStores(res);
         setStoreList(res);
       })();
+    } else {
+      (async () => {
+        const res = await requestOwners();
+        dispatchStores(res);
+        setStoreList(res);
+      })();
     }
-  }, [keyword]);
-
-  // TODO: throttle
-
-  const handleChangeKeyword = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      setKeyword(e.currentTarget.value);
-    },
-    [],
-  );
+  }, []);
 
   const handleClickStore = useCallback((storeId: number) => {
     navigate(`/stores/${storeId}`);
@@ -58,11 +51,7 @@ const StoreList: React.FC = () => {
 
   return (
     <Wrapper>
-      <SearchBar
-        keyword={keyword}
-        label="가게 검색: "
-        handleChangeKeyword={handleChangeKeyword}
-      />
+      <SearchBar label="가게 검색: " search={searchStores} />
       <>
         {!storeList ? (
           <Loading />
