@@ -2,12 +2,20 @@ import styled from '@emotion/styled';
 
 export const Wrapper = styled.div`
   width: 100%;
-  height: 81px;
+  height: auto;
+  min-height: 80px;
+  max-height: 140px;
   border: 1px solid #000000;
   border-radius: 10px;
   padding: 7px 13px;
   overflow: auto;
   margin-bottom: 10px;
+
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+  &::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera*/
+  }
 `;
 
 export const Header = styled.div`
