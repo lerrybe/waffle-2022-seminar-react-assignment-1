@@ -1,3 +1,4 @@
+import React, { useCallback, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 // import styles and assets
@@ -11,6 +12,12 @@ import {
   CategoryWrapper,
   ContentWrapper,
   CreateMenuIcon,
+  HeaderWrapper,
+  FilterWrapper,
+  CategoryFilter,
+  RatingFilter,
+  Categories,
+  RatingAnnounce,
 } from './menu-list.styled';
 import createIcon from '../../assets/create-icon.svg';
 
@@ -42,9 +49,53 @@ const MenuList: React.FC<MenuList> = ({
   const { accessToken } = useSessionContext()!;
   const user: Owner | null = loadObjItem('user');
 
+  const [type, setType] = useState<string>();
+  const [isChecked, setIsChecked] = useState(false);
+  const [rating, setRating] = useState<number | null>(3);
+
+  const checkHandler = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      if (isChecked) {
+        setIsChecked(false);
+        setRating(null);
+      } else {
+        setIsChecked(true);
+        setRating(3);
+      }
+    },
+    [isChecked],
+  );
+
+  const handleChangeType = useCallback(
+    (e: React.ChangeEvent<HTMLSelectElement>) => setType(e.target.value),
+    [],
+  );
+
   return (
     <Wrapper>
-      <SearchBar label="메뉴 이름 검색: " search={searchMenuList} />
+      <HeaderWrapper>
+        <SearchBar
+          label="메뉴 이름 검색: "
+          search={searchMenuList}
+          rating={rating}
+        />
+        <FilterWrapper>
+          <CategoryFilter value={type} onChange={(e) => handleChangeType(e)}>
+            <Categories value={undefined}>ALL</Categories>
+            <Categories value="waffle">waffle</Categories>
+            <Categories value="beverage">beverage</Categories>
+            <Categories value="coffee">coffee</Categories>
+            <Categories value="dessert">dessert</Categories>
+          </CategoryFilter>
+          <RatingAnnounce>별점 3점 이상</RatingAnnounce>
+          <RatingFilter
+            type="checkbox"
+            checked={isChecked}
+            onChange={(e) => checkHandler(e)}
+          />
+        </FilterWrapper>
+      </HeaderWrapper>
+
       <ContentWrapper>
         <CategoryWrapper>
           <CategoryID>ID</CategoryID>

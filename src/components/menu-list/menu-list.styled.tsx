@@ -7,6 +7,48 @@ export const Wrapper = styled.div`
   position: relative;
 `;
 
+export const HeaderWrapper = styled.div`
+  width: 100%;
+  height: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+export const FilterWrapper = styled.div`
+  height: 80%;
+  width: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 25px;
+  margin-left: 20px;
+`;
+
+export const CategoryFilter = styled.select`
+  height: 27px;
+  width: 90px;
+  text-align-last: center;
+  text-align: center;
+  -ms-text-align-last: center;
+  -moz-text-align-last: center;
+`;
+
+export const Categories = styled.option``;
+
+export const RatingFilter = styled.input`
+  width: 25px;
+  height: 25px;
+  margin-left: 10px;
+`;
+
+export const RatingAnnounce = styled.span`
+  height: 25px;
+  width: auto;
+  font-size: 15px;
+  margin-left: 15px;
+`;
+
 export const ContentWrapper = styled.div`
   flex-grow: 1;
   height: calc(100vh - 174px);

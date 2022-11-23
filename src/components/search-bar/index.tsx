@@ -12,10 +12,22 @@ import useSyncedState from '../../hooks/useSyncedState';
 
 interface SearchBar {
   label: string;
-  search: (keyword: string | null) => void;
+  search: (
+    keyword: string | null,
+    type?: string | null,
+    rating?: number | null,
+  ) => void;
+  type?: string | null;
+  rating?: number | null;
 }
 
-const SearchBar: React.FC<SearchBar> = ({ label, search }: SearchBar) => {
+// TODO: 메뉴 타입과 최소 별점으로 필터링
+const SearchBar: React.FC<SearchBar> = ({
+  label,
+  search,
+  type,
+  rating,
+}: SearchBar) => {
   const throttle = useThrottle();
   const [keyword, setKeyword] = useSyncedState<string | null>(null);
 
