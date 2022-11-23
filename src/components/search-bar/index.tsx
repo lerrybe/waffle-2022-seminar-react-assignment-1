@@ -1,4 +1,3 @@
-import { useCallback, useState } from 'react';
 import useThrottle from '../../hooks/useThrottle';
 
 import {

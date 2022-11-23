@@ -1,9 +1,12 @@
 import { createContext, useContext, useState } from 'react';
+import axios from 'axios';
+
 import { toast } from 'react-toastify';
 
 // functions
+import { requestOwnerMe } from '../api/owners';
 import { clearAll, saveObjItem } from '../services/storage';
-import { requestLogin, requestLogout } from '../api/auth';
+import { requestLogin, requestLogout, requestRefresh } from '../api/auth';
 
 // states
 import { initialUser, initialUserActions } from '../data/initialSessionStates';
@@ -59,8 +62,33 @@ function SessionProvider({ children }: SessionProvider) {
     return;
   };
 
+  const refresh = async () => {
+    try {
+      // DESC: refresh - access_token 갱신
+      const refreshData = await requestRefresh();
+      if (refreshData) {
+        setAccessToken(refreshData?.access_token);
+        const token = refreshData.access_token;
+
+        // DESC: accessToken 이용한 내 정보 갱신
+        const ownerData = await requestOwnerMe(token);
+        if (ownerData) {
+          setUser(ownerData?.owner);
+          saveObjItem('user', ownerData?.owner);
+          console.log('갱신됨!');
+        }
+      }
+    } catch (e: unknown) {
+      if (axios.isAxiosError(e)) {
+        // DESC: 갱신이 실패한 경우 사용자에게 안내
+        toast.error(e.response?.data.message);
+      }
+      return;
+    }
+  };
+
   return (
-    <SessionActionsContext.Provider value={{ login, logout }}>
+    <SessionActionsContext.Provider value={{ login, logout, refresh }}>
       <SessionContext.Provider
         value={{
           user,

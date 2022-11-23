@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { BASE_URL } from '../constant/constant';
+import { getURL } from '../utils/urls';
 
 export const requestOwners = async (name?: string) => {
   try {
@@ -21,9 +22,14 @@ export const requestOwner = async (id: number | null) => {
   }
 };
 
-export const requestOwnerMe = async () => {
+export const requestOwnerMe = async (accessToken: string | null) => {
   try {
-    const res = await axios.get(`${BASE_URL}/owners/me`);
+    const res = await axios.get(getURL('/owners/me'), {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+      withCredentials: true,
+    });
     return res.data;
   } catch (e) {
     return null;

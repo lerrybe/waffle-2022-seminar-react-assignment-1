@@ -8,4 +8,5 @@ export interface SessionState {
 export interface SessionDispatches {
   login: ({ username, password }: LoginRequest) => Promise<void>;
   logout: (accessToken: string) => Promise<void>;
+  refresh: () => Promise<void>;
 }

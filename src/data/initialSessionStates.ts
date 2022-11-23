@@ -17,4 +17,7 @@ export const initialUserActions: SessionDispatches = {
   logout() {
     throw new Error('SessionContext not provided');
   },
+  refresh() {
+    throw new Error('SessionContext not provided');
+  },
 };

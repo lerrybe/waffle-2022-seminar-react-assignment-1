@@ -6,7 +6,7 @@ import './styles/global.css';
 import './styles/reset.css';
 
 // import components
-import EntryRoute from './routes';
+import App from './App';
 import ModalToast from './components/modal-toast';
 
 // import contexts
@@ -22,7 +22,7 @@ root.render(
     <SessionProvider>
       <StoreDataProvider>
         <MenuDataProvider>
-          <EntryRoute />
+          <App />
           <ModalToast />
         </MenuDataProvider>
       </StoreDataProvider>

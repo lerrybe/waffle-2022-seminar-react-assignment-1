@@ -7,10 +7,14 @@ import { LoginRequest } from '../types/auth';
 
 export const requestLogin = async ({ username, password }: LoginRequest) => {
   try {
-    const res = await axios.post(getURL('/auth/login'), {
-      username,
-      password,
-    });
+    const res = await axios.post(
+      getURL('/auth/login'),
+      {
+        username,
+        password,
+      },
+      { withCredentials: true },
+    );
     return res.data;
   } catch (e: unknown) {
     if (axios.isAxiosError(e)) {
@@ -33,6 +37,17 @@ export const requestLogout = async (accessToken: string | null) => {
     if (axios.isAxiosError(e)) {
       toast.error(e.response?.data.message);
     }
+    return null;
+  }
+};
+
+export const requestRefresh = async () => {
+  try {
+    const res = await axios.post(getURL('/auth/refresh'), null, {
+      withCredentials: true,
+    });
+    return res.data;
+  } catch (e: unknown) {
     return null;
   }
 };
