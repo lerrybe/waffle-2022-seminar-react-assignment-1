@@ -8,7 +8,7 @@ import SearchBar from '../search-bar';
 import StoreCard from '../store-card';
 import { InnerWrapper, Wrapper } from './store-list.styled';
 
-import { requestOwners, requestSearchedOwners } from '../../api/owners';
+import { requestOwners } from '../../api/owners';
 
 import {
   useStoreDataContext,
@@ -35,7 +35,7 @@ const StoreList: React.FC = () => {
       })();
     } else {
       (async () => {
-        const res = await requestSearchedOwners(keyword);
+        const res = await requestOwners(keyword);
         dispatchStores(res);
         setStoreList(res);
       })();
@@ -43,10 +43,6 @@ const StoreList: React.FC = () => {
   }, [keyword]);
 
   // TODO: throttle
-  // DESC: 검색어 변화 감지 이벤트 핸들러 함수
-  // const handleChangeKeyword = _.throttle((e) => {
-  //   setKeyword(e.target.value);
-  // }, 500);
 
   const handleChangeKeyword = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {

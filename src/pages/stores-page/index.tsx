@@ -10,8 +10,9 @@ import { requestOwner } from '../../api/owners';
 import { useStoreDataActionsContext } from '../../context/StoreDataContext';
 import { useMenuDataActionsContext } from '../../context/MenuDataContext';
 
-import { saveObjItem } from '../../services/storage';
 import { Owner } from '../../types/auth';
+
+import { saveObjItem } from '../../services/storage';
 
 const StoresPage: React.FC = () => {
   const { storeId } = useParams();
@@ -24,8 +25,9 @@ const StoresPage: React.FC = () => {
     dispatchSelectedMenu(null);
     (async () => {
       try {
-        // 😹 TODO: request type 지정
-        const res = await requestOwner(storeId);
+        const res = await requestOwner(
+          Number(storeId) === NaN ? null : Number(storeId),
+        );
         setStore(res);
         dispatchSelectedStore(res);
         saveObjItem('owner', res);
