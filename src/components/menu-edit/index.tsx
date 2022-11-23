@@ -103,7 +103,6 @@ const MenuEdit: React.FC = () => {
       }));
     }
 
-    // TODO: 리다이렉트 문제
     (async () => {
       const res = await requestUpdateMenu(
         selectedMenu?.id || null,

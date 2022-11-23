@@ -21,7 +21,7 @@ interface SearchBar {
   rating?: number | null;
 }
 
-// TODO: 메뉴 타입과 최소 별점으로 필터링
+// TODO: 메뉴 타입과 최소 별점으로 필터링, 현재 : UI 정도
 const SearchBar: React.FC<SearchBar> = ({
   label,
   search,

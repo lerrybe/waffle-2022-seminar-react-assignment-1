@@ -67,7 +67,6 @@ const MenusNew: React.FC = () => {
     },
     [formData],
   );
-  console.log(formData);
 
   // DESC: 메뉴 추가 등록하기
   const handleSubmit = useCallback(() => {

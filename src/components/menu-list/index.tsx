@@ -49,6 +49,7 @@ const MenuList: React.FC<MenuList> = ({
   const { accessToken } = useSessionContext()!;
   const user: Owner | null = loadObjItem('user');
 
+  // 🔴 TODO: 메뉴 타입, 별점 필터링
   const [type, setType] = useState<string>();
   const [isChecked, setIsChecked] = useState(false);
   const [rating, setRating] = useState<number | null>(3);
