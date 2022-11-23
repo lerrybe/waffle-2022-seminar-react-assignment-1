@@ -61,7 +61,7 @@ const MenuListContainer: React.FC = () => {
       const res = await requestMenus(
         Number(storeId) === NaN ? null : Number(storeId),
       );
-      dispatchMenus(res.data);
+      dispatchMenus(res?.data);
     })();
   }, [storeId]);
 

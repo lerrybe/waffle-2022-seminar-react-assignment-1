@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import React, { useCallback, useEffect, useState } from 'react';
 
 // import useInView for infinity scroll
@@ -36,16 +36,23 @@ import {
 import { clearItem } from '../../services/storage';
 
 // import contexts
-import { useSessionContext } from '../../context/SessionContext';
+import {
+  useSessionContext,
+  useSessionActionsContext,
+} from '../../context/SessionContext';
 
 const MenuReviews: React.FC = () => {
   // DESC: 무한 스크롤을 위한 마지막 요소 ref 지정
   const { menuId } = useParams();
+  const navigate = useNavigate();
   const [ref, inView] = useInView();
   const { accessToken } = useSessionContext()!;
+  const { refresh } = useSessionActionsContext()!;
 
   const [next, setNext] = useState('');
-  const [currMenuId] = useState(Number(menuId));
+  const [currMenuId] = useState<number | null>(
+    Number(menuId) === NaN ? null : Number(menuId),
+  );
   const [menuRating, setMenuRating] = useState(0);
   const [reviews, setReviews] = useState<Review[] | null>();
   const [reviewId, setReviewId] = useState<number | undefined>();
@@ -159,14 +166,36 @@ const MenuReviews: React.FC = () => {
     };
     (async () => {
       const res = await requestCreateReview(data, accessToken);
-      if (res) {
+      if (res && res !== 401) {
         const res = await requestReviews(currMenuId, null, 6);
-        setReviews(res.data);
+        setReviews(res?.data);
         setNext(res?.next);
         setNewReviewContent('');
         setNewReviewRating(0);
         if (res?.data.length !== 0) {
-          setMenuRating(res.data[0]?.menu?.rating);
+          setMenuRating(res?.data[0]?.menu?.rating);
+        }
+      }
+
+      if (res === 401) {
+        // 🌟 DESC: accessToken 갱신 후 요청 재시도
+        refresh();
+
+        const res = await requestCreateReview(data, accessToken);
+        if (res && res !== 401) {
+          const res = await requestReviews(currMenuId, null, 6);
+          setReviews(res?.data);
+          setNext(res?.next);
+          setNewReviewContent('');
+          setNewReviewRating(0);
+          if (res?.data.length !== 0) {
+            setMenuRating(res?.data[0]?.menu?.rating);
+          }
+        }
+
+        if (res === 401) {
+          toast.error('사용자 인증이 필요합니다.');
+          navigate('/login');
         }
       }
     })();
@@ -191,13 +220,38 @@ const MenuReviews: React.FC = () => {
         data,
         accessToken ? accessToken : null,
       );
-      if (res) {
+      if (res && res != 401) {
         const res = await requestReviews(currMenuId, null, 6);
-        setReviews(res.data);
+        setReviews(res?.data);
         setNext(res?.next);
         setCloseUpdateWindow(true);
         if (res?.data.length !== 0) {
-          setMenuRating(res.data[0]?.menu?.rating);
+          setMenuRating(res?.data[0]?.menu?.rating);
+        }
+      }
+
+      if (res === 401) {
+        // 🌟 DESC: accessToken 갱신 후 요청 재시도
+        refresh();
+
+        const res = await requestUpdateReview(
+          Number(reviewId) === NaN ? null : Number(reviewId),
+          data,
+          accessToken ? accessToken : null,
+        );
+        if (res && res != 401) {
+          const res = await requestReviews(currMenuId, null, 6);
+          setReviews(res?.data);
+          setNext(res?.next);
+          setCloseUpdateWindow(true);
+          if (res?.data.length !== 0) {
+            setMenuRating(res?.data[0]?.menu?.rating);
+          }
+        }
+
+        if (res === 401) {
+          toast.error('사용자 인증이 필요합니다.');
+          navigate('/login');
         }
       }
     })();
@@ -212,10 +266,28 @@ const MenuReviews: React.FC = () => {
       );
 
       const res = await requestReviews(currMenuId, null, 6);
-      setReviews(res.data);
-      setNext(res?.next);
-      if (res?.data.length !== 0) {
-        setMenuRating(res.data[0]?.menu?.rating);
+      if (res && res != 401) {
+        setReviews(res?.data);
+        setNext(res?.next);
+        if (res?.data.length !== 0) {
+          setMenuRating(res?.data[0]?.menu?.rating);
+        }
+      }
+
+      if (res === 401) {
+        const res = await requestReviews(currMenuId, null, 6);
+        if (res && res != 401) {
+          setReviews(res?.data);
+          setNext(res?.next);
+          if (res?.data.length !== 0) {
+            setMenuRating(res?.data[0]?.menu?.rating);
+          }
+        }
+
+        if (res === 401) {
+          toast.error('사용자 인증이 필요합니다.');
+          navigate('/login');
+        }
       }
     })();
 
@@ -228,11 +300,11 @@ const MenuReviews: React.FC = () => {
     (async () => {
       // initial request
       const res = await requestReviews(currMenuId, null, 6);
-      setReviews(res.data);
+      setReviews(res?.data);
       setNext(res?.next);
 
       if (res?.data.length !== 0) {
-        setMenuRating(res.data[0]?.menu?.rating);
+        setMenuRating(res?.data[0]?.menu?.rating);
       }
     })();
   }, []);
@@ -242,7 +314,7 @@ const MenuReviews: React.FC = () => {
     (async () => {
       if (inView) {
         const res = await requestReviews(currMenuId, next, 6);
-        setReviews((prevReviews) => [...prevReviews!, ...res.data]);
+        setReviews((prevReviews) => [...prevReviews!, ...res?.data]);
         setNext(res?.next);
       }
     })();

@@ -14,7 +14,7 @@ export interface Review {
 export interface CreateReviewParams {
   content: string;
   rating: number;
-  menu: number;
+  menu: number | null;
 }
 
 export interface UpdateReviewParams {

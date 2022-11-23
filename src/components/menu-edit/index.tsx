@@ -38,13 +38,17 @@ import { requestUpdateMenu } from '../../api/menus';
 import { convertTypeEnToKo } from '../../utils/menu/type';
 
 // import contexts
+import {
+  useSessionContext,
+  useSessionActionsContext,
+} from '../../context/SessionContext';
 import { useMenuDataContext } from '../../context/MenuDataContext';
-import { useSessionContext } from '../../context/SessionContext';
 
 const MenuEdit: React.FC = () => {
   const navigate = useNavigate();
   const { accessToken } = useSessionContext()!;
   const { selectedMenu } = useMenuDataContext()!;
+  const { refresh } = useSessionActionsContext()!;
 
   const [formData, setFormData] = useState({
     name: selectedMenu?.name || '',
@@ -106,9 +110,29 @@ const MenuEdit: React.FC = () => {
         formData,
         accessToken,
       );
-      if (res) {
+      if (res && res !== 401) {
         toast.success('메뉴가 수정되었습니다!');
-        navigate(`/menus/${res.id}}`);
+        navigate(-1);
+      }
+
+      if (res === 401) {
+        // 🌟 DESC: accessToken 갱신 후 요청 재시도
+        refresh();
+
+        const res = await requestUpdateMenu(
+          selectedMenu?.id || null,
+          formData,
+          accessToken,
+        );
+        if (res && res !== 401) {
+          toast.success('메뉴가 수정되었습니다!');
+          navigate(-1);
+        }
+
+        if (res === 401) {
+          toast.error('사용자 인증이 필요합니다.');
+          navigate('/login');
+        }
       }
     })();
   }, [formData, navigate, selectedMenu?.id]);

@@ -30,6 +30,7 @@ export const requestMenu = async (menuId: number | null) => {
   }
 };
 
+// DESC: refresh target
 export const requestCreateMenu = async (
   menu: CreateMenuParams,
   accessToken?: string | null,
@@ -42,13 +43,17 @@ export const requestCreateMenu = async (
     });
     return res;
   } catch (e: unknown) {
-    if (axios.isAxiosError(e)) {
+    if (axios.isAxiosError(e) && e.response?.data.statusCode === 401) {
+      // DESC: statusCode 리턴
+      return e.response?.data.statusCode;
+    } else if (axios.isAxiosError(e)) {
       toast.error(e.response?.data.message);
     }
     return null;
   }
 };
 
+// DESC: refresh target
 export const requestUpdateMenu = async (
   menuId: number | null,
   menu: UpdateMenuParams,
@@ -60,15 +65,19 @@ export const requestUpdateMenu = async (
         Authorization: `Bearer ${accessToken}`,
       },
     });
-    return res.data;
+    return res;
   } catch (e: unknown) {
-    if (axios.isAxiosError(e)) {
+    if (axios.isAxiosError(e) && e.response?.data.statusCode === 401) {
+      // DESC: statusCode 리턴
+      return e.response?.data.statusCode;
+    } else if (axios.isAxiosError(e)) {
       toast.error(e.response?.data.message);
     }
     return null;
   }
 };
 
+// DESC: refresh target
 export const requestDeleteMenu = async (
   menuId: number | null,
   accessToken: String | null,
@@ -81,7 +90,10 @@ export const requestDeleteMenu = async (
     });
     return res.data;
   } catch (e: unknown) {
-    if (axios.isAxiosError(e)) {
+    if (axios.isAxiosError(e) && e.response?.data.statusCode === 401) {
+      // DESC: statusCode 리턴
+      return e.response?.data.statusCode;
+    } else if (axios.isAxiosError(e)) {
       toast.error(e.response?.data.message);
     }
     return null;

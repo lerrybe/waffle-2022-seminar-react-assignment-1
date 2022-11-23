@@ -24,6 +24,7 @@ import arrowBackIcon from '../../assets/arrow-back-icon.svg';
 import { Owner } from '../../types/auth';
 
 // import components
+import { toast } from 'react-toastify';
 import ModalDelete from '../modal-delete';
 
 // import utils and API functions
@@ -34,10 +35,13 @@ import { requestDeleteMenu, requestMenu } from '../../api/menus';
 
 // import contexts
 import {
+  useSessionContext,
+  useSessionActionsContext,
+} from '../../context/SessionContext';
+import {
   useMenuDataContext,
   useMenuDataActionsContext,
 } from '../../context/MenuDataContext';
-import { useSessionContext } from '../../context/SessionContext';
 
 const MenuDetail: React.FC = () => {
   const user: Owner | null = loadObjItem('user');
@@ -46,6 +50,7 @@ const MenuDetail: React.FC = () => {
   const { menuId } = useParams();
   const navigate = useNavigate();
   const { accessToken } = useSessionContext()!;
+  const { refresh } = useSessionActionsContext()!;
   const { menus, selectedMenu } = useMenuDataContext()!;
   const { dispatchSelectedMenu } = useMenuDataActionsContext()!;
 
@@ -80,10 +85,25 @@ const MenuDetail: React.FC = () => {
 
   const handleDeleteMenu = useCallback(() => {
     (async () => {
-      await requestDeleteMenu(
+      const res = await requestDeleteMenu(
         Number(menuId) === NaN ? null : Number(menuId),
         accessToken ? accessToken : null,
       );
+
+      if (res === 401) {
+        // 🌟 DESC: accessToken 갱신 후 요청 재시도
+        refresh();
+
+        const res = await requestDeleteMenu(
+          Number(menuId) === NaN ? null : Number(menuId),
+          accessToken ? accessToken : null,
+        );
+
+        if (res === 401) {
+          toast.error('사용자 인증이 필요합니다.');
+          navigate('/login');
+        }
+      }
     })();
 
     dispatchSelectedMenu(null);

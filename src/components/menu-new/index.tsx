@@ -26,12 +26,15 @@ import { requestCreateMenu } from '../../api/menus';
 import { checkValidName } from '../../utils/menu/name';
 
 // import contexts
-import { useSessionContext } from '../../context/SessionContext';
+import {
+  useSessionContext,
+  useSessionActionsContext,
+} from '../../context/SessionContext';
 
 const MenusNew: React.FC = () => {
   const navigate = useNavigate();
   const { accessToken } = useSessionContext()!;
-  const [newMenuId, setNewMenuId] = useState<number | null>();
+  const { refresh } = useSessionActionsContext()!;
 
   const [formData, setFormData] = useState({
     name: '',
@@ -81,40 +84,47 @@ const MenusNew: React.FC = () => {
 
   // DESC: 메뉴 추가 등록하기
   const handleSubmit = useCallback(() => {
-    // DESC: 토큰 확인
-    if (accessToken) {
-      // DESC: formData 유효성 검증
-      const { isValidName, announcement: nameAnnouncement } = checkValidName(
-        formData.name,
-      );
-      const { isValidPrice, announcement: priceAnnouncement } = checkValidPrice(
-        String(formData.price),
-      );
+    // DESC: formData 유효성 검증
+    const { isValidName, announcement: nameAnnouncement } = checkValidName(
+      formData.name,
+    );
+    const { isValidPrice, announcement: priceAnnouncement } = checkValidPrice(
+      String(formData.price),
+    );
 
-      if (!isValidName) {
-        toast.error(nameAnnouncement);
-        return;
-      }
-      if (!isValidPrice) {
-        toast.error(priceAnnouncement);
-        return;
-      }
-
-      (async () => {
-        const res = await requestCreateMenu(formData, accessToken);
-        console.log(res);
-        setNewMenuId(res?.data.id);
-        if (res) {
-          toast.success('메뉴가 생성되었습니다!');
-          navigate(newMenuId ? `/menus/${newMenuId}}` : '0');
-        }
-      })();
-    } else {
-      toast.error('토큰이 필요합니다.');
-      navigate('/login');
+    if (!isValidName) {
+      toast.error(nameAnnouncement);
+      return;
+    }
+    if (!isValidPrice) {
+      toast.error(priceAnnouncement);
+      return;
     }
 
-    // DESC: 생성한 메뉴 상세보기로 이동
+    (async () => {
+      const res = await requestCreateMenu(formData, accessToken);
+      if (res && res !== 401) {
+        toast.success('메뉴가 생성되었습니다!');
+        navigate(-1);
+      }
+
+      // DESC: statusCode가 401인 경우
+      if (res === 401) {
+        // 🌟 DESC: accessToken 갱신 후 요청 재시도
+        refresh();
+
+        const res = await requestCreateMenu(formData, accessToken);
+        if (res && res !== 401) {
+          toast.success('메뉴가 생성되었습니다!');
+          navigate(-1);
+        }
+
+        if (res === 401) {
+          toast.error('사용자 인증이 필요합니다.');
+          navigate('/login');
+        }
+      }
+    })();
   }, [formData]);
 
   return (

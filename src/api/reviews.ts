@@ -30,6 +30,7 @@ export const requestReview = async (reviewId?: number) => {
   }
 };
 
+// DESC: refresh target
 export const requestCreateReview = async (
   review: CreateReviewParams,
   accessToken: string | null,
@@ -42,13 +43,17 @@ export const requestCreateReview = async (
     });
     return res.data;
   } catch (e: unknown) {
-    if (axios.isAxiosError(e)) {
+    if (axios.isAxiosError(e) && e.response?.data.statusCode === 401) {
+      // DESC: statusCode 리턴
+      return e.response?.data.statusCode;
+    } else if (axios.isAxiosError(e)) {
       toast.error(e.response?.data.message);
     }
     return null;
   }
 };
 
+// DESC: refresh target
 export const requestUpdateReview = async (
   reviewId: number | null,
   review: UpdateReviewParams,
@@ -62,13 +67,17 @@ export const requestUpdateReview = async (
     });
     return res.data;
   } catch (e: unknown) {
-    if (axios.isAxiosError(e)) {
+    if (axios.isAxiosError(e) && e.response?.data.statusCode === 401) {
+      // DESC: statusCode 리턴
+      return e.response?.data.statusCode;
+    } else if (axios.isAxiosError(e)) {
       toast.error(e.response?.data.message);
     }
     return null;
   }
 };
 
+// DESC: refresh target
 export const requestDeleteReview = async (
   reviewId: number | null,
   accessToken: string | null,
@@ -81,7 +90,10 @@ export const requestDeleteReview = async (
     });
     return res.data;
   } catch (e: unknown) {
-    if (axios.isAxiosError(e)) {
+    if (axios.isAxiosError(e) && e.response?.data.statusCode === 401) {
+      // DESC: statusCode 리턴
+      return e.response?.data.statusCode;
+    } else if (axios.isAxiosError(e)) {
       toast.error(e.response?.data.message);
     }
     return null;

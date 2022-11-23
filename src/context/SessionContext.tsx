@@ -75,7 +75,6 @@ function SessionProvider({ children }: SessionProvider) {
         if (ownerData) {
           setUser(ownerData?.owner);
           saveObjItem('user', ownerData?.owner);
-          console.log('갱신됨!');
         }
       }
     } catch (e: unknown) {
