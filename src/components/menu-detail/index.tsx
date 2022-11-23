@@ -33,11 +33,11 @@ import { toStringNumberWithComma } from '../../utils/menu/price';
 import { requestDeleteMenu, requestMenu } from '../../api/menus';
 
 // import contexts
-import { useSessionContext } from '../../context/SessionContext';
 import {
   useMenuDataContext,
   useMenuDataActionsContext,
 } from '../../context/MenuDataContext';
+import { useSessionContext } from '../../context/SessionContext';
 
 const MenuDetail: React.FC = () => {
   const user: Owner = loadObjItem('user');
@@ -54,7 +54,9 @@ const MenuDetail: React.FC = () => {
 
   useEffect(() => {
     (async () => {
-      const res = await requestMenu(menuId);
+      const res = await requestMenu(
+        Number(menuId) === NaN ? null : Number(menuId),
+      );
       if (res) {
         dispatchSelectedMenu(res);
       } else {
@@ -78,7 +80,10 @@ const MenuDetail: React.FC = () => {
 
   const handleDeleteMenu = useCallback(() => {
     (async () => {
-      await requestDeleteMenu(menuId, accessToken);
+      await requestDeleteMenu(
+        Number(menuId) === NaN ? null : Number(menuId),
+        accessToken ? accessToken : null,
+      );
     })();
 
     dispatchSelectedMenu(null);

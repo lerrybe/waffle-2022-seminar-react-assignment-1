@@ -47,11 +47,11 @@ const MenuEdit: React.FC = () => {
   const { selectedMenu } = useMenuDataContext()!;
 
   const [formData, setFormData] = useState({
-    name: selectedMenu?.name,
-    price: selectedMenu?.price,
-    image: selectedMenu?.image,
-    type: selectedMenu?.type,
-    description: selectedMenu?.description,
+    name: selectedMenu?.name || '',
+    type: selectedMenu?.type || 'waffle',
+    price: selectedMenu?.price || 0,
+    image: selectedMenu?.image as string | undefined,
+    description: selectedMenu?.description as string | undefined,
   });
 
   // DESC: formData 변화 감지, price는 기본적으로 number로 관리
@@ -66,10 +66,24 @@ const MenuEdit: React.FC = () => {
           toNumberWithoutComma(String(e.target.value.replace(/[^0-9]/g, ''))),
         );
       }
-      setFormData({
-        ...formData,
+      setFormData((prev) => ({
+        ...prev,
         [target.name]: target.value,
-      });
+      }));
+
+      // DESC: set image & description undefined when ''
+      if (!formData.image) {
+        setFormData((prev) => ({
+          ...prev,
+          image: undefined,
+        }));
+      }
+      if (!formData.description) {
+        setFormData((prev) => ({
+          ...prev,
+          description: undefined,
+        }));
+      }
     },
     [formData],
   );
@@ -85,9 +99,10 @@ const MenuEdit: React.FC = () => {
       return;
     }
 
+    // TODO: 리다이렉트 문제
     (async () => {
       const res = await requestUpdateMenu(
-        selectedMenu?.id,
+        selectedMenu?.id || null,
         formData,
         accessToken,
       );

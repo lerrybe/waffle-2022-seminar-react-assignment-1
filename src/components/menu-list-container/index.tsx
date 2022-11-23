@@ -15,7 +15,7 @@ import {
 
 // import types and utils or API functions
 import { MenuType } from '../../types/menus';
-import { requestMenus, requestSearchedMenus } from '../../api/menus';
+import { requestMenus } from '../../api/menus';
 
 const MenuListContainer: React.FC = () => {
   const { storeId } = useParams();
@@ -48,20 +48,28 @@ const MenuListContainer: React.FC = () => {
   useEffect(() => {
     if (!keyword) {
       (async () => {
-        const res = await requestMenus(storeId);
+        const res = await requestMenus(
+          Number(storeId) === NaN ? null : Number(storeId),
+        );
+        dispatchMenus(res?.data);
+      })();
+    } else {
+      (async () => {
+        const res = await requestMenus(
+          Number(storeId) === NaN ? null : Number(storeId),
+          keyword,
+        );
         dispatchMenus(res?.data);
       })();
     }
-    (async () => {
-      const res = await requestSearchedMenus(storeId, keyword);
-      dispatchMenus(res?.data);
-    })();
   }, [keyword]);
 
   // DESC: menus fetching
   useEffect(() => {
     (async () => {
-      const res = await requestMenus(storeId);
+      const res = await requestMenus(
+        Number(storeId) === NaN ? null : Number(storeId),
+      );
       dispatchMenus(res.data);
     })();
   }, [storeId]);

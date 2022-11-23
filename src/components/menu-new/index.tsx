@@ -34,10 +34,10 @@ const MenusNew: React.FC = () => {
 
   const [formData, setFormData] = useState({
     name: '',
-    price: '',
-    image: '',
-    type: '',
-    description: '',
+    type: 'waffle',
+    price: 0,
+    image: undefined as string | undefined,
+    description: undefined as string | undefined,
   });
 
   // DESC: formData 변화 감지, price는 기본적으로 number로 관리
@@ -56,16 +56,31 @@ const MenusNew: React.FC = () => {
           toNumberWithoutComma(String(e.target.value.replace(/[^0-9]/g, ''))),
         );
       }
-      setFormData({
-        ...formData,
+      setFormData((prev) => ({
+        ...prev,
         [target.name]: target.value,
-      });
+      }));
+
+      // DESC: set image & description undefined when ''
+      if (!formData.image) {
+        setFormData((prev) => ({
+          ...prev,
+          image: undefined,
+        }));
+      }
+      if (!formData.description) {
+        setFormData((prev) => ({
+          ...prev,
+          description: undefined,
+        }));
+      }
     },
     [formData],
   );
 
   // DESC: 메뉴 추가 등록하기
   const handleSubmit = useCallback(() => {
+    // DESC: formData 유효성 검증
     const { isValidName, announcement: nameAnnouncement } = checkValidName(
       formData.name,
     );
@@ -83,16 +98,22 @@ const MenusNew: React.FC = () => {
     }
 
     // DESC: 요청
-    (async () => {
-      const res = await requestCreateMenu(formData, accessToken);
-      if (res) {
-        toast.success('메뉴가 생성되었습니다!');
-        navigate(`/menus/${res.id}}`);
-      }
-    })();
+    if (accessToken) {
+      (async () => {
+        const res = await requestCreateMenu(formData, accessToken);
+        console.log('res의 res', res);
+
+        if (res) {
+          toast.success('메뉴가 생성되었습니다!');
+          navigate(`/menus/${res.data?.id}}`);
+        }
+      })();
+    } else {
+      toast.error('토큰이 필요합니다.');
+    }
 
     // DESC: 생성한 메뉴 상세보기로 이동
-  }, [formData, navigate]);
+  }, [formData]);
 
   return (
     <>

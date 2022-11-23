@@ -5,7 +5,7 @@ export interface MenuType {
   name: string;
   type: string;
   price: number;
-  image: string;
+  image?: string;
   description: string;
   rating?: number;
   created_at: Date;
@@ -13,4 +13,18 @@ export interface MenuType {
   owner: Owner;
 }
 
-export {};
+export interface CreateMenuParams {
+  name: string;
+  type: string;
+  price: number;
+  image?: string;
+  description?: string;
+}
+
+export interface UpdateMenuParams {
+  name: string;
+  type: string;
+  price: number;
+  image?: string;
+  description?: string;
+}
