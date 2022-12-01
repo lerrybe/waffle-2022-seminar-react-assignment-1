@@ -26,6 +26,9 @@ const MenuListContainer: React.FC = () => {
     (item: MenuType) => {
       setOpenDetail(true);
       dispatchSelectedMenu(item);
+      if (openDetail) {
+        handleCloseOverview();
+      }
     },
     [dispatchSelectedMenu],
   );

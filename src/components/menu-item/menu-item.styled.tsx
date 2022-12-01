@@ -74,11 +74,6 @@ export const MenuItemRating = styled.span`
   flex-grow: 1;
   margin-left: 15px;
   min-width: 140px;
-
-  font-weight: 400;
-  font-size: 25px;
-  line-height: 25px;
-  color: #f0975e;
 `;
 
 export const MenuItemRatingText = styled.span`

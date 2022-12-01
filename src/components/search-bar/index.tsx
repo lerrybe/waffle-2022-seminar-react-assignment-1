@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import useThrottle from '../../hooks/useThrottle';
 
 import {
@@ -8,7 +9,6 @@ import {
   InputWrapper,
 } from './search-bar.styled';
 import searchImg from '../../assets/search-icon.svg';
-import useSyncedState from '../../hooks/useSyncedState';
 
 interface SearchBar {
   label: string;
@@ -29,7 +29,7 @@ const SearchBar: React.FC<SearchBar> = ({
   rating,
 }: SearchBar) => {
   const throttle = useThrottle();
-  const [keyword, setKeyword] = useSyncedState<string | null>(null);
+  const [keyword, setKeyword] = useState<string | null>(null);
 
   // DESC: 검색어 변화 감지 이벤트 핸들러 함수
   const handleChangeKeyword = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -49,7 +49,7 @@ const SearchBar: React.FC<SearchBar> = ({
           placeholder="검색어 입력"
           onChange={(e) => {
             handleChangeKeyword(e);
-            throttle(() => search(keyword), 500);
+            throttle(() => search(e.target.value), 500);
           }}
         />
         <SearchIcon alt="search" src={searchImg} />
